@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   namespace :public do
     root to: 'homes#top'
     get 'homes/about'
