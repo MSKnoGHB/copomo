@@ -1,0 +1,2 @@
+class RoomAccess < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class StudyInterval < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class StudyTheme < ApplicationRecord
+end

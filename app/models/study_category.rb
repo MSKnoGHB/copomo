@@ -1,0 +1,2 @@
+class StudyCategory < ApplicationRecord
+end
