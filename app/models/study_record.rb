@@ -5,4 +5,6 @@ class StudyRecord < ApplicationRecord
   belongs_to :user
   belongs_to :room
   belongs_to :study_theme
+  
+  validates :record_body, length: { maximum: 500 }
 end
