@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'rooms/index'
+    get 'rooms/show'
+  end
+  get 'chat_logs/create'
   devise_for :users
   namespace :public do
     root to: 'homes#top'
