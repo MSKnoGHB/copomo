@@ -3,4 +3,6 @@ class StudyTheme < ApplicationRecord
   has_many :study_records
   belongs_to :user
   belongs_to :study_category
+
+  validates :theme_title, presence: true, uniqueness:{ scope: :user_id }
 end
