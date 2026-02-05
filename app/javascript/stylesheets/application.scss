@@ -1,0 +1,16 @@
+@use '~bootstrap/scss/bootstrap';
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*font-family: verdana, arial, helvetica, sans-serif;*/
+}
+
+ header {
+  background-color: rgb(180, 230, 165);
+ }
+
+ footer {
+  background-color: rgb(180, 230, 165);
+ }

@@ -6,26 +6,39 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <header>
-      <p>COPOMO</p>
+      <%= link_to public_root_path do %>
+        <%= image_tag "copomo_logo_t2", alt: "COPOMO", width: '200', height: "100", style: "object-fit: cover;" %>
+      <% end %>
       <% if user_signed_in? %>
         <li>
           <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
         </li>
+        <li>
+          <%= link_to "マイページ" %>
+        </li>
+        <li>
+          <%= link_to "学習ルーム" %>
+        </li>
+        <li>
+          <%= link_to "タイムライン" %>
+        </li>
       <% else %>
         <li>
-          <%= link_to "新規登録", new_user_registration_path %>
+          <%= link_to "ユーザ登録", new_user_registration_path %>
         </li>
         <li>
           <%= link_to "ログイン", new_user_session_path %>
         </li>
       <% end %>
-      <%= link_to "マイページ" %>
+        <li>
+          <%= link_to "COPOMOとは", public_homes_about_path %>
+        </li>
     </header>
 
     <%= yield %>
