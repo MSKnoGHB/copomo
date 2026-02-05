@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Copomo</title>
+    <title>COPOMO</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script src="https://kit.fontawesome.com/8edf93cddf.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -30,14 +30,14 @@
         </li>
       <% else %>
         <li>
-          <%= link_to "ユーザ登録", new_user_registration_path %>
+          <%= link_to "新規登録", new_user_registration_path %>
         </li>
         <li>
           <%= link_to "ログイン", new_user_session_path %>
         </li>
       <% end %>
         <li>
-          <%= link_to "COPOMOとは", public_homes_about_path %>
+          <%= link_to "COPOMOとは", public_about_path %>
         </li>
     </header>
 
