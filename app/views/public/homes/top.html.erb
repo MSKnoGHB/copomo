@@ -1,18 +1,38 @@
-<div class = "container">
+<div class = "container-fluid top-container">
   <div class = "row">
     <h1>COPOMO-学習継続支援型コミュニティ-</h1>
   </div>
   <div class = "row">
     <div class = "col-6">
+
     </div>
     <div class = "col-6">
-      <p>新感覚の学習スタイルを。</p>
-      <p>ポモドーロタイマー ✕ みんなで共有。</p>
-      <p>集中も休憩も、ひとりじゃない。</p>
-      <p><strong>COPOMO</strong>で、新しい自己学習を体験しよう。</p>
-      <%= link_to "新規登録", new_user_registration_path, class: "btn btn-success btn-sm w-25 mb-3" %>
-      <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary btn-sm w-25 mb-3" %>
-      <%= link_to "学習開始", new_user_session_path, class: "btn btn-info btn-sm w-25 mb-3" %>
+      <div class = "row">
+        <div class = "col-12">
+          <h2>新感覚の学習スタイルを。</h2>
+          <h2>ポモドーロタイマー ✕ みんなで共有。</h2>
+          <h2>集中も休憩も、ひとりじゃない。</h2>
+          <h2><strong>COPOMO</strong>で、新しい自己学習を体験しよう。</h2>
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-4">
+          <%= link_to new_user_registration_path, class: "btn btn-success btn-lg w-100 mb-3 py-5" do %>
+            <i class="fa-solid fa-user-plus">  新規登録</i>
+          <% end %>
+        </div>
+        <div class = "col-4">
+          <%= link_to new_user_session_path, class: "btn btn-primary btn-lg w-100 mb-3 py-5" do %>
+            <i class="fa-solid fa-right-to-bracket">  ログイン</i>
+          <% end %>
+        </div>
+        <div class = "col-4">
+          <%= link_to public_rooms_path, class: "btn btn-warning btn-lg w-100 mb-3 py-5" do %>
+            <i class="fa-solid fa-pencil">  学習開始</i>
+           
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
