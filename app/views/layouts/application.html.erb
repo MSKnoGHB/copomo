@@ -10,38 +10,50 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <header>
-      <%= link_to public_root_path do %>
-        <%= image_tag "copomo_logo_t2", alt: "COPOMO", width: '200', height: "100", style: "object-fit: cover;" %>
-      <% end %>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-        <li>
-          <%= link_to "マイページ" %>
-        </li>
-        <li>
-          <%= link_to "学習ルーム" %>
-        </li>
-        <li>
-          <%= link_to "タイムライン" %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to "ログイン", new_user_session_path %>
-        </li>
-      <% end %>
-        <li>
-          <%= link_to "COPOMOとは", public_about_path %>
-        </li>
+      <div class = "container-fluid header-container">
+        <div class = "row">
+          <div class = "col-6">
+            <%= link_to public_root_path do %>
+              <%= image_tag "copomo_logo_t2", alt: "COPOMO", width: '200', height: "100", style: "object-fit: cover;" %>
+            <% end %>
+          </div>
+          <div class = "col-6">
+            <ul class = "d-flex list-unstyled">
+              <% if user_signed_in? %>
+                <li>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+                </li>
+                <li>
+                  <%= link_to "マイページ" %>
+                </li>
+                <li>
+                  <%= link_to "学習ルーム" %>
+                </li>
+                <li>
+                  <%= link_to "タイムライン" %>
+                </li>
+              <% else %>
+                <li>
+                  <%= link_to "新規登録", new_user_registration_path %>
+                </li>
+                <li>
+                  <%= link_to "ログイン", new_user_session_path %>
+                </li>
+              <% end %>
+                <li>
+                  <%= link_to "COPOMOとは", public_about_path %>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <%= yield %>
+    <main class = "flex-fill">
+      <%= yield %>
+    </main>
 
     <footer>
       <p>&copy; 2026 COPOMO.</p>

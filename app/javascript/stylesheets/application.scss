@@ -7,29 +7,21 @@
   /*font-family: verdana, arial, helvetica, sans-serif;*/
 }
 
-
 body {
   background-image: url("../image/dog2.jpeg");
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 header {
   background-color: rgba(180, 230, 165,0.8);
   width: 100%;
-  height: 10em;
+  height: 5em;
 }
-
-.top-container{
-
-  height: 50em;
-
-}
-
-
-
 
 footer {
   background-color: rgba(180, 230, 165,0.8);
   width: 100%;
-  height: 10em;
+  height: 5em;
 }
