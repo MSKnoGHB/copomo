@@ -7,17 +7,26 @@
   /*font-family: verdana, arial, helvetica, sans-serif;*/
 }
 
-body {
+body.registrations-new {
+  background-image: url("../image/sign_up_in.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  min-height: 100vh;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 420px; 
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
 }
 
 body.homes-top,
 body.homes-about {
   background-image: url("../image/dog2.jpeg");
-
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 header {
@@ -33,7 +42,7 @@ header {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 0 50px;
+  padding: 0 30px;
   color: black;
   font-size: large;
   text-decoration: none;
