@@ -10,16 +10,16 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="d-flex flex-column min-vh-100 <%= controller_name %>-<%= action_name %>">
+  <body class="d-flex min-vh-100 <%= controller_name %>-<%= action_name %>">
     <header>
-      <div class = "container-fluid">
-        <div class = "row">
-          <div class = "col-6 px-0 py-0">
+      <div class = "container-fluid h-100">
+        <div class = "row h-100">
+          <div class = "col-4 h-100 px-0 py-0"> 
             <%= link_to public_root_path do %>
-              <%= image_tag "copomo_logo_t2", alt: "COPOMO", width: '200', height: "100", style: "object-fit: cover;" %>
+              <%= image_tag "copomo_logo_t2", style: "height: 100%;" %>
             <% end %>
           </div>
-          <div class = "col-6 px-0 py-0">
+          <div class = "col-8 px-0 py-0">
             <ul class = "header-list d-flex list-unstyled h-100 mb-0 justify-content-end align-items-center">
               <% if user_signed_in? %>
                 <li class = "header-item">
@@ -42,21 +42,21 @@
                   <%= link_to "ログイン", new_user_session_path %>
                 </li>
               <% end %>
-                <li class = "h-100">
-                  <%= link_to "COPOMOとは", public_about_path %>
-                </li>
+              <li class = "h-100">
+                <%= link_to "COPOMOとは", public_about_path %>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </header>
 
-    <main class="flex-fill d-flex flex-column">
+    <main class="flex-fill d-flex">
       <%= yield %>
     </main>
 
-    <footer>
-      <p>&copy; 2026 COPOMO.</p>
+    <footer class="d-flex  align-items-center justify-content-center">
+      <p class="m-0">&copy; 2026 COPOMO.</p>
     </footer>
 
   </body>
