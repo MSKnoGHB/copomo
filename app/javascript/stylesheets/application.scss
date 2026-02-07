@@ -27,26 +27,17 @@ header {
 
 .header-list a:hover {
   color: #666;
-  background-color: rgba(180, 230, 165,1);
+  background-color: rgba(180, 230, 165, 1);
 }
 
 
 body.registrations-new,
 body.sessions-new {
-  background-image: url("../image/sign_up_in.jpeg");
+  background-color: rgb(253, 237, 237);
   background-size: cover;
   background-position: center;
   background-attachment: fixed; 
 }
-
-.signup-card {
-  width: 100%;
-  max-width: 420px; 
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-}
-
-
 
 body.homes-top,
 body.homes-about {
