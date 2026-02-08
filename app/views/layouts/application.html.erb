@@ -26,13 +26,13 @@
                   <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
                 </li>
                 <li class = "h-100">
-                  <%= link_to "マイページ" %>
+                  <%= link_to "マイページ", public_user_path(current_user.id) %>
                 </li>
                 <li class = "h-100">
-                  <%= link_to "学習ルーム" %>
+                  <%= link_to "学習ルーム", public_rooms_path %>
                 </li>
                 <li class = "h-100">
-                  <%= link_to "タイムライン" %>
+                  <%= link_to "タイムライン",public_study_records_path %>
                 </li>
               <% else %>
                 <li class = "h-100">

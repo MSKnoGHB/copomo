@@ -1,5 +1,6 @@
 class Public::StudyIntervalsController < ApplicationController
   def index
+    @study_interval = StudyInterval.all
   end
 
   def create
