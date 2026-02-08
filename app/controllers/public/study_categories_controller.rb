@@ -1,5 +1,5 @@
 class Public::StudyCategoriesController < ApplicationController
   def index
-    @study_category = StudyCategory.all
+    @study_categories = StudyCategory.all
   end
 end

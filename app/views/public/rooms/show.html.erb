@@ -1,2 +1,23 @@
-<h1>Public::Rooms#show</h1>
-<p>Find me in app/views/public/rooms/show.html.erb</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12 mx-auto w-50">
+      <%= form_with model: [:public, @study_record ] do |f| %>
+        <%= f.label :theme_title, "学習テーマ名" %>
+        <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" } %>
+      <% end %>
+
+
+      <%= form_with model: @study_theme do |f| %>
+        <%= f.label :category_title, "学習カテゴリ"%>
+        <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" } %>
+        <%= f.label :theme_title, "学習テーマ名" %>
+        <%= f.text_area :theme_title %>
+        <%= f.label :theme_body, "学習テーマ説明" %>
+        <%= f.text_area :theme_body %>
+        <%= f.label :theme_color, "学習テーマ色" %>
+        <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "色を選択してください"} %>
+        <%= f.submit "学習内容を登録して入室"%>
+      <% end %>
+    </div>
+  </div>
+</div>

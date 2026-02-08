@@ -1,6 +1,6 @@
 class Public::StudyRecordsController < ApplicationController
   def index
-    @study_record = StudyRecord.all
+    @study_records = StudyRecord.all
   end
 
   def show
