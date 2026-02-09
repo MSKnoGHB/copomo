@@ -13,6 +13,25 @@ import "popper.js";
 import "bootstrap";
 import "../stylesheets/application"; 
 
+import * as bootstrap from 'bootstrap'; 
+window.bootstrap = bootstrap; // ブラウザ全体で bootstrap を使えるようにする
+
+import "../stylesheets/application";
+
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+document.addEventListener('turbolinks:load', () => {
+  const modalElement = document.getElementById('entryModal');
+  if (modalElement) {
+    // このファイル内では bootstrap が import されているので直接使えます
+    // もし jQuery スタイルがお好みなら $('#entryModal').modal('show'); でもOK
+    const myModal = new bootstrap.Modal(modalElement, {
+      backdrop: 'static',
+      keyboard: false
+    })
+    myModal.show();
+  }
+});
