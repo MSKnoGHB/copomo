@@ -5,10 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Room.destroy_all
+#Room.destroy_all
 
-Room.create!([
-  { name: "クイックルーム", focus_minutes: 15, break_minutes: 3 },
-  { name: "スタンダードルーム", focus_minutes: 25, break_minutes: 5 },
-  { name: "ディープルーム", focus_minutes: 45, break_minutes: 10 }
+#Room.create!([
+  #{ name: "クイックルーム", focus_minutes: 15, break_minutes: 3 },
+  #{ name: "スタンダードルーム", focus_minutes: 25, break_minutes: 5 },
+  #{ name: "ディープルーム", focus_minutes: 45, break_minutes: 10 }
+#])
+
+StudyCategory.create!([
+  { category_title: "学校・受験", category_body: nil, is_active: true },
+  { category_title: "資格・検定", category_body: nil, is_active: true },
+  { category_title: "仕事・作業", category_body: nil, is_active: true }
 ])
