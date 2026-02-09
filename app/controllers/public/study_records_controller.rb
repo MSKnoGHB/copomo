@@ -19,4 +19,15 @@ class Public::StudyRecordsController < ApplicationController
 
   def destroy
   end
+
+  private
+
+  def study_record_params
+      params.require(:study_record).permit(:study_theme_id)
+  end
+
+  def study_theme_params
+    params.require(:study_theme).permit(:study_category_id, :theme_title, :theme_body, :theme_color)
+  end
+
 end
