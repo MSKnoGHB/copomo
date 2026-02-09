@@ -13,4 +13,6 @@ class Public::StudyThemesController < ApplicationController
 
   def update
   end
+
+  
 end

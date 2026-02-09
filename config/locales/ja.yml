@@ -1,13 +1,14 @@
 ja:
-  enums:
-    study_theme:
-      theme_color:
-        red:    "赤色"
-        orange: "橙色"
-        yellow: "黄色"
-        green:  "緑色"
-        blue:   "青色"
-        purple: "紫色"
-        pink:   "桃色"
-        brown:  "茶色"
-        black:  "黒色"
+  activerecord:
+    enums:
+      study_theme:
+        theme_color:
+          red:    "赤色"
+          orange: "橙色"
+          yellow: "黄色"
+          green:  "緑色"
+          blue:   "青色"
+          purple: "紫色"
+          pink:   "桃色"
+          brown:  "茶色"
+          black:  "黒色"
