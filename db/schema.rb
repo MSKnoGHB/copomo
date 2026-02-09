@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_08_043638) do
+ActiveRecord::Schema.define(version: 2026_02_09_024427) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2026_02_08_043638) do
     t.integer "study_category_id", null: false
     t.string "theme_title", null: false
     t.text "theme_body"
-    t.string "theme_color", null: false
+    t.integer "theme_color", default: 0, null: false
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
