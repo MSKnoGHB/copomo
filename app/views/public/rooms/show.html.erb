@@ -1,22 +1,31 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12 mx-auto w-50">
+<div class="container-fluid">
+  <div class="row w-50 mx-auto mb-3">
+    <div class="col-12">
+      <h3>学習テーマ選択</h3>
+    </div>
+  </div>
+  <div class="row w-50 mx-auto mb-5">
+    <div class="col-12">
       <%= form_with model: [:public, @study_record ] do |f| %>
-        <%= f.label :theme_title, "学習テーマ名" %>
-        <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" } %>
-      <% end %>
-
-
-      <%= form_with model: @study_theme do |f| %>
-        <%= f.label :category_title, "学習カテゴリ"%>
-        <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" } %>
-        <%= f.label :theme_title, "学習テーマ名" %>
-        <%= f.text_area :theme_title %>
-        <%= f.label :theme_body, "学習テーマ説明" %>
-        <%= f.text_area :theme_body %>
-        <%= f.label :theme_color, "学習テーマ色" %>
-        <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "色を選択してください"} %>
-        <%= f.submit "学習内容を登録して入室"%>
+        <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100 " %>
+        <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" }, { class: "form-select w-100 mb-3" } %>
+        <%= f.submit "入室する", class: "btn btn-outline-primary w-100" %>
+       <% end %>
+    </div>
+  </div>
+  <div class="row w-50 mx-auto">
+    <div class="col-12">
+      <%= form_with model: [:public, @study_theme ] do |f| %>
+        <div>
+        <%= f.label :category_title, "学習カテゴリ", class: "form-label  w-100" %>
+        <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
+        <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
+        <%= f.text_area :theme_title, class: "form-control mb-3" %>
+        <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
+        <%= f.text_area :theme_body, class: "form-control mb-3" %>
+        <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
+        <%= f.select :theme_color, StudyTheme.theme_colors_i18n, { include_blank: "学習テーマ色を選択"}, { class: "form-select  w-100 mb-3" }%>
+        <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success  w-100" %>
       <% end %>
     </div>
   </div>

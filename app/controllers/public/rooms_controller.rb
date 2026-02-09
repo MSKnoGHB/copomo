@@ -7,6 +7,7 @@ class Public::RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     @study_record = StudyRecord.new
+    @study_theme = StudyTheme.new
     @study_themes = StudyTheme.all
     @study_categories = StudyCategory.all
   end
