@@ -1,5 +1,5 @@
 <div class = "modal fade" id="entryModal" data-backdrop="static" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-  <div class = "modal-dialog modal-dialog-centered modal-lg">
+  <div class = "modal-dialog modal-dialog-centered">
     <div class = "modal-content">
       <div class="container-fluid">
         <div class = "modal-header">
@@ -24,20 +24,42 @@
               <%= form_with model: [:public, @study_theme ] do |f| %>
                 <%= f.label :category_title, "学習カテゴリ", class: "form-label  w-100" %>
                 <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
-                <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
-                <%= f.text_area :theme_title, class: "form-control mb-3" %>
-                <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
-                <%= f.text_area :theme_body, class: "form-control mb-3" %>
                 <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
                 <%= f.select :theme_color, StudyTheme.theme_colors_i18n, { include_blank: "学習テーマ色を選択"}, { class: "form-select  w-100 mb-3" }%>
-                <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success  w-100" %>
+                <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
+                <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
+                <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
+                <%= f.text_area :theme_body, class: "form-control mb-3", rows: 1 %>
+                
+                <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success w-100 mb-3" %>
               <% end %>
             </div>
           </div>
-        </div> 
+        </div>
+        <div class = "modal-footer">
+          <div class="row mx-auto">
+            <div class="col-12">
+              <%= link_to "学習ルーム選択に戻る", public_rooms_path, class: "btn btn-outline-secondary btn-sm" %>
+            </div>
+          </div>    
+        </div>
       </div>
     </div>  
   </div> 
 </div>  
+<script>
+  document.addEventListener('turbolinks:load', function() {
+    <%# jQueryを使わず、ブラウザ標準の機能で要素を探す %>
+    var modalElement = document.getElementById('entryModal');
 
-MMMMMMMM
+    if (modalElement) {
+     <%# application.jsで公開したbootstrapを使って窓を開ける %>
+      <%# もしエラーが出る場合は、application.jsで window.bootstrap = bootstrap が必要です %>
+      var myModal = new bootstrap.Modal(modalElement, {
+        backdrop: 'static',
+        keyboard: false
+      });
+      myModal.show();
+    }
+  });
+</script>
