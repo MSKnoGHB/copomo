@@ -7,13 +7,15 @@ Rails.application.routes.draw do
     get "about", to: 'homes#about'
 
     resources :users, only: [:show, :edit, :update]
-    resources :rooms, only: [:index, :show]
+    resources :rooms, only: [:index, :show] do
+      resources :study_themes, only: [:create]
+    end
     resources :room_accesses, only: [:create, :update]
     resources :chat_logs, only: [:create]
     resources :study_records
     resources :study_intervals, only: [:index, :create, :update, :destroy]
     resources :study_categories, only: [:index]
-    resources :study_themes, only: [:index, :create, :edit, :update]
+    resources :study_themes, only: [:index,:create, :edit, :update]
     resources :stamps, only: [:index]
     resources :likes, only: [:create, :destroy]
     resources :comments, only: [:create, :update, :destroy]
