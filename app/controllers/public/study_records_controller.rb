@@ -32,7 +32,6 @@ class Public::StudyRecordsController < ApplicationController
   end
 
   def update
-    @
   end
 
   def destroy

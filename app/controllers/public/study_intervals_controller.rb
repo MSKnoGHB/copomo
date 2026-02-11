@@ -15,7 +15,7 @@ class Public::StudyIntervalsController < ApplicationController
     )
     if @study_interval.update(ended_at: Time.current)
       @room_access.update!(study_status: 3)
-      redirect_to public_room_path(:room_id)
+      redirect_to public_room_path(@room.id)
     else
       
 
