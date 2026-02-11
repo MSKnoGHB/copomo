@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_09_024427) do
+ActiveRecord::Schema.define(version: 2026_02_03_133236) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2026_02_09_024427) do
     t.integer "study_theme_id"
     t.datetime "entry_time", null: false
     t.datetime "exit_time"
+    t.integer "study_status", default: 0, null: false
     t.boolean "is_active", default: true, null: false
     t.integer "exit_type"
     t.datetime "created_at", precision: 6, null: false
@@ -99,16 +100,17 @@ ActiveRecord::Schema.define(version: 2026_02_09_024427) do
     t.index ["exit_type"], name: "index_room_accesses_on_exit_type"
     t.index ["is_active"], name: "index_room_accesses_on_is_active"
     t.index ["room_id"], name: "index_room_accesses_on_room_id"
+    t.index ["study_status"], name: "index_room_accesses_on_study_status"
     t.index ["study_theme_id"], name: "index_room_accesses_on_study_theme_id"
     t.index ["user_id"], name: "index_room_accesses_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
+    t.string "room_name", null: false
     t.integer "focus_minutes", null: false
     t.integer "break_minutes", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", null: false
   end
 
   create_table "stamps", force: :cascade do |t|
@@ -130,29 +132,27 @@ ActiveRecord::Schema.define(version: 2026_02_09_024427) do
   end
 
   create_table "study_intervals", force: :cascade do |t|
-    t.integer "study_records_id", null: false
+    t.integer "study_record_id", null: false
     t.datetime "started_at", null: false
     t.datetime "ended_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["study_records_id"], name: "index_study_intervals_on_study_records_id"
+    t.index ["study_record_id"], name: "index_study_intervals_on_study_record_id"
   end
 
   create_table "study_records", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "study_room_id", null: false
+    t.integer "room_id", null: false
     t.integer "study_theme_id", null: false
     t.datetime "started_at", null: false
     t.datetime "ended_at"
     t.integer "total_focus_minutes"
-    t.integer "study_status", default: 0, null: false
     t.text "record_body"
     t.boolean "is_publish", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["is_publish"], name: "index_study_records_on_is_publish"
-    t.index ["study_room_id"], name: "index_study_records_on_study_room_id"
-    t.index ["study_status"], name: "index_study_records_on_study_status"
+    t.index ["room_id"], name: "index_study_records_on_room_id"
     t.index ["study_theme_id"], name: "index_study_records_on_study_theme_id"
     t.index ["user_id"], name: "index_study_records_on_user_id"
   end
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 2026_02_09_024427) do
     t.integer "study_category_id", null: false
     t.string "theme_title", null: false
     t.text "theme_body"
-    t.integer "theme_color", default: 0, null: false
+    t.integer "theme_color", null: false
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -201,8 +201,8 @@ ActiveRecord::Schema.define(version: 2026_02_09_024427) do
   add_foreign_key "room_accesses", "rooms"
   add_foreign_key "room_accesses", "study_themes"
   add_foreign_key "room_accesses", "users"
-  add_foreign_key "study_intervals", "study_records", column: "study_records_id"
-  add_foreign_key "study_records", "study_rooms"
+  add_foreign_key "study_intervals", "study_records"
+  add_foreign_key "study_records", "rooms"
   add_foreign_key "study_records", "study_themes"
   add_foreign_key "study_records", "users"
   add_foreign_key "study_themes", "study_categories"

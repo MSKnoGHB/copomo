@@ -21,7 +21,8 @@
           </div>
           <div class="row mx-auto">
             <div class="col-12">
-              <%= form_with model: [:public, @room, @study_theme ] do |f| %>
+              <%= form_with model: [:public, @study_theme ] do |f| %>
+                <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.label :category_title, "学習カテゴリ", class: "form-label  w-100" %>
                 <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
                 <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
@@ -49,6 +50,42 @@
 </div>  
 
 
+
+<div class="container-fluid">
+  <div class="row mx-auto mb-3" style="height: 10rem;">
+    <div class="col-12">
+      <h3>タイマー表示</h3>
+      
+    </div>
+  </div>
+  <div class="row mx-auto mb-3" style="height: 20rem;">
+    <div class="col-8">
+      <h3>チャット機能</h3>
+    </div>
+    <div class="col-4">
+      <h3>入室者一覧</h3>
+      
+    </div>
+  </div>
+  <div class="row mx-auto mb-3">
+    <div class="col-12">
+      <%= button_to "学習を開始する", public_study_records_path(room_id: @room.id, study_theme_id: @select_study_theme&.id), method: :post, class: "btn btn-primary" %>
+      <% if notice %>
+        <p class="notice"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert"><%= alert %></p>
+      <% end %>          
+      <%= link_to "学習を終了する", edit_public_study_record_path , class: "btn btn-success" %>              
+    </div>
+  </div>
+</div>
+
+
+
+
+  </div>
+</div>
 <% unless current_user.room_accesses.exists?( is_active: true ) %>
   <script>
     document.addEventListener('turbolinks:load', function() {

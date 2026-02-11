@@ -6,17 +6,18 @@ class Public::StudyThemesController < ApplicationController
   def create
     @study_theme = StudyTheme.new(study_theme_params)
     @study_theme.user_id = current_user.id
-    @room = Room.find(params[:room_id])
+    @room = Room.find(params[:study_theme][:room_id])
     if @study_theme.save
       RoomAccess.create!(
         room_id: @room.id,
         user_id: current_user.id,
         study_theme_id: @study_theme.id,
         entry_time: Time.current,
+        study_status: 0,
         is_active: true,
         exit_type: 0,
       )
-      redirect_to public_room_path(@room)
+      redirect_to public_room_path(@room, study_theme_id: @study_theme.id)
     else
       @study_access = RoomAccess.new 
       @study_themes = StudyTheme.all

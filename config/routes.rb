@@ -7,9 +7,7 @@ Rails.application.routes.draw do
     get "about", to: 'homes#about'
 
     resources :users, only: [:show, :edit, :update]
-    resources :rooms, only: [:index, :show] do
-      resources :study_themes, only: [:create]
-    end
+    resources :rooms, only: [:index, :show]
     resources :room_accesses, only: [:create, :update]
     resources :chat_logs, only: [:create]
     resources :study_records
