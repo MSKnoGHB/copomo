@@ -28,9 +28,11 @@ class Public::StudyRecordsController < ApplicationController
 
   def edit
     @study_record = StudyRecord.find(params[:id])
+
   end
 
   def update
+    @
   end
 
   def destroy
