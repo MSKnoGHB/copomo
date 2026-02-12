@@ -1,7 +1,6 @@
 class Public::RoomsController < ApplicationController
   def index
     @rooms = Room.all
-    
   end
 
   def show
@@ -11,12 +10,13 @@ class Public::RoomsController < ApplicationController
     @study_themes = StudyTheme.all
     @study_categories = StudyCategory.all
     @select_study_theme = StudyTheme.find_by(params[:study_theme_id])
-    #@study_interval = StudyInterval.find_by(user_id: current_user.id, is_active: true)
-    @study_record = StudyRecord.find_by(user_id: current_user.id, ended_at: nil )
-    if @study_record
-      @study_interval = @study_record.study_intervals.find_by(ended_at: nil)
-    else
-      @study_interval = nil
+
+    active_access = current_user.room_accesses.find_by(is_active: true)
+    @study_status = active_access&.study_status
+    
+    @study_record = current_user.study_records.find_by(ended_at: nil)
+    if  @study_record
+      @study_interval = @study_record.study_intervals.find_by( ended_at: nil)
     end
   end
 end
