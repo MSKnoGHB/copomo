@@ -69,21 +69,20 @@
   </div>
   <div class="row mx-auto mb-3">
     <div class="col-12">
-      <% unless @study_interval %>
+      <% unless @study_record %>
         <%= button_to "学習を開始", public_study_records_path(room_id: @room.id, study_theme_id: @select_study_theme&.id), method: :post, class: "btn btn-primary" %>
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert"><%= alert %></p>
-        <% end %>
+      <% else %>
+        <%= link_to "学習を終了", edit_public_study_record_path , class: "btn btn-success" %>
       <% end %>
 
       <% if @study_interval %>
-        <%= button_to "一時停止", public_study_interval_path(study_interval_id: @study_interval.id, room_id: @room.id ), method: :patch, class: "btn btn-primary" %>
-      <% end %>
+        <%= button_to "一時離席", public_study_interval_path(study_interval_id: @study_interval.id, room_id: @room.id ), method: :patch, class: "btn btn-primary" %>
+      <% else %>
+        <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_id: @room.id), method: :post, class: "btn btn-primary" %> 
+       <% end %>
+      
              
-      <%= link_to "学習を終了", edit_public_study_record_path , class: "btn btn-success" %>              
+                    
     </div>
   </div>
 </div>

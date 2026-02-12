@@ -4,6 +4,17 @@ class Public::StudyIntervalsController < ApplicationController
   end
 
   def create
+    @room = Room.find(params[:room_id])
+    @study_record = current_user.study_records.find_by!(ended_at: nil)
+    
+    @study_interval = StudyInterval.new(
+      study_record_id: @study_record.id,
+      started_at: Time.current
+    )
+    if @study_interval.save
+      redirect_to public_room_path(@room.id)
+    end
+
   end
 
   def update
@@ -16,9 +27,6 @@ class Public::StudyIntervalsController < ApplicationController
     if @study_interval.update(ended_at: Time.current)
       @room_access.update!(study_status: 3)
       redirect_to public_room_path(@room.id)
-    else
-      
-
     end
 
 
