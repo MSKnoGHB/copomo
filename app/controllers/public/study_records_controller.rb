@@ -60,7 +60,7 @@ class Public::StudyRecordsController < ApplicationController
       )
 
     #画面遷移_学習記録投稿画面へ
-    redirect_to edit_study_record_path(@study_record)
+    redirect_to edit_study_record_path(study_record_id)
 
   end
 
