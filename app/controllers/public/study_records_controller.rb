@@ -32,7 +32,7 @@ class Public::StudyRecordsController < ApplicationController
   def update
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     study_record = current_user.study_records.find(params[:study_record_id])
-    if study_record.study_intervals.exist?(ended_at: nil)
+    if study_record.study_intervals.exists?(ended_at: nil)
       study_interval = study_record.study_intervals.find_by(ended_at: nil)
       study_interval.update!(ended_at: Time.current)
     end
@@ -60,7 +60,7 @@ class Public::StudyRecordsController < ApplicationController
       )
 
     #画面遷移_学習記録投稿画面へ
-    redirect_to edit_study_record_path(study_record_id)
+    redirect_to edit_public_study_record_path(study_record.id)
 
   end
 

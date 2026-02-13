@@ -12,7 +12,8 @@
         <div class = "modal-body">
           <div class="row mx-auto mb-5">
             <div class="col-12">
-              <%= form_with model: [:public, @room_access ] do |f| %>
+              <%= form_with model: [:public, @room_access] do |f| %>
+                <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100 " %>
                 <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" }, { class: "form-select w-100 mb-3" } %>
                 <%= f.submit "入室する", class: "btn btn-outline-primary w-100" %>
@@ -21,7 +22,7 @@
           </div>
           <div class="row mx-auto">
             <div class="col-12">
-              <%= form_with model: [:public, @study_theme ] do |f| %>
+              <%= form_with model: [:public, @study_theme] do |f| %>
                 <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.label :category_title, "学習カテゴリ", class: "form-label  w-100" %>
                 <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
@@ -70,17 +71,17 @@
   <div class="row mx-auto mb-3">
     <div class="col-12">
       <% if @study_status == "waiting" %>
-        <%= button_to "学習を開始", public_study_records_path(room_access_id: @room_access.id), method: :post, class: "btn btn-primary" %>
+        <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %>
       <% end %>
       <% if @study_record %>
         <% if @study_status != "waiting" %>
-          <%= link_to "学習を終了", public_study_record_path(study_record_id: @study_record.id, room_access_id: @room_access.id), method: :patch, class: "btn btn-outline-success" %>
+          <%= link_to "学習を終了", public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-outline-success" %>
         <% end %>
         <% if @study_status == "studying" %>
-          <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @room_access.id), method: :patch, class: "btn btn-primary" %>
+          <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary" %>
         <% end %>
         <% if @study_status == "paused" %>
-          <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @room_access.id), method: :post, class: "btn btn-primary" %> 
+          <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %> 
         <% end %>
       <% end %>
     </div>

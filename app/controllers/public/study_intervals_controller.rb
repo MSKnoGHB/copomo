@@ -14,7 +14,7 @@ class Public::StudyIntervalsController < ApplicationController
 
     #roomにリダイレクト
     redirect_to public_room_path(study_record.room_id)
-    end
+   
 
   end
 
@@ -30,7 +30,7 @@ class Public::StudyIntervalsController < ApplicationController
 
     #roomにリダイレクト
     redirect_to public_room_path(study_record.room_id)
-    end
+   
   end
 
   def destroy 
