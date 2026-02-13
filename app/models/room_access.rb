@@ -10,4 +10,11 @@ class RoomAccess < ApplicationRecord
     finished: 3
   }
 
+  enum exit_type: {
+    normal:  0,
+    forced: 1,
+    timeout:   2,
+  }
+
 end
+ 

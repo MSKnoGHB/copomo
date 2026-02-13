@@ -5,18 +5,18 @@ class Public::RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
-    @room_access = RoomAccess.new
     @study_theme = StudyTheme.new
     @study_themes = StudyTheme.all
     @study_categories = StudyCategory.all
     @select_study_theme = StudyTheme.find_by(params[:study_theme_id])
-
-    active_access = current_user.room_accesses.find_by(is_active: true)
-    @study_status = active_access&.study_status
     
+    #room_accessを一意にする
+    @room_access = current_user.room_accesses.find_by(is_active: true)
+    #ボタン表示を制御するために現状の学習ステータスを格納する
+    @study_status = @room_access&.study_status
+    
+    
+    #study_recordを一意にする
     @study_record = current_user.study_records.find_by(ended_at: nil)
-    if  @study_record
-      @study_interval = @study_record.study_intervals.find_by( ended_at: nil)
-    end
   end
 end

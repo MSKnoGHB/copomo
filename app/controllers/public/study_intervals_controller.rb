@@ -3,38 +3,36 @@ class Public::StudyIntervalsController < ApplicationController
     @study_intervals = StudyInterval.all
   end
 
-  def create
-    @study_record = current_user.study_records.find_by!(ended_at: nil)
-    @room_access = current_user.room_accesses.find_by!(is_active: true)
-    @room = Room.find(params[:room_id])
+  def create #学習再開処理
+    #study_intervalのレコードを作成
+    study_record = current_user.study_records.find(params[:study_record_id])
+    study_interval = study_record.study_intervals.create!(started_at: Time.current)
+    
+    #room_accessの学習ステータスの更新
+    room_access = current_user.room_accesses.find(params[:room_access_id])
+    room_access.update!(study_status: "studying")
 
-    @study_interval = StudyInterval.new(
-      study_record_id: @study_record.id,
-      started_at: Time.current
-    )
-    if @study_interval.save
-      @room_access.update!(study_status: 1)
-      redirect_to public_room_path(@room.id)
+    #roomにリダイレクト
+    redirect_to public_room_path(study_record.room_id)
     end
 
   end
 
-  def update
-    @room = Room.find(params[:room_id])
-    @study_interval = StudyInterval.find(params[:study_interval_id])
-    @room_access = RoomAccess.find_by(
-      user_id: current_user.id,
-      is_active: true
-    )
-    if @study_interval.update(ended_at: Time.current)
-      @room_access.update!(study_status: 3)
-      redirect_to public_room_path(@room.id)
+  def update #一時停止処理
+    #study_intervalのレコードを更新
+    study_record = current_user.study_records.find(params[:study_record_id])
+    study_interval = study_record.study_intervals.find_by(ended_at: nil)
+    study_interval.update!(ended_at: Time.current)
+
+    #room_accessのレコードを更新
+    room_access = current_user.room_accesses.find(params[:room_access_id])
+    room_access.update!(study_status: "paused")
+
+    #roomにリダイレクト
+    redirect_to public_room_path(study_record.room_id)
     end
-
-
-
   end
 
-  def destroy
+  def destroy 
   end
 end
