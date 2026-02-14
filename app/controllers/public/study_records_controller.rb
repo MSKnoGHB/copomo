@@ -37,15 +37,17 @@ class Public::StudyRecordsController < ApplicationController
     
     #study_intervalの学習時間の合計処理
     study_intervals = study_record.study_intervals
-    total = 0
+    total_seconds = 0
+    total_minutes = 0
     study_intervals.each do |interval|
-     total += interval.ended_at - interval.started_at
+      total_seconds += interval.ended_at - interval.started_at
     end
+    total_minutes += (total_seconds / 60)
 
     #study_recordの更新
     study_record.update!(
       ended_at: Time.current,
-      total_focus_minutes: total
+      total_focus_minutes: total_minutes
       ) 
     
     #room_accessの更新
@@ -65,11 +67,15 @@ class Public::StudyRecordsController < ApplicationController
   def edit
     #学習結果を表示
     @study_record = StudyRecord.find(params[:id])
+    @room = @study_record.room.room_name
     @study_category = @study_record.study_theme.study_category.category_title
     @study_theme = @study_record.study_theme.theme_title
-    @started_at = @study_record.started_at
-    @ended_at = @study_record.ended_at
+    @started_at = @study_record.started_at.strftime("%Y/%m/%d %H:%M:%S")
+    @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
     @total_focus_minutes = @study_record.total_focus_minutes
+    #study_intervalを表示
+    @study_intervals = @study_record.study_intervals
+
   end
 
   def post

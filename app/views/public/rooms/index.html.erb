@@ -1,13 +1,27 @@
-<div class="container h-100"> 
-  <div class="row h-100">
-    <div class="col-4 mx-auto">
+<div class="container-fluid d-flex flex-column "> 
+  <div class="row flex-fill quick-room">
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <%= link_to "クイックルーム", public_room_path(@rooms[0]) %>
     </div>
-    <div class="col-4 mx-auto">
+    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+      <p>集中時間 15分 + 休憩時間 3分の学習ルーム<br>小さな達成感を積み重ねやすい</p>
+      
+    </div>
+  </div>
+  <div class="row flex-fill standard-room">
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <%= link_to "スタンダードルーム", public_room_path(@rooms[1]) %>
     </div>
-    <div class="col-4 mx-auto">
+    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+      <p>集中時間 25分 + 休憩時間 5分の学習ルーム<br>集中・休憩のサイクルを繰り返し、効率的に学習</p>
+    </div>
+  </div>
+  <div class="row flex-fill deep-room">
+    <div class="col-6 d-flex justify-content-center align-items-center">
       <%= link_to "ディープルーム", public_room_path(@rooms[2]) %>
+    </div>
+    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+      <p>集中時間 25分 + 休憩時間 5分の学習ルーム<br>ガッツリ集中、どっぷり集中</p>
     </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+<!-- モーダル_テーマ選択表示 -->
 <div class = "modal fade" id="entryModal" data-backdrop="static" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
   <div class = "modal-dialog modal-dialog-centered">
     <div class = "modal-content">
@@ -32,7 +33,6 @@
                 <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
                 <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
                 <%= f.text_area :theme_body, class: "form-control mb-3", rows: 1 %>
-                
                 <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success w-100 mb-3" %>
               <% end %>
             </div>
@@ -51,12 +51,11 @@
 </div>  
 
 
-
+<!-- メイン画面_学習ルーム画面 -->
 <div class="container-fluid">
   <div class="row mx-auto mb-3" style="height: 10rem;">
     <div class="col-12">
       <h3>タイマー表示</h3>
-      
     </div>
   </div>
   <div class="row mx-auto mb-3" style="height: 20rem;">
@@ -64,8 +63,12 @@
       <h3>チャット機能</h3>
     </div>
     <div class="col-4">
-      <h3>入室者一覧</h3>
-      
+      <h3>現在参加者</h3>
+      <% @room_accesses.each do |room_access| %>
+        <%= room_access.user.name %>
+        <%= room_access.study_theme.theme_title %>
+        <%= room_access.study_status %>
+      <% end %>
     </div>
   </div>
   <div class="row mx-auto mb-3">
@@ -83,6 +86,7 @@
         <% if @study_status == "paused" %>
           <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %> 
         <% end %>
+        
       <% end %>
     </div>
   </div>

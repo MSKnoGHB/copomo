@@ -4,7 +4,7 @@ class Public::RoomAccessesController < ApplicationController
     room_access = current_user.room_accesses.create!(
       room_access_params.merge(
         entry_time: Time.current,
-        study_status: "studying",
+        study_status: "waiting",
         is_active: true
       )
     )

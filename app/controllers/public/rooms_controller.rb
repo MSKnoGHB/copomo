@@ -22,5 +22,11 @@ class Public::RoomsController < ApplicationController
     @study_status = @active_room_access&.study_status
     #study_recordを一意にする
     @study_record = current_user.study_records.find_by(ended_at: nil)
+
+    #現在参加者を表示
+    @room_accesses = RoomAccess.where(is_active: true)
+  
+
+
   end
 end

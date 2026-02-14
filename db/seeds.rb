@@ -10,7 +10,7 @@
 Room.create!([
   { room_name: "クイックルーム", focus_minutes: 15, break_minutes: 3 },
   { room_name: "スタンダードルーム", focus_minutes: 25, break_minutes: 5 },
-  { room_name: "ディープルーム", focus_minutes: 45, break_minutes: 10 }
+  { room_name: "ディープルーム", focus_minutes:  50, break_minutes: 10 }
 ])
 
 StudyCategory.create!([
