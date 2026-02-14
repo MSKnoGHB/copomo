@@ -10,7 +10,12 @@ Rails.application.routes.draw do
     resources :rooms, only: [:index, :show]
     resources :room_accesses, only: [:create, :update]
     resources :chat_logs, only: [:create]
-    resources :study_records
+    resources :study_records do
+      member do 
+        patch :finish
+        patch :post
+      end
+    end
     resources :study_intervals, only: [:index, :create, :update, :destroy]
     resources :study_categories, only: [:index]
     resources :study_themes, only: [:index,:create, :edit, :update]

@@ -26,10 +26,8 @@ class Public::StudyRecordsController < ApplicationController
     redirect_to public_room_path(room_access.room_id)
   end
 
-  def edit
-  end
 
-  def update
+  def finish
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     study_record = current_user.study_records.find(params[:study_record_id])
     if study_record.study_intervals.exists?(ended_at: nil)
@@ -64,10 +62,32 @@ class Public::StudyRecordsController < ApplicationController
 
   end
 
+  def edit
+    #学習結果を表示
+    @study_record = StudyRecord.find(params[:id])
+    @study_category = @study_record.study_theme.study_category.category_title
+    @study_theme = @study_record.study_theme.theme_title
+    @started_at = @study_record.started_at
+    @ended_at = @study_record.ended_at
+    @total_focus_minutes = @study_record.total_focus_minutes
+  end
+
+  def post
+    #学習後の記録
+    @study_record = current_user.study_records.find(params[:id])
+    @study_record.update!(study_record_params)
+    redirect_to public_study_record_path(@study_record.id)
+
+  end
+
+
   def destroy
   end
 
   private
+  def study_record_params
+    params.require(:study_record).permit(:record_body)
+  end
 
 
 end

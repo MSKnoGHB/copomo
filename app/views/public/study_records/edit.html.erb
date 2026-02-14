@@ -1,2 +1,21 @@
-<h1>Public::StudyRecords#edit</h1>
-<p>Find me in app/views/public/study_records/edit.html.erb</p>
+<div class = "containe-fluid">
+  <div class = "row">
+    <div class = "col-12">
+      <h2>学習終了</h2>
+      <h3>学習カテゴリ: <%= @study_category  %></h3>
+      <h3>学習テーマ: <%= @study_theme  %></h3>
+      <h3>学習開始時間: <%= @started_at %></h3>
+      <h3>学習終了時間: <%= @ended_at %></h3>
+      <h3>学習集中トータル時間: <%= "#{@total_focus_minutes}分" %></h3>
+    </div>
+  </div>  
+  <div class = "row">
+    <div class = "col-12">
+      <%= form_with model: [:Public, @study_record], url: post_public_study_record_path(@study_record), method: :patch do |f| %>
+        <%= f.label :record_body, "投稿内容", class: "form-label" %>
+        <%= f.text_area :record_body, class: "form-control mb-3", rows: 5 %>
+        <%= f.submit "学習内容を投稿する", class: "btn btn-outline-success w-100 mb-3" %>
+      <% end %>  
+    </div>
+  </div>  
+</div>

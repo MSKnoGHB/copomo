@@ -75,7 +75,7 @@
       <% end %>
       <% if @study_record %>
         <% if @study_status != "waiting" %>
-          <%= link_to "学習を終了", public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-outline-success" %>
+          <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-outline-success" %>
         <% end %>
         <% if @study_status == "studying" %>
           <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary" %>
