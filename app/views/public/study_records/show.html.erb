@@ -1,2 +1,65 @@
-<h1>Public::StudyRecords#show</h1>
-<p>Find me in app/views/public/study_records/show.html.erb</p>
+<div class = "container-fluid">
+  <div class = "row mb-3">
+    <!-- 画面タイトル -->
+    <div class = "col-12">
+      <h2>学習記録詳細</h2>
+    </div>
+  </div>
+  <div class = "row ">
+    <!-- study_record詳細一覧 -->
+    <div class = "col-6">
+      <h3 class = "mb-3">学習ルーム: <%= @room %></h3>
+      <h3 class = "mb-3">学習カテゴリ: <%= @study_category %></h3>
+      <h3 class = "mb-3">学習テーマ: <%= @study_theme %></h3>
+      <h3 class = "mb-3">学習開始時間: <%= @started_at %></h3>
+      <h3 class = "mb-3">学習終了時間: <%= @ended_at %></h3>
+      <h3 class = "mb-3">学習集中時間: <%= "#{@total_focus_minutes}分" %></h3>
+      <h3 class = "mb-3">投稿内容: <%= @record_body %></h3>
+    </div>
+    <!-- study_interval詳細_カラム表示 -->
+    <div class = "col-6">
+      <div class = "row mx-auto p-3 border-bottom">
+        <div class = "col-3 d-flex justify-content-center">
+          <p class = "mb-0">No.</p>
+        </div>      
+        <div class = "col-3 d-flex justify-content-center">
+          <p class = "mb-0">集中開始時刻</p>
+        </div>
+        <div class = "col-3 d-flex justify-content-center ">
+          <p class = "mb-0">集中終了時刻</p>
+        </div>
+        <div class = "col-3 d-flex justify-content-center ">
+          <p class = "mb-0">集中時間</p>
+        </div> 
+      </div>
+      <!-- study_interval詳細_格納データ表示 -->
+      <% @study_intervals.each.with_index(1) do |study_interval, i| %>
+        <div class = "row mx-auto p-3 border-bottom ">
+          <div class = "col-3 d-flex justify-content-center align-items-center">
+            <p class = "mb-0"><%= i %></p>
+          </div>
+          <div class = "col-3 d-flex justify-content-center align-items-center">
+            <p class = "mb-0"><%= study_interval.started_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-3 d-flex justify-content-center align-items-center">
+            <p class = "mb-0"><%= study_interval.ended_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-3 d-flex justify-content-center align-items-center">
+            <p class = "mb-0"><%= ((study_interval.ended_at - study_interval.started_at)/60).to_i %>分</p>
+          </div>
+        </div>
+      <% end %> 
+    </div>
+  </div>
+  <div class = "row flex-fill">
+    <div class = "col-6">
+      <p>コメントといいね欄を設ける</p>
+    </div>
+    <div class = "col-6 d-flex justify-content-end align-items-center">
+      <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
+      <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
+      <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+    </div>
+    
+
+</div>

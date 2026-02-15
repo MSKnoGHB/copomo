@@ -4,7 +4,16 @@ class Public::StudyRecordsController < ApplicationController
   end
 
   def show
+    #学習記録詳細表示
     @study_record = StudyRecord.find(params[:id])
+    @room = @study_record.room.room_name
+    @study_category = @study_record.study_theme.study_category.category_title
+    @study_theme = @study_record.study_theme.theme_title
+    @started_at = @study_record.started_at.strftime("%Y/%m/%d %H:%M:%S")
+    @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
+    @total_focus_minutes = @study_record.total_focus_minutes
+    @record_body = @study_record.record_body
+    @study_intervals = @study_record.study_intervals
   end
 
   def create
@@ -83,11 +92,13 @@ class Public::StudyRecordsController < ApplicationController
     @study_record = current_user.study_records.find(params[:id])
     @study_record.update!(study_record_params)
     redirect_to public_study_record_path(@study_record.id)
-
   end
 
 
   def destroy
+    @study_record = StudyRecord.find(params[:id])
+    @study_record.destroy
+    redirect_to public_study_records_path
   end
 
   private

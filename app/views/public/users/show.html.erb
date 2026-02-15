@@ -1,2 +1,72 @@
-<h1>Public::Users#show</h1>
-<p>Find me in app/views/public/users/show.html.erb</p>
+<div class = "container-fluid min-vh-100">
+  <div class = "row">
+    <div class = "col-2">
+      <h2>ユーザ情報</h2>
+      <p>ユーザ名：<%= @user_name %></p>
+      <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-primary" %>
+    </div>
+    <div class = "col-10">
+      <!--最新の学習記録を四件表示-->
+      <div class = "row">
+        <div class = "col-12">
+          <h2>学習履歴</h2>
+        </div>
+      </div>
+      <div class = "row mb-3">
+        <% @recent_records.each_with_index do |record, i| %>
+          <div class = "col-3">
+            <div class = "row">
+              <div class = "col-12">
+                <p>学習<%= i + 1 %></p>
+              </div>
+            </div>
+            <div class = "row">
+              <div class = "col-12">
+                <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+                <p>学習ルーム：<%= record.room.room_name %></p>
+                <p>学習テーマ：<%= record.study_theme.theme_title %></p>
+                <p>集中時間：<%= record.total_focus_minutes %>分</p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class = "row mb-3" >
+        <div class = "col-12 pr-5 d-flex justify-content-end">
+          <%= link_to "学習記録一覧→", public_study_records_path %>
+        </div>
+      </div>
+      <div class = "row h-100">
+        <div class = "col-6">
+          <div class = "row">
+            <div class = "col-12">
+              <h2>グラフ</h2>
+            </div>
+          </div>
+          <div class = "row">
+            <div class = "col-12">
+              <p>丸グラフ</p>
+            </div>
+          </div>
+        </div>
+        <div class = "col-6">
+          <div class = "row">
+            <div class = "col-12">
+              <h2>学習テーマ一覧</h2>
+            </div>
+          </div>
+          <div class = "row">
+            <div class = "col-12">
+              <p>学習テーマ一覧</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-12">
+          <h2>カレンダーを表示</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
