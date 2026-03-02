@@ -12,7 +12,7 @@
       <h3 class = "mb-3">学習開始時間: <%= @started_at %></h3>
       <h3 class = "mb-3">学習終了時間: <%= @ended_at %></h3>
       <h3 class = "mb-3">学習集中時間: <%= "#{@total_focus_minutes}分" %></h3>
-      <%= form_with model: [:Public, @study_record], url: post_public_study_record_path(@study_record), method: :patch do |f| %>
+      <%= form_with model: [:public, @study_record], url: post_public_study_record_path(@study_record), method: :patch do |f| %>
         <%= f.label :record_body, "投稿内容", class: "form-label" %>
         <%= f.text_area :record_body, class: "form-control mb-3", rows: 5 %>
         <%= f.submit "学習内容を投稿する", class: "btn btn-outline-success w-100 mb-3" %>

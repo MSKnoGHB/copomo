@@ -17,5 +17,18 @@ class User < ApplicationRecord
   
   validates :name, presence: true, uniqueness: true, length: { maximum: 20}
 
+  def get_image
+    unless user_image.attached?
+      file_path = Rails.root.join("app/assets/images/no_image.jpg")
+      user_image.attach(
+        io: File.open(file_path),
+        filename: 'default-image.jpg',
+        content_type: 'image/jpeg'
+      )
+    end
+    user_image
+  end
+
+
   
 end

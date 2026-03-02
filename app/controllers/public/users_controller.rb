@@ -5,18 +5,26 @@ class Public::UsersController < ApplicationController
     @user_name = @user.name
     #最新４件の学習を表示_各情報を表示
     @recent_records = current_user.study_records.order(ended_at: :desc).limit(4)
-    #study_records一覧画面への遷移
+    @study_themes = current_user.study_themes.all
  
   end
 
   def edit
-    @user =User.find(params[:id])
+    @user = User.find(params[:id])
+
   end
 
   def update
+    @user = User.find(params[:id])
+    #ユーザ情報を更新
+    @user.update!(user_params)
+    redirect_to public_user_path(@user)
   end
+
+  private
+  def user_params
+    params.require(:user).permit(:name, :user_image)
+  end
+
+
 end
-     #<% @study_records.each do |study_record|%>
-              #<p>日付：<%= study_record.ended_at.strftime("%-m月%-d日（%a）") %></p>
-              #<p>学習テーマ：<%= study_record.study_theme.theme_title %></p>
-              #<p>学習時間：<%= study_record.total_focus_minutes %>分</p>
