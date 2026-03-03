@@ -1,73 +1,75 @@
 <div class="container-fluid">
   <div class = "row">
-    <div class = "col-11 offset-1">
-      <h1>学習記録一覧</h1>
+    <div class = "col-11 mx-auto">
+      <div class = "row">
+        <div class = "col-12">
+          <h1>学習記録一覧</h1>
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-1">
+          <p>No.</p>
+        </div>
+        <div class = "col-2">
+          <p>学習日</p>
+        </div>
+        <div class = "col-1">
+          <p>開始時間</p>
+        </div>
+        <div class = "col-1">
+          <p>終了時間</p>
+        </div>
+        <div class = "col-1">
+          <p>集中時間</p>
+        </div>
+        <div class = "col-1">
+          <p>学習ルーム</p>
+        </div>
+        <div class = "col-1">
+          <p>学習カテゴリ</p>
+        </div>
+        <div class = "col-1">
+          <p>学習テーマ</p>
+        </div>
+        <div class = "col-1">
+          <p>投稿表示</p>
+        </div>
+      </div>
+      <% @study_records.each_with_index do |record, i| %>
+        <div class = "row">
+          <div class = "col-1">
+            <p> <%= i + 1 %> </p>
+          </div>
+          <div class = "col-2">
+            <p><%= record.started_at.strftime("%Y年%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.started_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.ended_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= "#{record.total_focus_minutes}分" %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.room.room_name %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.study_theme.study_category.category_title %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.study_theme.theme_title %></p>
+          </div>
+          <div class = "col-1">
+            <p><%= record.is_publish ? "表示" : "非表示" %></p>
+          </div>
+          <div class = "col-2">
+            <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
+            <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
-  <div class = "row">
-    <div class = "col-1 offset-1">
-      <p>No.</p>
-    </div>
-    <div class = "col-1">
-      <p>学習日</p>
-    </div>
-    <div class = "col-1">
-      <p>開始時間</p>
-    </div>
-    <div class = "col-1">
-      <p>終了時間</p>
-    </div>
-    <div class = "col-1">
-      <p>集中時間</p>
-    </div>
-    <div class = "col-1">
-      <p>学習ルーム</p>
-    </div>
-    <div class = "col-1">
-      <p>学習カテゴリ</p>
-    </div>
-    <div class = "col-1">
-      <p>学習テーマ</p>
-    </div>
-    <div class = "col-1">
-      <p>投稿表示</p>
-    </div>
-    <div class = "col-1">
-      <p>学習詳細</p>
-    </div>
-  </div>
-  <%= @study_records.each_with_index do |record, i| %>
-    <div class = "row">
-      <div class = "col-1 offset-1">
-        <p> <%= i + 1 %> </p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.started_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.started_at.strftime("%H:%M:%S") %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.ended_at.strftime("%H:%M:%S") %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= "#{record.total_focus_minutes}分" %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.room.room_name %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.study_theme.study_category.category_title %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.study_theme.theme_title %></p>
-      </div>
-      <div class = "col-1">
-        <p><%= record.is_publish ? "表示" : "非表示" %></p>
-      </div>
-      <div class = "col-1">
-        <%= link_to "→", public_study_record_path(record) %>
-      </div>
-    </div>
-  <% end %>
 </div>

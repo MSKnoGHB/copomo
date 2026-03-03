@@ -40,7 +40,7 @@ class Public::StudyRecordsController < ApplicationController
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     study_record = current_user.study_records.find(params[:study_record_id])
     if study_record.study_intervals.exists?(ended_at: nil)
-      study_interval = study_record.study_intervals.find_by(ended_at: nil)
+      study_interval = study_record.study_intervals.find_by(ended_at: nil) 
       study_interval.update!(ended_at: Time.current)
     end
     
