@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     end
     resources :study_intervals, only: [:index, :create, :update, :destroy]
     resources :study_categories, only: [:index]
-    resources :study_themes, only: [:index,:create, :edit, :update]
+    resources :study_themes, only: [:index,:create, :edit, :update, :destroy]
     resources :stamps, only: [:index]
     resources :likes, only: [:create, :destroy]
     resources :comments, only: [:create, :update, :destroy]

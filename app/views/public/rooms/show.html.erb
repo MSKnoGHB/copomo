@@ -66,7 +66,7 @@
       <h3>現在参加者</h3>
       <div class="row mx-auto p-3 border-bottom">
         <div class="col-3 d-flex justify-content-center">
-          <p class = "mb-0">アイコン</p>
+          <p class = "mb-0"></p>
         </div>
         <div class="col-3 d-flex justify-content-center">
           <p class = "mb-0">ユーザ名</p>
@@ -81,7 +81,7 @@
       <% @room_accesses.each do |room_access| %>
         <div class="row mx-auto p-3 border-bottom">
           <div class="col-3 d-flex justify-content-center">
-            <p class = "mb-0">アイコン</p>
+            <p class = "mb-0"><%= image_tag room_access.user.user_image, style: "width:50px; height:50px; object-fit:cover;" %></p>
           </div>
           <div class="col-3 d-flex justify-content-center">
             <p class = "mb-0"><%= room_access.user.name %></p>

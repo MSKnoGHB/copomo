@@ -1,6 +1,6 @@
 class Public::StudyThemesController < ApplicationController
   def index
-    @study_themes = StudyTheme.all
+    @study_themes = StudyTheme.where(is_active: true)
   end
 
   def create
@@ -24,6 +24,13 @@ class Public::StudyThemesController < ApplicationController
 
   def update
   end
+
+  def destroy
+    @study_theme = StudyTheme.find(params[:id])
+    @study_theme.update(is_active: false)
+    redirect_to public_study_themes_path
+  end
+
 
   private
 
