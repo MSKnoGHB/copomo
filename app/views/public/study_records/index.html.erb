@@ -1,2 +1,73 @@
-<h1>Public::StudyRecords#index</h1>
-<p>Find me in app/views/public/study_records/index.html.erb</p>
+<div class="container-fluid">
+  <div class = "row">
+    <div class = "col-11 offset-1">
+      <h1>学習記録一覧</h1>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-1 offset-1">
+      <p>No.</p>
+    </div>
+    <div class = "col-1">
+      <p>学習日</p>
+    </div>
+    <div class = "col-1">
+      <p>開始時間</p>
+    </div>
+    <div class = "col-1">
+      <p>終了時間</p>
+    </div>
+    <div class = "col-1">
+      <p>集中時間</p>
+    </div>
+    <div class = "col-1">
+      <p>学習ルーム</p>
+    </div>
+    <div class = "col-1">
+      <p>学習カテゴリ</p>
+    </div>
+    <div class = "col-1">
+      <p>学習テーマ</p>
+    </div>
+    <div class = "col-1">
+      <p>投稿表示</p>
+    </div>
+    <div class = "col-1">
+      <p>学習詳細</p>
+    </div>
+  </div>
+  <%= @study_records.each_with_index do |record, i| %>
+    <div class = "row">
+      <div class = "col-1 offset-1">
+        <p> <%= i + 1 %> </p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.started_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.started_at.strftime("%H:%M:%S") %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.ended_at.strftime("%H:%M:%S") %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= "#{record.total_focus_minutes}分" %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.room.room_name %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.study_theme.study_category.category_title %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.study_theme.theme_title %></p>
+      </div>
+      <div class = "col-1">
+        <p><%= record.is_publish ? "表示" : "非表示" %></p>
+      </div>
+      <div class = "col-1">
+        <%= link_to "→", public_study_record_path(record) %>
+      </div>
+    </div>
+  <% end %>
+</div>
