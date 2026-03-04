@@ -5,7 +5,7 @@ class Public::UsersController < ApplicationController
     @user_name = @user.name
     #最新４件の学習を表示_各情報を表示
     @recent_records = current_user.study_records.order(ended_at: :desc).limit(4)
-    @study_themes = current_user.study_themes.all
+    @study_themes = current_user.study_themes.where(is_active: true)
  
   end
 

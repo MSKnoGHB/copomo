@@ -20,15 +20,20 @@ class Public::StudyThemesController < ApplicationController
 
   def edit
     @study_theme = StudyTheme.find(params[:id])
+    @study_categories = StudyCategory.all
+    
   end
 
   def update
+     @study_theme = StudyTheme.find(params[:id])
+     @study_theme.update!(study_theme_params)
+     redirect_to public_study_themes_path
   end
 
   def destroy
     @study_theme = StudyTheme.find(params[:id])
     @study_theme.update(is_active: false)
-    redirect_to public_study_themes_path
+    redirect_to public_study_themes_path(@study_theme)
   end
 
 

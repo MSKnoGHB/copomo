@@ -1,0 +1,68 @@
+<div class = "container">
+
+  <% @study_records.each_with_index do |study_record, i| %>
+    <div class = "row">
+      <div class = "col-12">
+        <div class = "row">
+          <div class = "col-12 mb-3">
+            <p>
+              <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
+              <%= study_record.user.name %>
+            </p> 
+            <p>
+              学習テーマ：
+              <%= study_record.study_theme.theme_title %> / 
+              <%= study_record.study_theme.study_category.category_title %></br>
+              学習時間：
+              <%= study_record.total_focus_minutes %>分
+            </p>
+            <p>
+              <%= study_record.record_body %>
+            </p>
+            <p class="d-flex justify-content-end">
+              <i class="fa-regular fa-pen-to-square mr-3"></i>
+              <i class="fa-solid fa-hands-clapping mr-3"></i>
+              <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class = "row">
+    <div class = "col-12">
+    </div>
+  </div>

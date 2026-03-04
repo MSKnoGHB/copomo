@@ -1,6 +1,13 @@
 class Public::StudyRecordsController < ApplicationController
   def index
-    @study_records = StudyRecord.all
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      @study_records = @user.study_records.order(created_at: :desc)
+    else
+      @study_records = StudyRecord.order(created_at: :desc)
+      @users = User.all 
+      render :timeline
+    end
   end
 
   def show
