@@ -1,8 +1,8 @@
 <div class = "container-fluid min-vh-100">
-  <div class = "row">
+  <div class = "row ">
     <div class = "col-2">
       <h2>ユーザ情報</h2>
-      <%= image_tag @user.get_image, style: "width:120px; height:120px; object-fit:cover;" %>
+      <%= image_tag @user.get_image, class:"mb-3", style: "width:120px; height:120px; object-fit:cover;" %>
       <p>ユーザ名：<%= @user_name %></p>
       <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-primary" %>
     </div>
@@ -16,19 +16,21 @@
       <div class = "row mb-3">
         <% @recent_records.each_with_index do |record, i| %>
           <div class = "col-3">
-            <div class = "row">
-              <div class = "col-12">
-                <p>学習<%= i + 1 %></p>
+            <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
+              <div class = "row">
+                <div class = "col-12">
+                  <p>学習<%= i + 1 %></p>
+                </div>
               </div>
-            </div>
-            <div class = "row">
-              <div class = "col-12">
-                <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
-                <p>学習ルーム：<%= record.room.room_name %></p>
-                <p>学習テーマ：<%= record.study_theme.theme_title %></p>
-                <p>集中時間：<%= record.total_focus_minutes %>分</p>
+              <div class = "row">
+                <div class = "col-12">
+                  <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+                  <p>学習ルーム：<%= record.room.room_name %></p>
+                  <p>学習テーマ：<%= record.study_theme.theme_title %></p>
+                  <p>集中時間：<%= record.total_focus_minutes %>分</p>
+                </div>
               </div>
-            </div>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -37,7 +39,7 @@
           <%= link_to "学習記録一覧→", public_user_study_records_path(@user) %>
         </div>
       </div>
-      <div class = "row h-100">
+      <div class = "row">
         <div class = "col-6">
           <div class = "row">
             <div class = "col-12">
@@ -65,7 +67,7 @@
           </div>
           <div class = "row">
             <div class = "col-12 pr-5 d-flex justify-content-end">
-              <%= link_to "学習テーマ一覧→", public_study_themes_path %>
+              <%= link_to "学習テーマ一覧→", public_user_study_themes_path(@user) %>
             </div>
           </div>
         </div>

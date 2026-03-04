@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:show, :edit, :update] do 
       resources :study_records, only: [:index]
+      resources :study_themes, only: [:index]
     end
     resources :rooms, only: [:index, :show]
     resources :room_accesses, only: [:create, :update]
