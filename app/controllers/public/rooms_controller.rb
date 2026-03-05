@@ -27,6 +27,14 @@ class Public::RoomsController < ApplicationController
     @room_accesses = RoomAccess.where(is_active: true)
 
     @timer = @room.timer_status
+    if  @study_record.present?
+      interval = @study_record.study_intervals.find_by(ended_at: nil)
+    end
 
+    if @timer[:mode] == "集中" && @study_status == "studying" && interval.nil?
+      @study_record.study_intervals.create!(
+        started_at: Time.current
+      )
+    end
   end
 end

@@ -26,16 +26,18 @@ class Public::StudyRecordsController < ApplicationController
   def create
     room_access = current_user.room_accesses.find(params[:room_access_id])
     #study_recordのレコードを作成
-    study_record = current_user.study_records.create!(
-      room_id: room_access.room_id,
-      study_theme_id: room_access.study_theme.id,
-      started_at: Time.current
-    )
+      study_record = current_user.study_records.create!(
+        room_id: room_access.room_id,
+        study_theme_id: room_access.study_theme.id,
+        started_at: Time.current
+      )
 
     #study_intervalのレコードを作成
-    study_interval = study_record.study_intervals.create!(
-      started_at: Time.current
-    )
+    if study_record.room.timer_status[:mode] == "集中"
+      study_interval = study_record.study_intervals.create!(
+        started_at: Time.current
+      )
+    end
     
     #room_accessの学習ステータスを更新
     room_access.update!(study_status: "studying")
@@ -46,7 +48,9 @@ class Public::StudyRecordsController < ApplicationController
   def finish
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     study_record = current_user.study_records.find(params[:study_record_id])
-    if study_record.study_intervals.exists?(ended_at: nil)
+    if study_record.room.timer_status[:mode] == "集中" && 
+      study_record.study_intervals.exists?(ended_at: nil)
+      
       study_interval = study_record.study_intervals.find_by(ended_at: nil) 
       study_interval.update!(ended_at: Time.current)
     end
@@ -107,6 +111,7 @@ class Public::StudyRecordsController < ApplicationController
     @study_record.destroy
     redirect_to public_study_records_path
   end
+
 
   private
   def study_record_params
