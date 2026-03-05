@@ -26,5 +26,7 @@ class Public::RoomsController < ApplicationController
     #現在参加者を表示
     @room_accesses = RoomAccess.where(is_active: true)
 
+    @timer = @room.timer_status
+
   end
 end

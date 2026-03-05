@@ -23,3 +23,26 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+document.addEventListener("turbolinks:load", () =>{
+  const timer = document.getElementById("timer")
+  if (!timer) return
+
+  let remaining = parseInt(timer.innerText)
+  function updateDisplay(){
+    let minutes = Math.floor(remaining / 60)
+    let seconds = remaining % 60
+    seconds = seconds.toString().padStart(2, '0')
+    timer.innerText = minutes + ":" + seconds
+  }
+
+  updateDisplay()
+
+  setInterval(() =>{
+    remaining -= 1
+    updateDisplay()
+    if (remaining <=0){
+      location.reload()
+    }
+
+  }, 1000)
+})
