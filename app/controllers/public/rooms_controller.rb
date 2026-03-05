@@ -27,6 +27,7 @@ class Public::RoomsController < ApplicationController
     @room_accesses = RoomAccess.where(is_active: true)
 
     @timer = @room.timer_status
+
     if  @study_record.present?
       interval = @study_record.study_intervals.find_by(ended_at: nil)
     end
@@ -36,5 +37,15 @@ class Public::RoomsController < ApplicationController
         started_at: Time.current
       )
     end
+
+    if @timer[:mode] == "休憩" && @study_status == "studying" && interval.present?
+      @study_record.study_intervals.update!(
+        ended_at: Time.current
+      )
+    end
+
+    Rails.logger.debug "mode: #{@timer[:mode]}"
+    Rails.logger.debug "status: #{@study_status}"
+    Rails.logger.debug "interval_nil: #{interval.nil?}"
   end
 end

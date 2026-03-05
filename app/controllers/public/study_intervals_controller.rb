@@ -37,4 +37,7 @@ class Public::StudyIntervalsController < ApplicationController
 
   def destroy 
   end
+
+
+  
 end
