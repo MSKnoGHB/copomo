@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 2026_02_03_133236) do
     t.string "room_name", null: false
     t.integer "focus_minutes", null: false
     t.integer "break_minutes", null: false
+    t.datetime "cycle_started_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

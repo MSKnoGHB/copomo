@@ -6,8 +6,10 @@
         <div class = "row">
           <div class = "col-12 mb-3">
             <p>
-              <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
-              <%= study_record.user.name %>
+              <%= link_to public_user_path(study_record.user_id) do %>
+                <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
+                <%= study_record.user.name %>
+              <% end %>
             </p> 
             <p>
               学習テーマ：
@@ -20,7 +22,9 @@
               <%= study_record.record_body %>
             </p>
             <p class="d-flex justify-content-end">
-              <i class="fa-regular fa-pen-to-square mr-3"></i>
+              <%= link_to public_study_record_path(study_record) do %>
+                <i class="fa-regular fa-pen-to-square mr-3"></i>
+              <% end %>
               <i class="fa-solid fa-hands-clapping mr-3"></i>
               <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
             </p>

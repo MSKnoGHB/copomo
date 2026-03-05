@@ -4,6 +4,7 @@ class CreateRooms < ActiveRecord::Migration[6.1]
       t.string :room_name, null: false
       t.integer :focus_minutes, null: false
       t.integer :break_minutes, null: false
+      t.datetime :cycle_started_at, null: false
       t.timestamps
     end
   end
