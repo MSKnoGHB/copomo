@@ -4,9 +4,13 @@ class Public::UsersController < ApplicationController
     #ユーザ情報を表示
     @user_name = @user.name
     #最新４件の学習を表示_各情報を表示
-    @recent_records = current_user.study_records.order(ended_at: :desc).limit(4)
-    @study_themes = current_user.study_themes.where(is_active: true)
- 
+    @recent_records = @user.study_records.order(ended_at: :desc).limit(4)
+    #study_themesはis_active_TRUEのものだけ表示
+    @study_themes = @user.study_themes.where(is_active: true)
+    #テーマ別学習時間のグラフを表示
+    @chart_records = @user.study_records.joins(:study_theme)
+    @chart_data = @chart_records.group("study_themes.theme_title").sum(:total_focus_minutes)
+    @chart_colors = @chart_records.group("study_themes.theme_title").order("study_themes.theme_title").pluck("study_themes.theme_color").map { |key| StudyTheme::COLOR_MAP[key]}
   end
 
   def edit

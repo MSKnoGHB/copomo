@@ -19,4 +19,16 @@ class StudyTheme < ApplicationRecord
     black:  8
   }
 
+  COLOR_MAP = {
+    "red"    => "#ff4d4d",
+    "orange" => "#ffa500",
+    "yellow" => "#ffff00",
+    "green"  => "#2ecc71",
+    "blue"   => "#3498db",
+    "purple" => "#9b59b6",
+    "pink"   => "#ff69b4",
+    "brown"  => "#8b4513",
+    "black"  => "#333333"
+  }
+  
 end
