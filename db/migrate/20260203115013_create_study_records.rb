@@ -8,7 +8,7 @@ class CreateStudyRecords < ActiveRecord::Migration[6.1]
       t.datetime :ended_at
       t.integer :total_focus_minutes
       t.text :record_body
-      t.boolean :is_publish, null: false, default: true, index: true
+      t.boolean :is_publish, null: false, default: false, index: true
       t.timestamps
     end
   end

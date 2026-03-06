@@ -115,7 +115,7 @@ class Public::StudyRecordsController < ApplicationController
 
   private
   def study_record_params
-    params.require(:study_record).permit(:record_body)
+    params.require(:study_record).permit(:record_body, :is_publish)
   end
 
 

@@ -1,37 +1,45 @@
 <div class = "container">
 
   <% @study_records.each_with_index do |study_record, i| %>
-    <div class = "row">
-      <div class = "col-12">
-        <div class = "row">
-          <div class = "col-12 mb-3">
-            <p>
-              <%= link_to public_user_path(study_record.user_id) do %>
-                <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
-                <%= study_record.user.name %>
-              <% end %>
-            </p> 
-            <p>
-              学習テーマ：
-              <%= study_record.study_theme.theme_title %> / 
-              <%= study_record.study_theme.study_category.category_title %></br>
-              学習時間：
-              <%= study_record.total_focus_minutes %>分
-            </p>
-            <p>
-              <%= study_record.record_body %>
-            </p>
-            <p class="d-flex justify-content-end">
-              <%= link_to public_study_record_path(study_record) do %>
-                <i class="fa-regular fa-pen-to-square mr-3"></i>
-              <% end %>
-              <i class="fa-solid fa-hands-clapping mr-3"></i>
-              <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
-            </p>
-          </div>
+    <% if study_record.is_publish %>
+      <div class = "row">
+        <div class = "col-12">
+          <p>
+            <%= link_to public_user_path(study_record.user_id) do %>
+              <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
+              <%= study_record.user.name %>
+            <% end %>
+          </p>
         </div>
       </div>
-    </div>
+      <div class = "row">
+        <div class = "col-4 mb-3">
+          <p>
+            学習テーマ：
+            <%= study_record.study_theme.theme_title %> / 
+            <%= study_record.study_theme.study_category.category_title %></br>
+            学習時間：
+            <%= study_record.total_focus_minutes %>分
+          </p>
+        </div>
+        <div class = "col-8 mb-3">
+          <p>
+            <%= study_record.record_body %>
+          </p>
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-12 mb-3">
+          <p class="d-flex justify-content-end">
+            <%= link_to public_study_record_path(study_record) do %>
+              <i class="fa-regular fa-pen-to-square mr-3"></i>
+            <% end %>
+              <i class="fa-solid fa-hands-clapping mr-3"></i>
+            <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
+          </p>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>
 

@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2026_02_03_133236) do
     t.datetime "ended_at"
     t.integer "total_focus_minutes"
     t.text "record_body"
-    t.boolean "is_publish", default: true, null: false
+    t.boolean "is_publish", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["is_publish"], name: "index_study_records_on_is_publish"

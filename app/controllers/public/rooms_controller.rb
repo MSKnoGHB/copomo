@@ -26,26 +26,25 @@ class Public::RoomsController < ApplicationController
     #現在参加者を表示
     @room_accesses = RoomAccess.where(is_active: true)
 
+    #タイマーを表示
     @timer = @room.timer_status
 
+    #study_intervalを一意にする
     if  @study_record.present?
       interval = @study_record.study_intervals.find_by(ended_at: nil)
     end
 
+    #集中モードへの切り替わり時にstudy_intervalのレコードを作成
     if @timer[:mode] == "集中" && @study_status == "studying" && interval.nil?
       @study_record.study_intervals.create!(
         started_at: Time.current
       )
     end
-
+    #休憩モードへの切り替わり時にstudy_intervalのレコードを更新
     if @timer[:mode] == "休憩" && @study_status == "studying" && interval.present?
-      @study_record.study_intervals.update!(
+       interval.update!(
         ended_at: Time.current
       )
     end
-
-    Rails.logger.debug "mode: #{@timer[:mode]}"
-    Rails.logger.debug "status: #{@study_status}"
-    Rails.logger.debug "interval_nil: #{interval.nil?}"
   end
 end
