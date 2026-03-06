@@ -7,67 +7,79 @@
       <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-primary" %>
     </div>
     <div class = "col-10">
-      <!--最新の学習記録を四件表示-->
       <div class = "row">
         <div class = "col-12">
-          <h2>学習履歴</h2>
-        </div>
-      </div>
-      <div class = "row mb-3">
-        <% @recent_records.each_with_index do |record, i| %>
-          <div class = "col-3">
-            <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
-              <div class = "row">
-                <div class = "col-12">
-                  <p>学習<%= i + 1 %></p>
-                </div>
-              </div>
-              <div class = "row">
-                <div class = "col-12">
-                  <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
-                  <p>学習ルーム：<%= record.room.room_name %></p>
-                  <p>学習テーマ：<%= record.study_theme.theme_title %></p>
-                  <p>集中時間：<%= record.total_focus_minutes %>分</p>
+          <div class = "row">
+            <div class = "col-12">
+              <h2>学習履歴</h2>
+            </div>
+          </div>
+          <div class = "row mb-3">
+            <% @recent_records.each_with_index do |record, i| %>
+              <div class = "col-3">
+                <div class="card shadow-sm p-3 h-100">
+                  <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
+                    <div class = "row">
+                      <div class = "col-12">
+                        <p>学習<%= i + 1 %></p>
+                      </div>
+                    </div>
+                    <div class = "row">
+                      <div class = "col-12">
+                        <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+                        <p>学習ルーム：<%= record.room.room_name %></p>
+                        <p>学習テーマ：<%= record.study_theme.theme_title %></p>
+                        <p>集中時間：<%= record.total_focus_minutes %>分</p>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             <% end %>
           </div>
-        <% end %>
-      </div>
-      <div class = "row mb-3" >
-        <div class = "col-12 pr-5 d-flex justify-content-end">
-          <%= link_to "学習記録一覧→", public_user_study_records_path(@user) %>
+          <div class = "row mb-3" >
+            <div class = "col-12 pr-5 mb-3 d-flex justify-content-end">
+              <%= link_to "学習記録一覧→", public_user_study_records_path(@user) %>
+            </div>
+          </div>
         </div>
       </div>
       <div class = "row">
-        <div class = "col-6">
+        <div class = "col-12 mb-3">
           <div class = "row">
-            <div class = "col-12">
-              <h2>グラフ</h2>
-              <%= pie_chart @chart_data, colors: @chart_colors, suffix: "分" %>
+            <div class = "col-6">
+              <div class="card shadow-sm p-3 h-100">
+                <div class = "row">
+                  <div class = "col-12">
+                    <h2>グラフ</h2>
+                  </div>
+                </div>
+                <div class = "row">
+                  <div class = "col-12">
+                    <%= pie_chart @chart_data, colors: @chart_colors, suffix: "分" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class = "col-6">
+              <div class="card shadow-sm p-3 h-100">
+                <div class = "row">
+                  <div class = "col-12">
+                    <h2>学習テーマ一覧</h2>
+                  </div>
+                </div>
+                <div class = "row">
+                  <div class = "col-12">
+                    <% @study_themes.each_with_index do |study_theme, i| %>
+                      <p>テーマ<%= i + 1 %>：<%= study_theme.theme_title %></p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class = "row">
-            <div class = "col-12">
-              <p>丸グラフ</p>
-            </div>
-          </div>
-        </div>
-        <div class = "col-6">
-          <div class = "row">
-            <div class = "col-12">
-              <h2>学習テーマ一覧</h2>
-            </div>
-          </div>
-          <div class = "row">
-            <div class = "col-12">
-              <% @study_themes.each_with_index do |study_theme, i| %>
-                <p>テーマ<%= i + 1 %>：<%= study_theme.theme_title %></p>
-              <% end %>
-            </div>
-          </div>
-          <div class = "row">
-            <div class = "col-12 pr-5 d-flex justify-content-end">
+            <div class = "col-12 pr-5 mt-3 mb-3 d-flex justify-content-end">
               <%= link_to "学習テーマ一覧→", public_user_study_themes_path(@user) %>
             </div>
           </div>
@@ -75,7 +87,12 @@
       </div>
       <div class = "row">
         <div class = "col-12">
-          <h2>カレンダーを表示</h2>
+          <div class="card shadow-sm p-3">
+            <h2>学習カレンダー</h2>
+            <%= month_calendar do |date| %>
+              <%= date.day %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

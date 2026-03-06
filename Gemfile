@@ -59,3 +59,4 @@ gem 'devise'
 gem 'enum_help'
 gem 'chartkick'
 gem 'groupdate'
+gem "simple_calendar", "~> 2.4"
