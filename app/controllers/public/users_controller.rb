@@ -12,8 +12,6 @@ class Public::UsersController < ApplicationController
     @chart_records = @user.study_records.joins(:study_theme)
     @chart_data = @chart_records.group("study_themes.theme_title").sum(:total_focus_minutes)
     @chart_colors = @chart_records.group("study_themes.theme_title").order("study_themes.theme_title").pluck("study_themes.theme_color").map { |key| StudyTheme::COLOR_MAP[key]}
-
-   
   end
 
   def edit

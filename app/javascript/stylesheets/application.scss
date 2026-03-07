@@ -104,6 +104,11 @@ body.homes-about {
 
 }
 
+.simple-calendar {
+  table-layout: fixed; 
+  width: 100%;
+}
+
 .calendar-heading {
   display: flex;
   justify-content: center;
@@ -124,10 +129,17 @@ body.homes-about {
 
 
 .simple-calender table{
+  table-layout: fixed;
+  width: 100%;
   border-collapse: collapse;
   background-color: #ffffff;
 }
 
+.simple-calendar th, 
+.simple-calendar td {
+  width: 14.28%; 
+  word-break: break-all; 
+}
 .simple-calendar th {
   padding: 10px;
   text-align: center;
@@ -140,16 +152,42 @@ body.homes-about {
   height: 100px; 
   border: 1px solid #cccccc;
   vertical-align: top;
-  padding: 5px;
+  padding: 0;
+}
+
+.calendar-day-header {
+  padding: 5px; 
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-day-body {
+  height: 70px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.calendar-day-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.calendar-day-body::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.calendar-theme-breakdown{
+  font-size: 10px;
 }
 
 .simple-calendar .today {
-  background-color: #f1ffff;
+  background-color: #fffaaa;
 }
 
 .simple-calendar .day {
   font-weight: bold;
-
 }
 
 

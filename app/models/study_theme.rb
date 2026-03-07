@@ -31,4 +31,8 @@ class StudyTheme < ApplicationRecord
     "black"  => "#333333"
   }
   
+  def self.theme_stats(records)
+    records.group_by { |r| r.study_theme&.theme_title }.transform_values { |rs| rs.sum(&:total_focus_minutes) }
+  end
+
 end
