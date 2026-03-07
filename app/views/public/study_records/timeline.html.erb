@@ -1,46 +1,52 @@
-<div class = "container">
-
-  <% @study_records.each_with_index do |study_record, i| %>
-    <% if study_record.is_publish %>
-      <div class = "row">
-        <div class = "col-12">
-          <p>
-            <%= link_to public_user_path(study_record.user_id) do %>
-              <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %>
-              <%= study_record.user.name %>
-            <% end %>
-          </p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class = "col-4 mb-3">
-          <p>
-            学習テーマ：
-            <%= study_record.study_theme.theme_title %> / 
-            <%= study_record.study_theme.study_category.category_title %></br>
-            学習時間：
-            <%= study_record.total_focus_minutes %>分
-          </p>
-        </div>
-        <div class = "col-8 mb-3">
-          <p>
-            <%= study_record.record_body %>
-          </p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class = "col-12 mb-3">
-          <p class="d-flex justify-content-end">
-            <%= link_to public_study_record_path(study_record) do %>
-              <i class="fa-regular fa-pen-to-square mr-3"></i>
-            <% end %>
-              <i class="fa-solid fa-hands-clapping mr-3"></i>
-            <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
+<div class = "container-fluid ">
+  <div class = "row">
+    <div class = "col-10 offset-1">
+      <% @study_records.each_with_index do |study_record, i| %>
+        <% if study_record.is_publish %>
+          <div class="card shadow-sm pt-0 pr-3 pl-3 pb-3 mb-3">
+            <div class = "row">
+              <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
+                <p class=" pt-3 pb-3 mb-0">
+                  <%= link_to public_user_path(study_record.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
+                    <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
+                    <%= study_record.user.name %>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+            <div class = "row mt-3">
+              <div class = "col-4 mb-3">
+                <p>
+                  学習テーマ：
+                  <%= study_record.study_theme.theme_title %> / 
+                  <%= study_record.study_theme.study_category.category_title %></br>
+                  学習時間：
+                  <%= study_record.total_focus_minutes %>分
+                </p>
+              </div>
+              <div class = "col-8 mb-3 text-break">
+                <p>
+                  <%= study_record.record_body %>
+                </p>
+              </div>
+            </div>
+            <div class = "row">
+              <div class = "col-12">
+                <p class="d-flex justify-content-end align-items-center mb-0">
+                  <%= link_to public_study_record_path(study_record) do %>
+                    <i class="fa-regular fa-pen-to-square mr-3">コメントをする</i>
+                  <% end %>
+                    <i class="fa-solid fa-hands-clapping mr-3">いいね</i>
+                  <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
+                  
+                </p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 
