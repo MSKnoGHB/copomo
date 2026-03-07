@@ -16,7 +16,7 @@
               <%= form_with model: [:public, @room_access] do |f| %>
                 <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100 " %>
-                <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" }, { class: "form-select w-100 mb-3" } %>
+                <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" },{ required: true, class: "form-select w-100 mb-3" } %>
                 <%= f.submit "入室する", class: "btn btn-outline-primary w-100" %>
               <% end %>
             </div>
@@ -26,9 +26,9 @@
               <%= form_with model: [:public, @study_theme] do |f| %>
                 <%= f.hidden_field :room_id, value: @room.id %>
                 <%= f.label :category_title, "学習カテゴリ", class: "form-label  w-100" %>
-                <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
+                <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { required: true, class: "form-select w-100 mb-3" } %>
                 <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
-                <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "学習テーマ色を選択"}, { class: "form-select  w-100 mb-3" }%>
+                <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "学習テーマ色を選択"}, { required: true, class: "form-select  w-100 mb-3" }%>
                 <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
                 <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
                 <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>

@@ -6,6 +6,7 @@ class StudyTheme < ApplicationRecord
 
   validates :theme_title, presence: true, uniqueness:{ scope: :user_id }, length: { maximum: 20 }
   validates :theme_body, length: { maximum: 100 }
+  validates :theme_color, presence: true
 
   enum theme_color: {
     red:    0, 

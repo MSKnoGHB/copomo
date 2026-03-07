@@ -1,17 +1,24 @@
 ja:
   activerecord:
-    enums:
-      study_theme:
-        theme_color:
-          red:    "赤色"
-          orange: "橙色"
-          yellow: "黄色"
-          green:  "緑色"
-          blue:   "青色"
-          purple: "紫色"
-          pink:   "桃色"
-          brown:  "茶色"
-          black:  "黒色"
+
+  attributes:
+    study_theme:
+      theme_title: "学習テーマ名"
+      theme_body: "学習テーマ説明"
+      theme_color: "テーマカラー"
+
+  enums:
+    study_theme:
+      theme_color:
+        red:    "🟥 赤色"
+        orange: "🟧 橙色"
+        yellow: "🟨 黄色"
+        green:  "🟩 緑色"
+        blue:   "🟦 青色"
+        purple: "🟪 紫色"
+        pink:   "🌸 桜色"
+        brown:  "🟫 茶色"
+        black:  "⬛️ 黒色"
 
   date:
     abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
