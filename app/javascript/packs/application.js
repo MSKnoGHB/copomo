@@ -41,9 +41,13 @@ document.addEventListener("turbolinks:load", () =>{
   setInterval(() =>{
     remaining -= 1
     updateDisplay()
-    if (remaining <=0){
-      location.reload()
+    if (remaining <= 0){
+      const modalOpen = document.body.classList.contains('modal-open');
+      if (modalOpen) {
+        remaining = 10;
+      } else {
+        location.reload();
+      }
     }
-
   }, 1000)
 })

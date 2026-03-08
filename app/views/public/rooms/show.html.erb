@@ -29,11 +29,11 @@
                 <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { required: true, class: "form-select w-100 mb-3" } %>
                 <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
                 <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "学習テーマ色を選択"}, { required: true, class: "form-select  w-100 mb-3" }%>
-                <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
-                <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
+                <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %><%= alert %>
+                <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1, required: true %>
                 <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
                 <%= f.text_area :theme_body, class: "form-control mb-3", rows: 1 %>
-                <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success w-100 mb-3" %>
+                <%= f.submit "学習内容を登録して入室する", class: "btn btn-outline-success w-100 mb-3",onclick: "if(this.form.checkValidity()){ const val = this.form.querySelector('textarea[name*=\"theme_title\"]').value.trim(); if(!val){ alert('テーマ名を空白のみで登録することはできません'); return false; } } " %>
               <% end %>
             </div>
           </div>
@@ -66,31 +66,27 @@
     <div class="col-5">
       <h3>現在参加者</h3>
       <div class="row mx-auto p-3 border-bottom">
-        <div class="col-3 d-flex justify-content-center">
-          <p class = "mb-0"></p>
-        </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-4 d-flex justify-content-center">
           <p class = "mb-0">ユーザ名</p>
         </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-4 d-flex justify-content-center">
           <p class = "mb-0">学習テーマ</p>
         </div>
-        <div class="col-3 d-flex justify-content-center">
+        <div class="col-4 d-flex justify-content-center">
           <p class = "mb-0">ステータス</p>
         </div>
       </div>
       <% @room_accesses.each do |room_access| %>
-        <div class="row mx-auto p-3 border-bottom">
-          <div class="col-3 d-flex justify-content-center">
-            <p class = "mb-0"><%= image_tag room_access.user.user_image, style: "width:50px; height:50px; object-fit:cover;" %></p>
-          </div>
-          <div class="col-3 d-flex justify-content-center">
+        <div class="row mx-auto p-1 border-bottom">
+            
+          <div class="col-4 d-flex justify-content-center align-items-center">
+            <p class = "mb-0 mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></p>
             <p class = "mb-0"><%= room_access.user.name %></p>
           </div>
-          <div class="col-3 d-flex justify-content-center">
+          <div class="col-4 d-flex justify-content-center align-items-center">
             <p class = "mb-0"><%= room_access.study_theme.theme_title %></p>
           </div>
-          <div class="col-3 d-flex justify-content-center">
+          <div class="col-4 d-flex justify-content-center align-items-center align-items-center">
             <p class = "mb-0"><%= room_access.study_status %></p>
           </div>
         </div>
@@ -122,8 +118,6 @@
 
 
 
-  </div>
-</div>
 <% unless current_user.room_accesses.exists?( is_active: true ) %>
   <script>
     document.addEventListener('turbolinks:load', function() {
