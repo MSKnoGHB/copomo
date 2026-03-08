@@ -46,5 +46,8 @@ class Public::RoomsController < ApplicationController
         ended_at: Time.current
       )
     end
+    
+    @chat_logs = @room.chat_logs.includes(:user).last(100)
+    @chat_log = ChatLog.new
   end
 end
