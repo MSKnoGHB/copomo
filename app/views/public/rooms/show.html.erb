@@ -53,64 +53,71 @@
 
 <!-- メイン画面_学習ルーム画面 -->
 <div class="container-fluid">
-  <div class="row mx-auto mb-3" style="height: 10rem;">
-    <div class="col-12 text-center">
-      <p id="mode" style="font-size: 50px;"><%= @timer[:mode] %></p>
-      <p id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></p>
-    </div>
-  </div>
-  <div class="row mx-auto mb-3" style="height: 20rem;">
-    <div class="col-7">
+  <div class="row mx-auto mb-3 h-100">
+    <div class="col-5">
       <h3>チャット機能</h3>
     </div>
-    <div class="col-5">
-      <h3>現在参加者</h3>
-      <div class="row mx-auto p-3 border-bottom">
-        <div class="col-4 d-flex justify-content-center">
-          <p class = "mb-0">ユーザ名</p>
+    <div class="col-7">
+      <div class="row mx-auto h-75">
+        <div class="col-3 d-flex flex-column justify-content-center align-items-center">
+          <p id="mode" style="font-size: 50px;"><%= @timer[:mode] %></p>
+          <p id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></p>
+          <% if @study_status == "waiting" %>
+            <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %>
+          <% end %>
+          <% if @study_record %>
+            <% if @study_status == "studying" %>
+              <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary w-100", form_class: "w-100" %>
+            <% end %>
+            <% if @study_status == "paused" %>
+              <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary w-100", form_class: "w-100" %> 
+            <% end %>
+            <% if @study_status != "waiting" %>
+              <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-success w-100 m-3", form_class: "w-100" %>
+            <% end %>        
+          <% end %>
         </div>
-        <div class="col-4 d-flex justify-content-center">
-          <p class = "mb-0">学習テーマ</p>
-        </div>
-        <div class="col-4 d-flex justify-content-center">
-          <p class = "mb-0">ステータス</p>
+        <div class="col-9">
+          <h3>現在参加者</h3>
+          <div class="row mx-auto p-3 border-bottom">
+            <div class="col-4 d-flex justify-content-left">
+              <p class = "mb-0">ユーザ名</p>
+            </div>
+            <div class="col-4 d-flex justify-content-left">
+              <p class = "mb-0">学習テーマ</p>
+            </div>
+            <div class="col-4 d-flex justify-content-left">
+              <p class = "mb-0">ステータス</p>
+            </div>
+          </div>
+          <% @room_accesses.each do |room_access| %>
+            <div class="row mx-auto p-1 border-bottom">
+                
+              <div class="col-4 d-flex justify-content-left align-items-center">
+                <p class = "mb-0 mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></p>
+                <p class = "mb-0"><%= room_access.user.name %></p>
+              </div>
+              <div class="col-4 d-flex justify-content-left align-items-center">
+                <p class = "mb-0"><%= room_access.study_theme.theme_title %></p>
+              </div>
+              <div class="col-4 d-flex justify-content-left align-items-center align-items-center">
+                <p class = "mb-0"><%= room_access.study_status %></p>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
-      <% @room_accesses.each do |room_access| %>
-        <div class="row mx-auto p-1 border-bottom">
-            
-          <div class="col-4 d-flex justify-content-center align-items-center">
-            <p class = "mb-0 mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></p>
-            <p class = "mb-0"><%= room_access.user.name %></p>
-          </div>
-          <div class="col-4 d-flex justify-content-center align-items-center">
-            <p class = "mb-0"><%= room_access.study_theme.theme_title %></p>
-          </div>
-          <div class="col-4 d-flex justify-content-center align-items-center align-items-center">
-            <p class = "mb-0"><%= room_access.study_status %></p>
-          </div>
+      <div class="row">
+        <div class="col-5">
+        <p>コメント欄</p>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 
   <div class="row mx-auto mb-3">
     <div class="col-12">
-      <% if @study_status == "waiting" %>
-        <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %>
-      <% end %>
-      <% if @study_record %>
-        <% if @study_status != "waiting" %>
-          <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-success" %>
-        <% end %>
-        <% if @study_status == "studying" %>
-          <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary" %>
-        <% end %>
-        <% if @study_status == "paused" %>
-          <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %> 
-        <% end %>
-        
-      <% end %>
+      
     </div>
   </div>
 </div>
