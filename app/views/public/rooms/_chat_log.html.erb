@@ -1,9 +1,12 @@
 <div class="mb-4">
   <div class="mb-1">
     <%= image_tag chat_log.user.user_image, style: "width:40px; height:40px; object-fit:cover;" %>
-    <strong><%= chat_log.user.name %></strong></br>
+    <strong><%= chat_log.user.name %></strong>
   </div>
   <div style = "width: fit-content; background-color: rgba(100, 149, 237, 0.5); margin-left:50px; padding: 5px 20px; border-radius: 2px 20px 20px 20px; max-width: 100%; word-break: break-all;">
     <%= chat_log.message %>
+  </div>
+  <div class="d-flex justify-content-end">
+    <%= chat_log.created_at.strftime("%Y/%m/%d %H:%M") %>
   </div>
 </div>
