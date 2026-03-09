@@ -9,8 +9,6 @@ class Public::ChatLogsController < ApplicationController
     }
       head :ok
     else
-      p @chat_log.errors.full_messages
-    # 保存失敗（バリデーション落ちなど）
       render status: :unprocessable_entity
     end
   end
