@@ -52,9 +52,9 @@
 
 
 <!-- メイン画面_学習ルーム画面 -->
-<div class="container-fluid">
-  <div class="row mx-auto mb-3 h-100">
-    <div class="col-5">
+<div class="container-fluid h-100">
+  <div class="row mx-auto mb-3 ">
+    <div class="col-5 style="height:  100px;">
     
       <div class="row mx-auto mb-3">
         <div class="col-12">
@@ -63,7 +63,7 @@
       </div>
       <div class="row mx-auto mb-3">
         <div class="col-12">
-          <div id="chat-logs-container" data-room-id="<%= @room.id %>">
+          <div id="chat-logs-container" class=" overflow-auto border p-3 " style="max-height: 65vh;" data-room-id="<%= @room.id %>">
             <% @chat_logs.each do |chat_log| %>
               <p><%= chat_log.user.name %>: <%= chat_log.message %></p>
             <% end %>
