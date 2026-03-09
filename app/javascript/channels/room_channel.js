@@ -1,14 +1,29 @@
 import consumer from "./consumer"
+let chatSubscription;
 
-document.addEventListener("turbolinks:load",()=>{
-  const chatElement = document.getElementById('chat-logs-container');
+document.addEventListener("turbolinks:load", () => {
+  const chatCheck = document.getElementById("chat-logs-container");
 
-  if(chatElement){
-    const roomId = chatElement.dataset.roomId;
-    consumer.subscriptions.create({ channel: "RoomChannel", room_id: roomId }, {
+  if (chatCheck) {
+    if (chatSubscription) {
+      consumer.subscriptions.remove(chatSubscription);
+    }
+
+    const roomId = chatCheck.dataset.roomId;
+    
+    chatSubscription = consumer.subscriptions.create({ channel: "RoomChannel", room_id: roomId }, {
       received(data) {
-        const html = `<p>${data.user_name}: ${data.message}</p>`;
-        chatElement.insertAdjacentHTML('beforeend', html);
+        if (data && data.chat_log_html) {
+          const chatElement = document.getElementById("chat-logs-container");
+          if (chatElement) {
+            chatElement.insertAdjacentHTML("beforeend", data.chat_log_html);
+            chatElement.scrollTop = chatElement.scrollHeight;
+            const inputElement = document.getElementById("chat-input");
+            if (inputElement) {
+              inputElement.value = '';
+            }
+          }
+        } 
       }
     });
   }

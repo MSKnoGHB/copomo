@@ -58,14 +58,14 @@
     
       <div class="row mx-auto mb-3">
         <div class="col-12">
-          <h3>チャット機能</h3>
+          <h3>チャット</h3>
         </div>
       </div>
       <div class="row mx-auto mb-3">
         <div class="col-12">
-          <div id="chat-logs-container" class=" overflow-auto border p-3 " style="max-height: 65vh;" data-room-id="<%= @room.id %>">
-            <% @chat_logs.each do |chat_log| %>
-              <p><%= chat_log.user.name %>: <%= chat_log.message %></p>
+          <div id="chat-logs-container" data-room-id="<%= @room.id %>" class=" overflow-auto border p-3 " style="height: 65vh;" >
+            <% @chat_logs.each do |log| %>
+              <%= render 'public/rooms/chat_log', chat_log: log %>
             <% end %>
           </div>
         </div>
@@ -121,11 +121,13 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-5">
+        <div class="col-11">
           <%= form_with model: @chat_log, url: public_chat_logs_path, local: false do |f| %>
             <%= f.hidden_field :room_id, value: @room.id %>
-            <%= f.text_field :message, class: "form-control", placeholder: "メッセージを入力..." %>
-            <%= f.submit "送信", class: "btn btn-primary" %>
+            <%= f.text_area :message, id: "chat-input", class: "form-control ", rows: 3, placeholder: "メッセージを入力..." %>
+            <div class="d-flex justify-content-end mt-2">
+              <%= f.submit "送信", class: "btn btn-primary " %>
+            </div>
           <% end %>
         </div>
       </div>

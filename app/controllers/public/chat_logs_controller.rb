@@ -1,19 +1,17 @@
 class Public::ChatLogsController < ApplicationController
   def create
-    @room = Room.find(params[:chat_log][:room_id])
-    @chat_log = current_user.chat_logs.new(chat_log_params)
+    @chat_log = ChatLog.new(chat_log_params)
     @chat_log.user_id = current_user.id
     @chat_log.message_type = :message
-    
     if @chat_log.save
-      ActionCable.server.broadcast "room_channel_#{@chat_log.room_id}", {
-        message: @chatlog.message,
-        user_name: current_user.name,
-        image: view_context.image_tag(current_user.user_image, style: "width:30px; height:30px; object-fit:cover;")
-      }
+      ActionCable.server.broadcast "room_channel_#{@chat_log.room_id}",{
+      chat_log_html: render_to_string(partial: 'public/rooms/chat_log', locals: { chat_log: @chat_log })
+    }
       head :ok
     else
-      head :bad_request
+      p @chat_log.errors.full_messages
+    # 保存失敗（バリデーション落ちなど）
+      render status: :unprocessable_entity
     end
   end
 
