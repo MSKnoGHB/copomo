@@ -130,8 +130,11 @@
             <div class="w-100">
               <%= f.text_area :message, id: "chat-input", class: "form-control ", rows: 3, placeholder: "メッセージを入力..." %>
             </div>
-            <%= f.hidden_field :stamp_id, id: "stamp-id" %>
-            <button type="button" id="stamp-btn" class="btn btn-secondary">😊</button>
+            <div class="w-100 d-flex justify-content-between">
+              <%= f.hidden_field :stamp_id, id: "stamp-id" %>
+              <button type="button" id="stamp-btn" class="btn btn-secondary">😊</button>
+              <%= f.submit "送信", class: "btn btn-primary " %>
+            </div>
             <div class="stamp-modal d-none" id="stamp_modal">
               <% @stamps.each do |stamp|%>
                 <%= image_tag stamp.stamp_image, data: {id: stamp.id }, class:"stamp-item", style: "width:50px; height:50px; object-fit:cover; cursor: pointer;" %>
@@ -139,7 +142,7 @@
               <% end%>
             </div>
             <div class="d-flex justify-content-end mt-2">
-              <%= f.submit "送信", class: "btn btn-primary " %>
+              
             </div>
           <% end %>
         </div>
