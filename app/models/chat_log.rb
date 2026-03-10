@@ -3,7 +3,7 @@ class ChatLog < ApplicationRecord
   belongs_to :user
   belongs_to :stamp, optional: true
 
-  validates :message, presence: true, length: { maximum: 250}
+  validates :message, presence: true, length: { maximum: 250 }, unless: :stamp_id?
 
   enum message_type: {stamp: 0, message: 1}
 

@@ -49,5 +49,6 @@ class Public::RoomsController < ApplicationController
     
     @chat_logs = @room.chat_logs.includes(:user).last(100)
     @chat_log = ChatLog.new
+    @stamps = Stamp.all
   end
 end
