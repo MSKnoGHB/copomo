@@ -55,11 +55,12 @@
     <div class = "col-6">
       <p>コメントといいね欄を設ける</p>
     </div>
-    <div class = "col-6 d-flex justify-content-end align-items-center">
-      <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
-      <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
-      <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
-    </div>
-    
+    <%if @study_record.user == current_user %>
+      <div class = "col-6 d-flex justify-content-end align-items-center">
+        <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
+        <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
+        <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+      </div>
+    <%end%>
 
 </div>

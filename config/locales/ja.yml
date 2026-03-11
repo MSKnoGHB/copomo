@@ -1,11 +1,23 @@
 ja:
   activerecord:
+    attributes:
+      study_theme:
+        theme_title: "学習テーマ名"
+        theme_body: "学習テーマ説明"
+        theme_color: "テーマカラー"
 
-  attributes:
-    study_theme:
-      theme_title: "学習テーマ名"
-      theme_body: "学習テーマ説明"
-      theme_color: "テーマカラー"
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        name: "ユーザー名"
+
+  errors:
+    messages:
+      blank: "を入力してください"
+      
+  devise:
+    failure:
+      invalid: "ユーザー名またはパスワードが正しくありません。"
 
   enums:
     study_theme:

@@ -13,8 +13,15 @@
       <h3 class="ml-3"><strong>COPOMO</strong>で、新しい自己学習を体験しよう。</h3>
     </div>
   </div>
-  <div class = "row mt-auto justify-content-end">
-    <div class = "col-2 offset-6">
+  <div class = "row mt-auto justify-content-center">
+  <% if user_signed_in? %>
+    <div class = "col-2 mr-3 offset-6">
+      <%= link_to public_rooms_path, class: "btn btn-warning btn-lg w-100 mb-3 py-5" do %>
+        <i class="fa-solid fa-pencil">  学習開始</i>
+      <% end %>
+    </div>
+  <% else %>
+    <div class = "col-2 mr-3 offset-6">
       <%= link_to new_user_registration_path, class: "btn btn-success btn-lg w-100 mb-3 py-5" do %>
         <i class="fa-solid fa-user-plus">  新規登録</i>
       <% end %>
@@ -24,10 +31,6 @@
         <i class="fa-solid fa-right-to-bracket">  ログイン</i>
       <% end %>
     </div>
-    <div class = "col-2">
-      <%= link_to public_rooms_path, class: "btn btn-warning btn-lg w-100 mb-3 py-5" do %>
-        <i class="fa-solid fa-pencil">  学習開始</i>
-      <% end %>
-    </div>
+  <% end %>
   </div>
 </div>

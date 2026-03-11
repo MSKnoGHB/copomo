@@ -13,7 +13,14 @@
     <div class="col-12 card-body p-0 ">
       <div class="card w-50 pt-3 pl-5 pr-5 mx-auto shadow-lg">
         <%= form_with model: @user, url: user_registration_path do |f| %>
-          <%= render "devise/shared/error_messages", resource: resource %>
+          <% if @user.errors.any? %>
+            <%= @user.errors.count %>件のエラーが発生しました
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          <% end %>
 
           <div class="mb-3">
             <%= f.label :name, "ユーザー名" %><br />

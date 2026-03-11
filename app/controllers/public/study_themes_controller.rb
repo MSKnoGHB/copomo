@@ -1,6 +1,6 @@
 class Public::StudyThemesController < ApplicationController
   def index
-    @study_themes = StudyTheme.where(is_active: true)
+    @study_themes = current_user.study_themes.where(is_active: true)
   end
 
   def create

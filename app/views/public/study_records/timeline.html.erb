@@ -34,11 +34,16 @@
               <div class = "col-12">
                 <p class="d-flex justify-content-end align-items-center mb-0">
                   <%= link_to public_study_record_path(study_record) do %>
-                    <i class="fa-regular fa-pen-to-square mr-3">コメントをする</i>
+                    <% if study_record.user == current_user%>
+                      <i class="fa-regular fa-pen-to-square mr-3">詳細</i>
+                    <% else %>
+                      <i class="fa-regular fa-pen-to-square mr-3">コメントをする</i>
+                    <% end %>
                   <% end %>
+                  <% if study_record.user != current_user%>
                     <i class="fa-solid fa-hands-clapping mr-3">いいね</i>
+                  <% end %>
                   <%= study_record.created_at.strftime("%Y/%m/%d %H:%M") %>
-                  
                 </p>
               </div>
             </div>
