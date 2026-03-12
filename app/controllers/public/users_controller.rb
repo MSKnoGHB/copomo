@@ -28,10 +28,15 @@ class Public::UsersController < ApplicationController
 
   def destroy
     @user = current_user
+    #ユーザ情報を物理削除
+    @user.destroy!
+    sign_out current_user
+    redirect_to root_path
     #ユーザ情報を論理削除
-    @user.update!(is_active: false)
-    reset_session
-    redirect_to public_root_path
+    #@user.update!(is_active: false)
+    #sign_out current_user
+    #redirect_to public_root_path
+    
   end
 
 
