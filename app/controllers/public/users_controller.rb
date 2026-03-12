@@ -15,16 +15,25 @@ class Public::UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
 
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     #ユーザ情報を更新
     @user.update!(user_params)
     redirect_to public_user_path(@user)
   end
+
+  def destroy
+    @user = current_user
+    #ユーザ情報を論理削除
+    @user.update!(is_active: false)
+    reset_session
+    redirect_to public_root_path
+  end
+
 
   private
   def user_params
