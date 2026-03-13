@@ -39,10 +39,12 @@
         <p><%= study_theme.study_category.category_title %></p>
       </div>
       <div class = "col-2">
-        <p>
-          <%= link_to "編集", edit_public_study_theme_path(study_theme), class: "btn btn-sm btn-success" %>
-          <%= link_to "削除", public_study_theme_path(study_theme), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
-        </p>
+        <% if @user == current_user %>
+          <p>
+            <%= link_to "編集", edit_public_study_theme_path(study_theme), class: "btn btn-sm btn-success" %>
+            <%= link_to "削除", public_study_theme_path(study_theme), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+          </p>
+        <% end %>
       </div>
     </div>
   <% end %>

@@ -64,10 +64,12 @@
           <div class = "col-1">
             <p><%= record.is_publish ? "表示" : "非表示" %></p>
           </div>
-          <div class = "col-2">
-            <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
-            <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
-          </div>
+          <% if @user == current_user %>
+            <div class = "col-2">
+              <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
+              <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
