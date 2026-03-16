@@ -7,10 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #Room.destroy_all
 
+Room.destroy_all
+StudyCategory.destroy_all
+
 Room.create!([
-  { room_name: "クイック", focus_minutes: 2, break_minutes: 1, cycle_started_at: Time.current },
+  { room_name: "クイック", focus_minutes: 15, break_minutes: 3, cycle_started_at: Time.current },
   { room_name: "スタンダード", focus_minutes: 25, break_minutes: 5, cycle_started_at: Time.current },
-  { room_name: "ディープ", focus_minutes:  50, break_minutes: 1, cycle_started_at: Time.current }
+  { room_name: "ディープ", focus_minutes:  50, break_minutes: 10, cycle_started_at: Time.current }
 ])
 
 StudyCategory.create!([
