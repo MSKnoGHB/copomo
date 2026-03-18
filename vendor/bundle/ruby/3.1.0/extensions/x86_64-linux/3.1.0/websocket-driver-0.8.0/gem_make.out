@@ -1,0 +1,15 @@
+current directory: /home/ubuntu/environment/copomo/vendor/bundle/ruby/3.1.0/gems/websocket-driver-0.8.0/ext/websocket-driver
+/home/ubuntu/.rbenv/versions/3.1.2/bin/ruby -I /home/ubuntu/.rbenv/versions/3.1.2/lib/ruby/3.1.0 -r ./siteconf20260317-24050-82k66j.rb extconf.rb
+creating Makefile
+
+current directory: /home/ubuntu/environment/copomo/vendor/bundle/ruby/3.1.0/gems/websocket-driver-0.8.0/ext/websocket-driver
+make DESTDIR\= clean
+
+current directory: /home/ubuntu/environment/copomo/vendor/bundle/ruby/3.1.0/gems/websocket-driver-0.8.0/ext/websocket-driver
+make DESTDIR\=
+compiling websocket_mask.c
+linking shared-object websocket_mask.so
+
+current directory: /home/ubuntu/environment/copomo/vendor/bundle/ruby/3.1.0/gems/websocket-driver-0.8.0/ext/websocket-driver
+make DESTDIR\= install
+/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20260317-24050-2s0hhd
