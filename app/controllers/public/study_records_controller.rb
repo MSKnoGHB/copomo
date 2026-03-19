@@ -50,7 +50,6 @@ class Public::StudyRecordsController < ApplicationController
     study_record = current_user.study_records.find(params[:study_record_id])
     if study_record.room.timer_status[:mode] == "集中" && 
       study_record.study_intervals.exists?(ended_at: nil)
-      
       study_interval = study_record.study_intervals.find_by(ended_at: nil) 
       study_interval.update!(ended_at: Time.current)
     end
@@ -101,15 +100,26 @@ class Public::StudyRecordsController < ApplicationController
   def post
     #学習後の記録
     @study_record = current_user.study_records.find(params[:id])
-    @study_record.update!(study_record_params)
-    redirect_to public_study_record_path(@study_record.id)
+    if @study_record.update(study_record_params)
+      redirect_to public_study_record_path(@study_record.id)
+    else
+      @room = @study_record.room.room_name
+      @study_category = @study_record.study_theme.study_category.category_title
+      @study_theme = @study_record.study_theme.theme_title
+      @started_at = @study_record.started_at.strftime("%Y/%m/%d %H:%M:%S")
+      @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
+      @total_focus_minutes = @study_record.total_focus_minutes
+      #study_intervalを表示
+      @study_intervals = @study_record.study_intervals
+      render :edit
+    end
   end
 
 
   def destroy
     @study_record = StudyRecord.find(params[:id])
     @study_record.destroy
-    redirect_to public_study_records_path
+    redirect_to public_user_study_records_path(@study_record.user)
   end
 
 

@@ -16,6 +16,11 @@
             <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
             <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
             <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
+            <% if @study_theme.errors.any? %>
+              <% @study_theme.errors.full_messages.each do |message| %>
+                <p><%= message %></p>
+              <% end%>
+            <% end%>
             <%= f.text_area :theme_body, class: "form-control mb-3", rows: 5 %>
             <%= f.submit "学習内容を更新する", class: "btn btn-outline-success w-100 mb-3" %>
           <% end %>
@@ -28,4 +33,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

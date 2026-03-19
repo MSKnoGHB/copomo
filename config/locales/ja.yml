@@ -5,6 +5,8 @@ ja:
         theme_title: "学習テーマ名"
         theme_body: "学習テーマ説明"
         theme_color: "テーマカラー"
+      study_record:
+        record_body: 記録内容
 
       user:
         email: "メールアドレス"
@@ -17,6 +19,7 @@ ja:
       blank: "を入力してください"
       confirmation: "と一致していません"
       too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
 
   devise:
     failure:

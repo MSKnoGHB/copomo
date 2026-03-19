@@ -1,5 +1,6 @@
 class Public::StudyThemesController < ApplicationController
   def index
+    @user = User.find(params[:user_id])
     @study_themes = current_user.study_themes.where(is_active: true)
   end
 
@@ -25,15 +26,19 @@ class Public::StudyThemesController < ApplicationController
   end
 
   def update
-     @study_theme = StudyTheme.find(params[:id])
-     @study_theme.update!(study_theme_params)
-     redirect_to public_study_themes_path
+    @study_theme = StudyTheme.find(params[:id])
+    if @study_theme.update(study_theme_params)
+      redirect_to public_user_study_themes_path(@study_theme.user)
+    else
+      @study_categories = StudyCategory.all
+      render :edit
+    end
   end
 
   def destroy
     @study_theme = StudyTheme.find(params[:id])
     @study_theme.update(is_active: false)
-    redirect_to public_study_themes_path(@study_theme)
+    redirect_to public_user_study_themes_path(@study_theme.user)
   end
 
 

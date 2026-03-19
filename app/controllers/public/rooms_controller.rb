@@ -10,7 +10,7 @@ class Public::RoomsController < ApplicationController
 
     #modal_テーマ選択後の入室
     @room_access = RoomAccess.new
-    @study_themes = current_user.study_themes
+    @study_themes = current_user.study_themes.where(is_active: true)
 
     #modal_テーマ新規作成後の入室
     @study_theme = StudyTheme.new
