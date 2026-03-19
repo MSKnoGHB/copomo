@@ -18,6 +18,7 @@
           </div>
           <div class = "row mb-3">
             <% @recent_records.each_with_index do |record, i| %>
+              <% next if record.ended_at.nil? %>
               <div class = "col-3">
                 <div class="card shadow-sm p-3 h-100">
                   <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
