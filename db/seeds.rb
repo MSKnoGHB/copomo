@@ -7,17 +7,37 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #Room.destroy_all
 
-Room.destroy_all
-StudyCategory.destroy_all
+Room.find_or_create_by!(room_name: "クイック") do |room|
+  room.focus_minutes = 15
+  room.break_minutes = 3
+  room.cycle_started_at = Time.current
+end
 
-Room.create!([
-  { room_name: "クイック", focus_minutes: 15, break_minutes: 3, cycle_started_at: Time.current },
-  { room_name: "スタンダード", focus_minutes: 25, break_minutes: 5, cycle_started_at: Time.current },
-  { room_name: "ディープ", focus_minutes:  50, break_minutes: 10, cycle_started_at: Time.current }
-])
+Room.find_or_create_by!(room_name: "スタンダード") do |room|
+  room.focus_minutes = 25
+  room.break_minutes = 5
+  room.cycle_started_at = Time.current
+end
 
-StudyCategory.create!([
-  { category_title: "学校・受験", category_body: nil, is_active: true },
-  { category_title: "資格・検定", category_body: nil, is_active: true },
-  { category_title: "仕事・作業", category_body: nil, is_active: true }
-])
+Room.find_or_create_by!(room_name: "ディープ") do |room|
+  room.focus_minutes = 50
+  room.break_minutes = 10
+  room.cycle_started_at = Time.current
+end
+
+StudyCategory.find_or_create_by!(category_title: "学校・受験") do |study_category|
+  study_category.category_body = nil
+  study_category.is_active = true
+end
+
+StudyCategory.find_or_create_by!(category_title: "資格・検定") do |study_category|
+  study_category.category_body = nil
+  study_category.is_active = true
+end
+
+StudyCategory.find_or_create_by!(category_title: "仕事・作業") do |study_category|
+  study_category.category_body = nil
+  study_category.is_active = true
+end
+
+
