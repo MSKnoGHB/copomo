@@ -20,10 +20,10 @@ ja:
 
   devise:
     failure:
-      invalid: "ユーザー名またはパスワードが正しくありません。"
-      not_found_in_database: "ユーザー名またはパスワードが正しくありません。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
       user:
-        not_found_in_database: "ユーザー名またはパスワードが正しくありません。"
+        not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
 
   enums:
     study_theme:
