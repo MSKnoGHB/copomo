@@ -1,7 +1,7 @@
 class Public::StudyThemesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @study_themes = current_user.study_themes.where(is_active: true)
+    @study_themes = @user.study_themes.where(is_active: true)
   end
 
   def create

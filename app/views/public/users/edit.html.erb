@@ -5,12 +5,15 @@
       <div class = "row">
         <div class="col-md-12 mx-auto mb-3">
           <%= form_with model: [:public, @user] do |f|%>
-
             <div class="mb-3">
               <%= f.label :name, "ユーザ名" %>
+              <% if @user.errors.any? %>
+                <% @user.errors.full_messages.each do |message| %>
+                  <p><%= message %></p>
+                <% end %>
+              <% end %>
               <%= f.text_field :name, autocomplete: "name", class: "form-control" %>
             </div>
-
             <div class="mb-3">
               <%= f.label :user_image, "ユーザアイコン" %></br>
               <% if @user.user_image.attached? %>

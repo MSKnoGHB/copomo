@@ -22,8 +22,11 @@ class Public::UsersController < ApplicationController
   def update
     @user = current_user
     #ユーザ情報を更新
-    @user.update!(user_params)
-    redirect_to public_user_path(@user)
+    if @user.update(user_params)
+      redirect_to public_user_path(@user)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -31,12 +34,11 @@ class Public::UsersController < ApplicationController
     #ユーザ情報を物理削除
     @user.destroy!
     sign_out current_user
-    redirect_to root_path
+    redirect_to new_user_registration_path
     #ユーザ情報を論理削除
     #@user.update!(is_active: false)
     #sign_out current_user
     #redirect_to public_root_path
-    
   end
 
 

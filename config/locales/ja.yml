@@ -27,6 +27,8 @@ ja:
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
       user:
         not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+        unauthenticated: "ユーザーとしてログインしてください"
+      unauthenticated: "ログインしてください"
 
   enums:
     study_theme:
