@@ -1,5 +1,5 @@
 class Public::StudyIntervalsController < ApplicationController
-  before_action only: [:create, ,:update, :edit] do #destroy未実装
+  before_action only: [:create, :update, :edit] do #destroy未実装
     interval = StudyInterval.find(params[:id])
     authorize_owner(interval.study_record)
   end
