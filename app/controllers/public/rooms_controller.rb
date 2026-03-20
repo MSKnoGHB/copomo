@@ -24,7 +24,7 @@ class Public::RoomsController < ApplicationController
     @study_record = current_user.study_records.find_by(ended_at: nil)
 
     #現在参加者を表示
-    @room_accesses = RoomAccess.where(is_active: true)
+    @room_accesses = @room.room_accesses.where(is_active: true)
 
     #タイマーを表示
     @timer = @room.timer_status
