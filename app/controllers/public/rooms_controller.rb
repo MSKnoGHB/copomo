@@ -2,11 +2,22 @@ class Public::RoomsController < ApplicationController
   def index
     #学習ルーム選択
     @rooms = Room.all
+    @active_room_access = current_user.room_accesses.find_by(is_active: true)
   end
 
   def show
     #room_idの受け渡し
     @room = Room.find(params[:id])
+
+    #room_accessを一意にする
+    @active_room_access = current_user.room_accesses.find_by(is_active: true)
+
+    #URL直接入力によるアクセスを制限
+    if @active_room_access && @active_room_access.room_id != @room.id
+      flash[:alert] = "別のルームに入室中です。先に現在のルームを退室してください。"
+      redirect_to public_rooms_path, alert: "別のルームに入室中です。先に現在のルームを退室してください。"
+      return
+    end
 
     #modal_テーマ選択後の入室
     @room_access = RoomAccess.new
@@ -16,8 +27,7 @@ class Public::RoomsController < ApplicationController
     @study_theme = StudyTheme.new
     @study_categories = StudyCategory.all
  
-    #room_accessを一意にする
-    @active_room_access = current_user.room_accesses.find_by(is_active: true)
+
     #ボタン表示を制御するために現状の学習ステータスを格納する
     @study_status = @active_room_access&.study_status
     #study_recordを一意にする
@@ -46,7 +56,7 @@ class Public::RoomsController < ApplicationController
         ended_at: Time.current
       )
     end
-    
+
     @chat_logs = @room.chat_logs.includes(:user).last(100)
     @chat_log = ChatLog.new
     @stamps = Stamp.all
