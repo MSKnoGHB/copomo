@@ -1,5 +1,5 @@
 class Public::StudyRecordsController < ApplicationController
-  before_action only: [:edit, :destroy, :post] do
+  before_action only: [:edit, :destroy] do
     authorize_owner(StudyRecord.find(params[:id]))
   end
 
@@ -89,7 +89,7 @@ class Public::StudyRecordsController < ApplicationController
 
   def edit
     #学習結果を表示
-    @study_record = StudyRecord.find(params[:id])
+    @study_record = current_user.study_records.find(params[:id])
     @room = @study_record.room.room_name
     @study_category = @study_record.study_theme.study_category.category_title
     @study_theme = @study_record.study_theme.theme_title
@@ -119,7 +119,7 @@ class Public::StudyRecordsController < ApplicationController
   end
 
   def destroy
-    @study_record = StudyRecord.find(params[:id])
+    @study_record = current_user_study_records.find(params[:id])
     @study_record.destroy
     redirect_to public_user_study_records_path(@study_record.user)
   end
