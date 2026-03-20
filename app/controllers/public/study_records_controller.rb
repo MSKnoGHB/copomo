@@ -1,4 +1,8 @@
 class Public::StudyRecordsController < ApplicationController
+  before_action only: [:create, :edit, :destroy, :finish, :post] do
+    authorize_owner(StudyRecord.find(params[:id]))
+  end
+
   def index
     if params[:user_id]
       @user = User.find(params[:user_id])
@@ -94,7 +98,6 @@ class Public::StudyRecordsController < ApplicationController
     @total_focus_minutes = @study_record.total_focus_minutes
     #study_intervalを表示
     @study_intervals = @study_record.study_intervals
-
   end
 
   def post
@@ -115,13 +118,11 @@ class Public::StudyRecordsController < ApplicationController
     end
   end
 
-
   def destroy
     @study_record = StudyRecord.find(params[:id])
     @study_record.destroy
     redirect_to public_user_study_records_path(@study_record.user)
   end
-
 
   private
   def study_record_params

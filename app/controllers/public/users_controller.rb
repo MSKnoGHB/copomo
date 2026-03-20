@@ -1,4 +1,6 @@
 class Public::UsersController < ApplicationController
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
+
   def show
     @user = User.find(params[:id])
     #ユーザ情報を表示
@@ -43,9 +45,9 @@ class Public::UsersController < ApplicationController
 
 
   private
+
   def user_params
     params.require(:user).permit(:name, :user_image)
   end
-
 
 end

@@ -1,4 +1,5 @@
 class Public::ChatLogsController < ApplicationController
+
   def create
     @chat_log = ChatLog.new(chat_log_params)
     @chat_log.user_id = current_user.id

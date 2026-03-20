@@ -10,6 +10,21 @@ class ApplicationController < ActionController::Base
     public_root_path
   end
 
+  #他ユーザ操作禁止
+
+  def is_matching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to public_user_path(current_user)
+    end
+  end
+
+  def authorize_owner(resource)
+    unless resource.user_id == current_user.id
+      redirect_to public_user_path(current_user)
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

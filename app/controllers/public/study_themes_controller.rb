@@ -1,4 +1,8 @@
 class Public::StudyThemesController < ApplicationController
+  before_action only: [:create, :edit, :update, :destroy] do
+    authorize_owner(StudyTheme.find(params[:id]))
+  end
+
   def index
     @user = User.find(params[:user_id])
     @study_themes = @user.study_themes.where(is_active: true)

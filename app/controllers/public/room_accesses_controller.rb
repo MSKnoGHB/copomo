@@ -1,4 +1,5 @@
 class Public::RoomAccessesController < ApplicationController
+
   def create
     #既存のstudy_themeを選択した際の処理
     room_access = current_user.room_accesses.create!(
@@ -12,8 +13,8 @@ class Public::RoomAccessesController < ApplicationController
     redirect_to public_room_path(room_access.room_id)
   end
 
-  def update
-  end
+  #def update
+  #end
 
  #ストロングパラメータ
   private
