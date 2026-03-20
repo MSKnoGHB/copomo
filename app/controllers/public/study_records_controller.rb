@@ -1,5 +1,5 @@
 class Public::StudyRecordsController < ApplicationController
-  before_action only: [:create, :edit, :destroy, :finish, :post] do
+  before_action only: [:edit, :destroy, :finish, :post] do
     authorize_owner(StudyRecord.find(params[:id]))
   end
 

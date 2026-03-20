@@ -1,5 +1,5 @@
 class Public::StudyThemesController < ApplicationController
-  before_action only: [:create, :edit, :update, :destroy] do
+  before_action only: [:edit, :update, :destroy] do
     authorize_owner(StudyTheme.find(params[:id]))
   end
 
