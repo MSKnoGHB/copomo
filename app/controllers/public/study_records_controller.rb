@@ -119,7 +119,7 @@ class Public::StudyRecordsController < ApplicationController
   end
 
   def destroy
-    @study_record = current_user_study_records.find(params[:id])
+    @study_record = current_user.study_records.find(params[:id])
     @study_record.destroy
     redirect_to public_user_study_records_path(@study_record.user)
   end

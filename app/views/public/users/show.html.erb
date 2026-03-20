@@ -5,7 +5,7 @@
       <%= image_tag @user.get_image, class:"mb-3", style: "width:120px; height:120px; object-fit:cover;" %>
       <p>ユーザ名：<%= @user_name %></p>
       <% if @user == current_user %>
-        <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-primary" %>
+        <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-success" %>
       <% end %>
     </div>
     <div class = "col-10">
