@@ -1,9 +1,5 @@
 class Public::StudyIntervalsController < ApplicationController
-  before_action only: [:update, :edit] do #destroy未実装
-    interval = StudyInterval.find(params[:id])
-    authorize_owner(interval.study_record)
-  end
-  
+
   def index
     @study_intervals = StudyInterval.all
   end
@@ -16,9 +12,9 @@ class Public::StudyIntervalsController < ApplicationController
     end
     #room_accessの学習ステータスの更新
     room_access = current_user.room_accesses.find(params[:room_access_id])
-    room_access.update!(study_status: "studying")
+    if room_access.update!(study_status: "studying")
     #roomにリダイレクト
-    redirect_to public_room_path(study_record.room_id)
+      redirect_to public_room_path(study_record.room_id)
   end
 
   def update #一時停止処理
