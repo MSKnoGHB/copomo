@@ -42,6 +42,7 @@ class Public::UsersController < ApplicationController
     #redirect_to public_root_path
   end
 
+  
 
   private
 
