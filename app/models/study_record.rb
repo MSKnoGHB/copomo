@@ -9,7 +9,7 @@ class StudyRecord < ApplicationRecord
   validates :record_body, length: { maximum: 500 }
 
   def self.search_for(content, method)
-    active_study_records = StudyRecord.where(is_active: true).joins(:study_theme)
+    active_study_records = StudyRecord.where(is_publish: true).joins(:study_theme)
     if method == "perfect"
       active_study_records.where("study_themes.theme_title = ?", content)
     elsif method == "forward"

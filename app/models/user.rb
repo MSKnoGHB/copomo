@@ -30,14 +30,15 @@ class User < ApplicationRecord
   end
 
   def self.search_for(content, method)
+    active_study_records = StudyRecord.where(is_publish: true).joins(:user)
     if method == "perfect"
-      User.where(name: content)
+      active_study_records.where(users: { name: content })
     elsif method == "forward"
-      User.where("name LIKE ?", content + "%")
+      active_study_records.where("users.name LIKE ?", content + "%")
     elsif method == "backward"
-      User.where("name LIKE ?", "%" + content)
+      active_study_records.where("users.name LIKE ?", "%" + content)
     else
-      User.where("name LIKE ?", "%"+ content + "%")
+      active_study_records.where("users.name LIKE ?", "%"+ content + "%")
     end
   end
 end
