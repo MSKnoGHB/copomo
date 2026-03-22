@@ -1,6 +1,10 @@
 <div class = "container-fluid ">
   <div class = "row">
     <div class = "col-10 offset-1">
+      <h3>学習タイムライン</h3>
+      <div class="mb-3 d-flex justify-content-end">
+        <%= render 'searches/form' %>
+      </div>
       <% @study_records.each_with_index do |study_record, i| %>
         <% if study_record.is_publish %>
           <div class="card shadow-sm pt-0 pr-3 pl-3 pb-3 mb-3">
@@ -53,39 +57,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <div class = "row">
-    <div class = "col-12">
-    </div>
-  </div>

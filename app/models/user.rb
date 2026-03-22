@@ -29,6 +29,17 @@ class User < ApplicationRecord
     user_image
   end
 
-
-  
+  def self.search_for(content, method)
+    active_study_records = StudyRecord.where(is_publish: true).joins(:user)
+    if method == "perfect"
+      active_study_records.where(users: { name: content })
+    elsif method == "forward"
+      active_study_records.where("users.name LIKE ?", content + "%")
+    elsif method == "backward"
+      active_study_records.where("users.name LIKE ?", "%" + content)
+    else
+      active_study_records.where("users.name LIKE ?", "%"+ content + "%")
+    end
+  end
 end
+

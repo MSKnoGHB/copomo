@@ -46,11 +46,11 @@ class Public::StudyThemesController < ApplicationController
   end
 
 
+
   private
 
   def study_theme_params
     params.require(:study_theme).permit(:study_category_id, :theme_color, :theme_title, :theme_body)
   end
 
-  
 end
