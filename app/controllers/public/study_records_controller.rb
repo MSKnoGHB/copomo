@@ -25,6 +25,8 @@ class Public::StudyRecordsController < ApplicationController
     @total_focus_minutes = @study_record.total_focus_minutes
     @record_body = @study_record.record_body
     @study_intervals = @study_record.study_intervals
+    @comments = @study_record.comments.all
+    @comment = @study_record.comments.new
   end
 
   def create
