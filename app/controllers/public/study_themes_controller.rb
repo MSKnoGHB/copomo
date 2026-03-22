@@ -53,15 +53,4 @@ class Public::StudyThemesController < ApplicationController
     params.require(:study_theme).permit(:study_category_id, :theme_color, :theme_title, :theme_body)
   end
 
-  def self.search_for(content, method)
-    active_study_record = StudyRecord.where(is_active: true).joins(:study_theme)
-    if method == "perfect"
-      active_study_record.where("study_themes.theme_title = ?", content)
-    elsif method == "forward"
-      active_study_record.where("study_themes.theme_title LIKE ?", content + '%')
-    elsif method == "backward"
-      active_study_record.where("study_themes.theme_title LIKE ?", '%' + content)
-    else
-      active_study_record.where("study_themes.theme_title LIKE ?", '%' + content + '%')
-    end
 end

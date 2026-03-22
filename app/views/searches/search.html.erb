@@ -1,6 +1,7 @@
 <%if @model == "user" %>
   <h3>ユーザー名「<%= @content %>」の検索結果</h3>
-<% elsif @model == "study_theme" %>
+  
+<% elsif @model == "study_record" %>
   <h3>学習テーマ名「<%= @content %>」の検索結果</h3>
-  <% render "public/study_records/timeline", records: @records %>
+  <%= render "public/study_records/timeline", records: @study_records%>
 <% end %> 

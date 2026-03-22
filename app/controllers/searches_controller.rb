@@ -4,9 +4,9 @@ class SearchesController < ApplicationController
     @content = params[:content]
     @method = params[:method]
     if @model == "user"
-      @records = User.search_for(@content, @method) 
+      @study_records = User.search_for(@content, @method) 
     else
-      @records = StudyTheme.search_for(@content, @method)
+      @study_records = StudyRecord.search_for(@content, @method)
     end
   end
 end

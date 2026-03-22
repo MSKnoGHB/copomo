@@ -10,7 +10,7 @@ class Public::StudyRecordsController < ApplicationController
     else
       @study_records = StudyRecord.order(created_at: :desc)
       @users = User.all 
-      render :timeline
+      render :timeline,locals: { records: @study_records }
     end
   end
 
