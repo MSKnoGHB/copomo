@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin - COPOMO</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/8edf93cddf.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="d-flex flex-column min-vh-100 <%= controller_name %>-<%= action_name %>">
+    <header>
+      <div class = "container-fluid h-100">
+        <div class = "row h-100">
+          <div class = "col-4 h-100 px-0 py-0"> 
+            <%= link_to admin_root_path do %>
+              <%= image_tag "copomo_logo_t2.png", style: "height: 100%;" %>
+            <% end %>
+          </div>
+          <div class = "col-8 px-0 py-0">
+            <ul class = "header-list d-flex list-unstyled h-100 mb-0 justify-content-end align-items-center">
+              <% if admin_signed_in? %>
+                <li class = "header-item">
+                  <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "マイページ", public_user_path(current_user.id) %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "学習ルーム", public_rooms_path %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "タイムライン",public_study_records_path %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "新規登録", new_user_registration_path %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "ログイン", new_user_session_path %>
+                </li>
+                <li class = "h-100">
+                  <%#= link_to "COPOMOとは", public_about_path %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-fill d-flex">
+      <%= yield %>
+    </main>
+
+    <footer class="d-flex  align-items-center justify-content-center">
+      <p class="m-0">&copy; 2026 COPOMO.</p>
+    </footer>
+
+  </body>
+</html>

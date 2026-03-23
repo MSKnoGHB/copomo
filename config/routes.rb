@@ -1,6 +1,17 @@
 Rails.application.routes.draw do
+  
   devise_for :users
+  devise_for :admins, controllers: {
+    sessions: "admin/devise/sessions",
+    registrations: "admin/devise/registrations"
+  }
+
   get '/search', to: 'searches#search'
+
+  namespace :admin do
+    root to: "dashboards#index"
+  end
+
   namespace :public do
     root to: 'homes#top'
     get "about", to: 'homes#about'
