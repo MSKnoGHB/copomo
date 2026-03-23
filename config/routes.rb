@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :room_accesses, only: [:create, :update]
     resources :chat_logs, only: [:create]
     resources :study_records do
+      resources :comments, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
       member do 
         patch :finish
         patch :post
@@ -22,8 +24,7 @@ Rails.application.routes.draw do
     resources :study_categories, only: [:index]
     resources :study_themes, only: [:index,:create, :edit, :update, :destroy]
     resources :stamps, only: [:index]
-    resources :likes, only: [:create, :destroy]
-    resources :comments, only: [:create, :update, :destroy]
+
     resources :follows, only: [:create, :destroy]
 
   end

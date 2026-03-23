@@ -21,4 +21,8 @@ class StudyRecord < ApplicationRecord
     end
   end
 
+  def likes_by?(user)
+    likes.exists?(user_id: user.id)
+  end
+
 end

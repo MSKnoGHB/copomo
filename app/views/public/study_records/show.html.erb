@@ -49,18 +49,73 @@
           </div>
         </div>
       <% end %> 
+      <div class = "row flex-fill mt-3">
+        <div class = "col-12">
+          <% @comments.each do |comment|%>
+            <div class="card shadow-sm pt-0 pr-3 pl-3 pb-0 mb-3">
+              <div class = "row">
+                <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
+                  <p class=" d-flex arign-items-center pt-1 pb-1 mb-0">
+                    <%= link_to public_user_path(comment.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
+                      <%= image_tag comment.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
+                      <%= comment.user.name %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+              <div class = "row">
+                <div class = "col-11 offset-1 mt-3 mb-3 text-break">
+                  <p class = "mb-0">
+                    <%= comment.comment_body %>
+                  </p>
+                </div>
+              </div>
+              <div class = "row">
+                <div class = "col-12">
+                  <% if comment.user == current_user%>
+                    <p class="d-flex justify-content-end align-items-center mb-0">
+                      <%= link_to "削除する",public_study_record_comment_path(@study_record, comment), method: :delete, data: { confirm: "本当に削除しますか？" }%>
+                    </p>
+                  <% end %>
+                  <p class="d-flex justify-content-end align-items-center mb-0">
+                    <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% if @study_record.user == current_user %>
+          <div class = "col-12 d-flex justify-content-end align-items-center">
+            <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
+            <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
+            <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+          </div>
+        <% else %>
+          <div class = "col-12 d-flex  align-items-center">
+            <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
+              <%= f.text_area :comment_body, class: "form-control mb-0", rows: 5 %>
+              <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
+                <% if @study_record.likes_by?(current_user) %>
+                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :delete, class: "liked " do %>
+                    <i class="fa-solid fa-hands-clapping mr-3">
+                      <%= @study_record.likes.count %>いいね
+                    </i>
+                  <% end %>
+                <% else %>
+                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :post, class: "not-liked" do %>
+                    <i class="fa-solid fa-hands-clapping mr-3">
+                      <%= @study_record.likes.count %>いいね
+                    </i>
+                  <% end %>
+                <% end %>
+              </div>
+              <%= f.submit "コメントを投稿する", class: "btn btn-outline-success w-100 mb-3" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div class = "row flex-fill">
-    <div class = "col-6">
-      <p>コメントといいね欄を設ける</p>
-    </div>
-    <%if @study_record.user == current_user %>
-      <div class = "col-6 d-flex justify-content-end align-items-center">
-        <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
-        <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
-        <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
-      </div>
-    <%end%>
-
 </div>
