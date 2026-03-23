@@ -55,7 +55,7 @@
             <div class="card shadow-sm pt-0 pr-3 pl-3 pb-0 mb-3">
               <div class = "row">
                 <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
-                  <p class=" pt-1 pb-1 mb-0">
+                  <p class=" d-flex arign-items-center pt-1 pb-1 mb-0">
                     <%= link_to public_user_path(comment.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
                       <%= image_tag comment.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
                       <%= comment.user.name %>
@@ -95,7 +95,22 @@
         <% else %>
           <div class = "col-12 d-flex  align-items-center">
             <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
-              <%= f.text_area :comment_body, class: "form-control mb-3", rows: 5 %>
+              <%= f.text_area :comment_body, class: "form-control mb-0", rows: 5 %>
+              <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
+                <% if @study_record.likes_by?(current_user) %>
+                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :delete, class: "liked " do %>
+                    <i class="fa-solid fa-hands-clapping mr-3">
+                      <%= @study_record.likes.count %>いいね
+                    </i>
+                  <% end %>
+                <% else %>
+                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :post, class: "not-liked" do %>
+                    <i class="fa-solid fa-hands-clapping mr-3">
+                      <%= @study_record.likes.count %>いいね
+                    </i>
+                  <% end %>
+                <% end %>
+              </div>
               <%= f.submit "コメントを投稿する", class: "btn btn-outline-success w-100 mb-3" %>
             <% end %>
           </div>

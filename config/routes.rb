@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :chat_logs, only: [:create]
     resources :study_records do
       resources :comments, only: [:create, :destroy]
-      resources :likes, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
       member do 
         patch :finish
         patch :post
