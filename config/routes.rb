@@ -6,10 +6,9 @@ Rails.application.routes.draw do
     registrations: "admin/devise/registrations"
   }
 
-  get '/search', to: 'searches#search'
-
   namespace :admin do
     root to: "dashboards#index"
+    resources :users, only: [:index, :destroy]
   end
 
   namespace :public do
@@ -39,6 +38,8 @@ Rails.application.routes.draw do
     resources :follows, only: [:create, :destroy]
 
   end
-  
+
+  get '/search', to: 'searches#search'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

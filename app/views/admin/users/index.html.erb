@@ -1,0 +1,59 @@
+<div class="container-fluid">
+  <div class = "row">
+    <div class = "col-11 mx-auto">
+      <div class = "row mb-3">
+        <div class = "col-12">
+          <h1>ユーザ一覧</h1>
+        </div>
+      </div>
+      <div class = "row mb-3">
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>No.</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>ID</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>ユーザー名</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>メールアドレス</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>アカウント作成日時</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>ステータス</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>退会ボタン</p>
+        </div>
+      </div>
+      <% @users.each_with_index do |user, i| %>
+        <div class = "row mb-3">
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= i + 1 %></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= user.id %></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= user.name %></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= user.email %></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= user.created_at.strftime("%Y年%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[user.created_at.wday] %>)</p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= user.is_active %></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
