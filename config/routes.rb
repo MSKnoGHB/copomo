@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     root to: "dashboards#index"
     resources :users, only: [:index, :destroy]
     resources :study_records, only: [:index, :destroy]
-
+    resources :comments, only: [:index, :destroy]
   end
 
   namespace :public do
