@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   devise_for :users
   devise_for :admins, controllers: {
     sessions: "admin/devise/sessions",
@@ -7,15 +7,24 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
+
     root to: "dashboards#index"
     resources :users, only: [:index, :destroy]
     resources :study_records, only: [:index, :destroy]
     resources :comments, only: [:index, :destroy]
+
     resources :study_categories, only: [:create, :edit, :index, :update] do
       member do
         patch :activate
       end
     end
+
+    resources :stamps, only: [:create, :edit, :index, :update] do
+      member do
+        patch :activate
+      end
+    end
+    
   end
 
   namespace :public do

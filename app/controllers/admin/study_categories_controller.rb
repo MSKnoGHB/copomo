@@ -28,7 +28,7 @@ class Admin::StudyCategoriesController < ApplicationController
     end
   end
 
-   def activate
+  def activate
     study_category = StudyCategory.find(params[:id])
     if study_category.is_active?
       study_category.update(is_active: false)
@@ -42,4 +42,5 @@ class Admin::StudyCategoriesController < ApplicationController
   def study_category_params
     params.require(:study_category).permit(:category_title, :category_body, :is_active)
   end
+  
 end
