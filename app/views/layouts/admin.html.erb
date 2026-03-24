@@ -21,11 +21,11 @@
           <div class = "col-8 px-0 py-0">
             <ul class = "header-list d-flex list-unstyled h-100 mb-0 justify-content-end align-items-center">
               <% if admin_signed_in? %>
+                <li class = "h-100">
+                  <%= link_to "ダッシュボード",admin_root_path %>
+                </li>
                 <li class = "header-item">
                   <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
-                </li>
-                <li class = "h-100">
-                  <%#= link_to "マイページ", public_user_path(current_user.id) %>
                 </li>
                 <li class = "h-100">
                   <%#= link_to "学習ルーム", public_rooms_path %>

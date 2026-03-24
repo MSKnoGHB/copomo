@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <div class = "row">
+    <div class = "col-11 mx-auto">
+      <div class = "row mb-3">
+        <div class = "col-12">
+          <h1>学習記録一覧</h1>
+        </div>
+      </div>
+      <div class = "row mb-3">
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>ID</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>学習日</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>ユーザー名</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>学習テーマ</p>
+        </div>
+        <div class = "col-2 d-flex justify-content-center align-items-center">
+          <p>学習カテゴリ</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>学習ルーム</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>開始時間</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>終了時間</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>集中時間</p>
+        </div>
+        <div class = "col-1 d-flex justify-content-center align-items-center">
+          <p>削除ボタン</p>
+        </div>
+      </div>
+      <% @study_records.each do |study_record| %>
+        <div class = "row mb-3">
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.id %></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= study_record.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_record.created_at.wday] %>) </p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.user.name %></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.study_theme.theme_title%></p>
+          </div>
+          <div class = "col-2 d-flex justify-content-center align-items-center">
+            <p><%= study_record.study_theme.study_category.category_title%></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.room.room_name%></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.started_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.ended_at.strftime("%H:%M:%S") %></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= study_record.total_focus_minutes %></p>
+          </div>
+          <div class = "col-1 d-flex justify-content-center align-items-center">
+            <p><%= link_to "削除", admin_study_record_path(study_record), method: :delete, class: "btn btn-sm btn-danger" %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
