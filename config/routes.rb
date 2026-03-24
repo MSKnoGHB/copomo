@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :destroy]
     resources :study_records, only: [:index, :destroy]
     resources :comments, only: [:index, :destroy]
+    resources :study_categories, only: [:create, :edit, :index, :update] do
+      member do
+        patch :activate
+      end
+    end
   end
 
   namespace :public do
