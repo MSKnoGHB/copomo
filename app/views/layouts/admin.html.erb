@@ -13,16 +13,17 @@
     <header>
       <div class = "container-fluid h-100">
         <div class = "row h-100">
-          <div class = "col-4 h-100 px-0 py-0"> 
+          <div class = "col-6 h-100 px-0 py-0"> 
             <%= link_to admin_root_path do %>
               <%= image_tag "copomo_logo_t2.png", style: "height: 100%;" %>
             <% end %>
+            <strong>COPOMO管理者</strong>
           </div>
-          <div class = "col-8 px-0 py-0">
+          <div class = "col-6 px-0 py-0">
             <ul class = "header-list d-flex list-unstyled h-100 mb-0 justify-content-end align-items-center">
               <% if admin_signed_in? %>
                 <li class = "h-100">
-                  <%= link_to "ダッシュボード",admin_root_path %>
+                  <%= link_to "管理一覧",admin_root_path %>
                 </li>
                 <li class = "header-item">
                   <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>

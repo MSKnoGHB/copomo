@@ -201,6 +201,15 @@ body.homes-about {
   color: gray
 }
 
+.dashboard-card{
+  aspect-ratio: 1 / 1;
+  color: black;
+  font-weight: bold;
+}
+
+.dashboard-card:hover {
+  color: rgb(29, 156, 0);
+}
 
 footer {
   background-color: rgba(255, 255, 255, 0.8);
