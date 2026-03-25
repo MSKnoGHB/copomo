@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     resources :study_records, only: [:index, :destroy]
     resources :comments, only: [:index, :destroy]
 
+    resources :rooms, only: [:index, :show] do
+      resources :chat_logs, only: [:destroy]
+    end
+
     resources :study_categories, only: [:create, :edit, :index, :update] do
       member do
         patch :activate
@@ -24,6 +28,8 @@ Rails.application.routes.draw do
         patch :activate
       end
     end
+
+    
     
   end
 
