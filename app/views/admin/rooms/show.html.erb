@@ -8,7 +8,7 @@
       </div>
       <div class = "row m-0">
         <div class = "col-12 p-0">
-          <div class = "p-3 overflow-auto border" id = "chat-logs-container" data-room-id = "<%= @room.id %>">
+          <div class = "p-3 overflow-auto border" id = "chat-logs-container" data-room-id = "<%= @room.id %>" style="height: 500px;">
             <% @chat_logs.each do |log| %>
               <%= render "shared/chat_log", chat_log: log %>
             <% end %>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class = "col-7">
-      <div class = "row h-75">
+      <div class = "row">
         <div class="col-3 pt-5 pr-0 pl-0 d-flex flex-column justify-content-center align-items-center">
           <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
           <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
@@ -28,7 +28,7 @@
               <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>現在参加者</strong></h3>
             </div>
           </div>  
-          <div class="row m-0 border h-100">
+          <div class="row m-0 border" style="min-height: 400px; align-content: flex-start;">
             <div class="col-12">
               <div class="row m-0 border-bottom">
                 <div class="col-5 p-1 d-flex justify-content-center">
@@ -61,13 +61,18 @@
       </div>
       <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" } do |f| %>
         <div class="row">
-          <div class="col-12">
+          <div class="col-10 pr-0 pl-0">
             <%= f.hidden_field :room_id, value: @room.id %>
-            <%= f.text_area :message, class: "mb-3 form-control", id: "chat-input", rows: 2, placeholder: "チャットメッセージを入力..." %>
+            <%= f.text_area :message, class: "mb-3 form-control", id: "chat-input", rows: 3, placeholder: "チャットメッセージを入力..." %>
+          </div>
+          <div class="col-2">
+            <%= f.hidden_field :stamp_id, id: "stamp-id" %>
+            <button type = "button" class = "w-100 mb-1 btn btn-secondary" id = "stamp-btn">😊</button>
+            <%= f.submit "送信", class: "w-100 btn btn-primary"%>
           </div>
         </div>
         <div class="row">
-          <div class="col-9">
+          <div class="col-12">
             <div class = "stamp-modal d-none flex-wrap justify-content-start" id = "stamp_modal">
               <% @stamps.each do |stamp|%>
                 <div class = "mr-3 d-flex flex-column align-items-center">
@@ -76,13 +81,6 @@
                 </div>
               <% end%>
             </div>
-          </div>
-          <div class="col-2 d-flex justify-content-center">
-            <%= f.hidden_field :stamp_id, id: "stamp-id" %>
-            <button type = "button" class = "btn btn-secondary" id = "stamp-btn">😊</button>
-          </div>
-          <div class="col-1 d-flex justify-content-end">
-              <%= f.submit "送信", class: "btn btn-primary"%>
           </div>
         </div>
       <% end %>
