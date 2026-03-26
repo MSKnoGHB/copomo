@@ -52,106 +52,109 @@
 
 
 <!-- メイン画面_学習ルーム画面 -->
-<div class="container-fluid  d-flex flex-column">
-  <div class="row mx-0 mb-3 h-100">
-    <div class="col-5">
-      <div class="row mx-0 mb-3">
-        <div class="col-12">
-          <h3>チャット</h3>
+<div class = "container-fluid">
+  <div class = "row">
+    <div class = "col-5">
+      <div class = "row m-0">
+        <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
+          <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>チャット</strong></h3>
         </div>
       </div>
-      <div class="row mx-auto mb-3">
-        <div class="col-12">
-          <div id="chat-logs-container" data-room-id="<%= @room.id %>" class=" overflow-auto border p-3 " style="height: 65vh;" >
+      <div class = "row m-0">
+        <div class = "col-12 p-0">
+          <div class = "p-3 overflow-auto border" id = "chat-logs-container" data-room-id = "<%= @room.id %>" style="height: 500px;">
             <% @chat_logs.each do |log| %>
-              <%= render 'public/rooms/chat_log', chat_log: log %>
+              <%= render "shared/chat_log", chat_log: log %>
             <% end %>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-7 w-100 p-0">
-      <div class="row w-100 h-75">
-        <div class="col-3 d-flex flex-column justify-content-center align-items-center">
-          <p id="mode" style="font-size: 50px;"><%= @timer[:mode] %></p>
-          <p id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></p>
+    <div class = "col-7">
+      <div class = "row">
+        <div class="col-3 pt-5 pr-0 pl-0 d-flex flex-column justify-content-center align-items-center">
+          <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
+          <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
           <% if @study_status == "waiting" %>
             <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary" %>
           <% end %>
           <% if @study_record %>
             <% if @study_status == "studying" %>
-              <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary w-100", form_class: "w-100" %>
+              <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-primary w-100", form_class: "w-100 mt-3" %>
             <% end %>
             <% if @study_status == "paused" %>
-              <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary w-100", form_class: "w-100" %> 
+              <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-primary w-100", form_class: "w-100 mt-3" %> 
             <% end %>
             <% if @study_status != "waiting" %>
               <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-success w-100 m-3", form_class: "w-100" %>
             <% end %>        
           <% end %>
         </div>
-        <div class="col-8 offset-1 border p-0 mb-3 d-flex flex-column h-100">
-          <div class="d-flex justify-content-center p-3 border-bottom">
-            現在参加者
-          </div>
-          <div class="row mx-0 p-2 border-bottom">
-            <div class="col-5 d-flex justify-content-left">
-              <p class = "mb-0">ユーザ名</p>
+        <div class="col-9 mb-3  d-flex flex-column">
+          <div class = "row m-0">
+            <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
+              <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>現在参加者</strong></h3>
             </div>
-            <div class="col-4 d-flex justify-content-left">
-              <p class = "mb-0">学習テーマ</p>
-            </div>
-            <div class="col-3 d-flex justify-content-left">
-              <p class = "mb-0">ステータス</p>
-            </div>
-          </div>
-          <div class="flex-grow-1 overflow-auto">
-            <% @room_accesses.each do |room_access| %>
-              <div class="row mx-0 p-2 border-bottom">
-                <div class="col-5 d-flex justify-content-left align-items-center">
-                  <p class = "mb-0 mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></p>
-                  <p class = "mb-0"><%= room_access.user.name %></p>
+          </div>  
+          <div class="row m-0 border" style="min-height: 400px; align-content: flex-start;">
+            <div class="col-12">
+              <div class="row m-0 border-bottom">
+                <div class="col-5 p-1 d-flex justify-content-center">
+                  ユーザー名
                 </div>
-                <div class="col-4 d-flex justify-content-left align-items-center">
-                  <p class = "mb-0"><%= room_access.study_theme.theme_title %></p>
+                <div class="col-4 p-1 d-flex justify-content-center">
+                  学習テーマ
                 </div>
-                <div class="col-3 d-flex justify-content-left align-items-center align-items-center">
-                  <p class = "mb-0"><%= room_access.study_status %></p>
+                <div class="col-3 p-1 d-flex justify-content-center">
+                  ステータス
                 </div>
               </div>
-            <% end %>
+              <% @room_accesses.each do |room_access| %>
+                <div class="row mx-0 p-2 border-bottom">
+                  <div class="col-5 d-flex justify-content-left align-items-center">
+                    <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
+                    <%= room_access.user.name %>
+                  </div>
+                  <div class="col-4 d-flex justify-content-left align-items-center">
+                    <%= room_access.study_theme.theme_title %>
+                  </div>
+                  <div class="col-3 d-flex justify-content-left align-items-center align-items-center">
+                    <%= room_access.study_status %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row mx-0 h-25">
-        <div class="col-12 mx-0 p-0">
-          <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" } do |f| %>
+      <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" } do |f| %>
+        <div class="row">
+          <div class="col-10 pr-0 pl-0">
             <%= f.hidden_field :room_id, value: @room.id %>
-            <div class="w-100">
-              <%= f.text_area :message, id: "chat-input", class: "form-control ", rows: 3, placeholder: "メッセージを入力..." %>
-            </div>
-            <div class="w-100 d-flex justify-content-between">
-              <%= f.hidden_field :stamp_id, id: "stamp-id" %>
-              <button type="button" id="stamp-btn" class="btn btn-secondary">😊</button>
-              <%= f.submit "送信", class: "btn btn-primary " %>
-            </div>
-            <div class="stamp-modal w-50 mx-auto d-none flex-wrap justify-content-between" id="stamp_modal">
+            <%= f.text_area :message, class: "mb-3 form-control", id: "chat-input", rows: 3, placeholder: "チャットメッセージを入力..." %>
+          </div>
+          <div class="col-2">
+            <%= f.hidden_field :stamp_id, id: "stamp-id" %>
+            <button type = "button" class = "w-100 mb-1 btn btn-secondary" id = "stamp-btn">😊</button>
+            <%= f.submit "送信", class: "w-100 btn btn-primary"%>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class = "stamp-modal d-none flex-wrap justify-content-start" id = "stamp_modal">
               <% @stamps.each do |stamp|%>
-                <div class="d-flex flex-column align-items-center">
-                  <%= image_tag stamp.stamp_image, data: {id: stamp.id }, class:"stamp-item", style: "width:50px; height:50px; object-fit:cover; cursor: pointer;" %>
-                  <span><%= stamp.stamp_name %></span>
+                <div class = "mr-3 d-flex flex-column align-items-center">
+                  <%= image_tag stamp.stamp_image, data: {id: stamp.id }, class: "stamp-item", style: "width:40px; height:40px; object-fit:cover; cursor: pointer;" %>
+                  <span style = "font-size:10px;"><%= stamp.stamp_name %></span>
                 </div>
               <% end%>
             </div>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
-
-
-
 
 <% unless current_user.room_accesses.exists?( is_active: true ) %>
   <script>
@@ -168,3 +171,5 @@
     });
   </script>
 <% end %>
+
+
