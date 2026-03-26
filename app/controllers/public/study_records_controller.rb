@@ -53,40 +53,13 @@ class Public::StudyRecordsController < ApplicationController
 
   def finish
     #学習中に終了ボタンを押した際のstudy_intervalの更新
-    study_record = current_user.study_records.find(params[:study_record_id])
-    if study_record.room.timer_status[:mode] == "集中" && 
-      study_record.study_intervals.exists?(ended_at: nil)
-      study_interval = study_record.study_intervals.find_by(ended_at: nil) 
-      study_interval.update!(ended_at: Time.current)
-    end
-    
-    #study_intervalの学習時間の合計処理
-    study_intervals = study_record.study_intervals
-    total_seconds = 0
-    total_minutes = 0
-    study_intervals.each do |interval|
-      total_seconds += interval.ended_at - interval.started_at
-    end
-    total_minutes += (total_seconds / 60)
-
-    #study_recordの更新
-    study_record.update!(
-      ended_at: Time.current,
-      total_focus_minutes: total_minutes
-      ) 
-    
-    #room_accessの更新
-    room_access = current_user.room_accesses.find(params[:room_access_id])
-    room_access.update!(
-      exit_time: Time.current,
-      study_status: "finished",
-      is_active: false,
-      exit_type: 0
-      )
-
+    #ADMIN共通メソッドとしてUSERモデルに処理を記載(compleate_study_session)
+    study_record = current_user.complete_study_session!(
+      params[:study_record_id],
+      params[:room_access_id]
+    )
     #画面遷移_学習記録投稿画面へ
     redirect_to edit_public_study_record_path(study_record.id)
-
   end
 
   def edit

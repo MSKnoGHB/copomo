@@ -109,20 +109,9 @@
                   ステータス
                 </div>
               </div>
-              <% @room_accesses.each do |room_access| %>
-                <div class="row mx-0 p-2 border-bottom">
-                  <div class="col-5 d-flex justify-content-left align-items-center">
-                    <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
-                    <%= room_access.user.name %>
-                  </div>
-                  <div class="col-4 d-flex justify-content-left align-items-center">
-                    <%= room_access.study_theme.theme_title %>
-                  </div>
-                  <div class="col-3 d-flex justify-content-left align-items-center ">
-                    <%= room_access.study_status %>
-                  </div>
-                </div>
-              <% end %>
+              <div id = "active-users-container">
+                <%= render "shared/active_users_list", room_accesses: @room_accesses %>
+              </div>
             </div>
           </div>
         </div>
