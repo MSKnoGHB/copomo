@@ -31,6 +31,8 @@ class Public::StudyRecordsController < ApplicationController
 
   def create
     room_access = current_user.room_accesses.find(params[:room_access_id])
+    room = room_access.room
+
     #study_recordのレコードを作成
       study_record = current_user.study_records.create!(
         room_id: room_access.room_id,
@@ -47,17 +49,38 @@ class Public::StudyRecordsController < ApplicationController
     
     #room_accessの学習ステータスを更新
     room_access.update!(study_status: "studying")
+
+    #Actioncableによるリアルタイム表示
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: render_to_string(
+        partial: "shared/active_users_list",
+        locals: { room_accesses: room.room_accesses.where(is_active: true)}
+      )
+    }
+
     redirect_to public_room_path(room_access.room_id)
   end
 
 
   def finish
+    target_record = current_user.study_records.find(params[:study_record_id])
+    room = target_record.room
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     #ADMIN共通メソッドとしてUSERモデルに処理を記載(compleate_study_session)
     study_record = current_user.complete_study_session!(
       params[:study_record_id],
       params[:room_access_id]
     )
+
+    
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: render_to_string(
+        partial: "shared/active_users_list",
+        locals: { room_accesses: room.room_accesses.where(is_active: true)}
+      )
+    }
     #画面遷移_学習記録投稿画面へ
     redirect_to edit_public_study_record_path(study_record.id)
   end
