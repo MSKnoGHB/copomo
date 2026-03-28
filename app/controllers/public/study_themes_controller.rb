@@ -14,7 +14,7 @@ class Public::StudyThemesController < ApplicationController
     study_theme = current_user.study_themes.create!(study_theme_params)
     #room_accessのレコードを作成
     room_access = current_user.room_accesses.create!(
-      room_id: @room.id,
+      room_id: room.id,
       study_theme_id: study_theme.id,
       entry_time: Time.current,
       study_status: "waiting",
@@ -25,10 +25,17 @@ class Public::StudyThemesController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: render_to_string(
         partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true)}
+        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
       )
     }
-
+    ActionCable.server.broadcast "admin_global_channel",{
+      type: "active_users_list",
+      room_id: room.id,
+      html: render_to_string(
+        partial: "shared/active_users_list",
+        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
+      )
+    }
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end

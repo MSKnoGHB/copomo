@@ -98,19 +98,8 @@
           </div>  
           <div class="row m-0 border" style="min-height: 400px; align-content: flex-start;">
             <div class="col-12">
-              <div class="row m-0 p-2 border-bottom">
-                <div class="col-5 p-1 d-flex justify-content-left align_items-center">
-                  ユーザー名
-                </div>
-                <div class="col-4 p-1 d-flex justify-content-left align_items-center">
-                  学習テーマ
-                </div>
-                <div class="col-3 p-1 d-flex justify-content-left align_items-center">
-                  ステータス
-                </div>
-              </div>
               <div id = "active-users-container">
-                <%= render "shared/active_users_list", room_accesses: @room_accesses %>
+                <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: false %>
               </div>
             </div>
           </div>

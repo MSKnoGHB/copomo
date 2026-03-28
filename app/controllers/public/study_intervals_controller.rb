@@ -20,7 +20,15 @@ class Public::StudyIntervalsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: render_to_string(
         partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true)}
+        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
+      )
+    }
+    ActionCable.server.broadcast "admin_global_channel",{
+      type: "active_users_list",
+      room_id: room.id,
+      html: render_to_string(
+        partial: "shared/active_users_list",
+        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
       )
     }
 
@@ -43,7 +51,15 @@ class Public::StudyIntervalsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: render_to_string(
         partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true)}
+        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
+      )
+    }
+    ActionCable.server.broadcast "admin_global_channel",{
+      type: "active_users_list",
+      room_id: room.id,
+      html: render_to_string(
+        partial: "shared/active_users_list",
+        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
       )
     }
 

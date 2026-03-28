@@ -21,7 +21,7 @@
         <div class="col-3 pt-5 pr-0 pl-0 d-flex flex-column justify-content-center align-items-center">
           <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
           <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
-          <%= link_to "終了", admin_root_path, class: "btn btn-success w-100 m-3" %>
+          <%= link_to "終了", admin_root_path, class: "btn btn-outline-danger w-100 m-3" %>
         </div>
         <div class="col-9 mb-3  d-flex flex-column">
           <div class = "row m-0">
@@ -31,22 +31,8 @@
           </div>  
           <div class="row m-0 border" style="min-height: 500px; align-content: flex-start;">
             <div class="col-12">
-              <div class="row m-0 border-bottom">
-                <div class="col-4 p-1 d-flex justify-content-center">
-                  ユーザー名
-                </div>
-                <div class="col-4 p-1 d-flex justify-content-center">
-                  学習テーマ
-                </div>
-                <div class="col-3 p-1 d-flex justify-content-center">
-                  ステータス
-                </div>
-                <div class="col-1 p-1 d-flex justify-content-center">
-                  削除
-                </div>
-              </div>
-              <div id = "active-users-list">
-                <%= render "shared/active_users_list", room_accesses: @room_accesses %>
+              <div id = "active-users-container">
+                <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: true %>
               </div>
             </div>
           </div>

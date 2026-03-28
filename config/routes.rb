@@ -17,6 +17,12 @@ Rails.application.routes.draw do
       resources :chat_logs, only: [:destroy]
     end
 
+    resources :room_accesses, only: [] do
+      member do
+        patch :force_exit
+      end
+    end
+
     resources :study_categories, only: [:create, :edit, :index, :update] do
       member do
         patch :activate
