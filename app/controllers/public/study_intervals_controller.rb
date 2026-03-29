@@ -16,20 +16,24 @@ class Public::StudyIntervalsController < ApplicationController
     room_access.update!(study_status: "studying")
     #roomにリダイレクト
 
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
     ActionCable.server.broadcast "room_channel_#{room.id}", {
       type: "active_users_list", 
-      active_users_list_html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
-      )
+      active_users_list_html: public_html
     }
-    ActionCable.server.broadcast "admin_global_channel",{
-      type: "active_users_list",
-      room_id: room.id,
-      html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
-      )
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
     }
 
     redirect_to public_room_path(study_record.room_id)
@@ -47,22 +51,25 @@ class Public::StudyIntervalsController < ApplicationController
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "paused")
 
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
     ActionCable.server.broadcast "room_channel_#{room.id}", {
       type: "active_users_list", 
-      active_users_list_html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
-      )
+      active_users_list_html: public_html
     }
-    ActionCable.server.broadcast "admin_global_channel",{
-      type: "active_users_list",
-      room_id: room.id,
-      html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
-      )
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
     }
-
     #roomにリダイレクト
     redirect_to public_room_path(study_record.room_id)
    

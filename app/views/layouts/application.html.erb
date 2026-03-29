@@ -3,6 +3,9 @@
   <head>
     <title>COPOMO</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <% if user_signed_in? %>
+      <meta name="current-user-id" content="<%= current_user.id %>">
+    <% end %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://kit.fontawesome.com/8edf93cddf.js" crossorigin="anonymous"></script>

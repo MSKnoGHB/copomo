@@ -46,6 +46,7 @@ class User < ApplicationRecord
 
   #学習終了退出機能
   def complete_study_session!(study_record_id, room_access_id, exit_type: 0)
+    
     study_record = self.study_records.find(study_record_id)
     if study_record.room.timer_status[:mode] == "集中" && study_record.study_intervals.exists?(ended_at: nil)
       study_interval = study_record.study_intervals.find_by(ended_at: nil) 

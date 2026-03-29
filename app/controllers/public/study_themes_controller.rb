@@ -21,21 +21,28 @@ class Public::StudyThemesController < ApplicationController
       is_active: true
     )
 
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
     ActionCable.server.broadcast "room_channel_#{room.id}", {
       type: "active_users_list", 
-      active_users_list_html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: { room_accesses: room.room_accesses.where(is_active: true), is_admin: false}
-      )
+      active_users_list_html: public_html
     }
-    ActionCable.server.broadcast "admin_global_channel",{
-      type: "active_users_list",
-      room_id: room.id,
-      html: render_to_string(
-        partial: "shared/active_users_list",
-        locals: {room_accesses: room.room_accesses.where(is_active: true), is_admin: true}
-      )
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
     }
+    #画面遷移_学習記録投稿画面へ
+    redirect_to edit_public_study_record_path(study_record.id)
+  end
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end

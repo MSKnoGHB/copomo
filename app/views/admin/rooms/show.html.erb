@@ -31,7 +31,7 @@
           </div>  
           <div class="row m-0 border" style="min-height: 500px; align-content: flex-start;">
             <div class="col-12">
-              <div id = "active-users-container">
+              <div id="admin-monitor-container" data-room-id="<%= @room.id %>">
                 <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: true %>
               </div>
             </div>
