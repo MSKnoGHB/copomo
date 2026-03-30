@@ -7,6 +7,7 @@ class Public::StudyIntervalsController < ApplicationController
   def create #学習再開処理
     #study_intervalのレコードを作成
     study_record = current_user.study_records.find(params[:study_record_id])
+    room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval = study_record.study_intervals.create!(started_at: Time.current)
     end
@@ -14,6 +15,27 @@ class Public::StudyIntervalsController < ApplicationController
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "studying")
     #roomにリダイレクト
+
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
+
     redirect_to public_room_path(study_record.room_id)
   end
 
@@ -21,6 +43,7 @@ class Public::StudyIntervalsController < ApplicationController
     #study_intervalのレコードを更新
     study_record = current_user.study_records.find(params[:study_record_id])
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
+    room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval.update!(ended_at: Time.current)
     end
@@ -28,6 +51,25 @@ class Public::StudyIntervalsController < ApplicationController
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "paused")
 
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
     #roomにリダイレクト
     redirect_to public_room_path(study_record.room_id)
    

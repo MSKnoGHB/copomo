@@ -1,0 +1,43 @@
+<div class = "container-fluid">
+  <div class = "row">
+    <div class = "col-5">
+      <div class = "row m-0">
+        <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
+          <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>チャット</strong></h3>
+        </div>
+      </div>
+      <div class = "row m-0">
+        <div class = "col-12 p-0">
+          <div class = "p-3 overflow-auto border" id = "chat-logs-container" data-room-id = "<%= @room.id %>" style="height: 500px;">
+            <% @chat_logs.each do |log| %>
+              <%= render "shared/chat_log", chat_log: log %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class = "col-7">
+      <div class = "row">
+        <div class="col-3 pt-5 pr-0 pl-0 d-flex flex-column justify-content-center align-items-center">
+          <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
+          <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
+          <%= link_to "終了", admin_root_path, class: "btn btn-outline-danger w-100 m-3" %>
+        </div>
+        <div class="col-9 mb-3  d-flex flex-column">
+          <div class = "row m-0">
+            <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
+              <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>現在参加者</strong></h3>
+            </div>
+          </div>  
+          <div class="row m-0 border" style="min-height: 500px; align-content: flex-start;">
+            <div class="col-12">
+              <div id="admin-monitor-container" data-room-id="<%= @room.id %>">
+                <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: true %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

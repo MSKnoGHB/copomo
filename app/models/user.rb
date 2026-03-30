@@ -17,6 +17,7 @@ class User < ApplicationRecord
   
   validates :name, presence: true, uniqueness: true, length: { maximum: 20}
 
+  #Activestorage
   def get_image
     unless user_image.attached?
       file_path = Rails.root.join("app/assets/images/no_image.jpg")
@@ -29,6 +30,7 @@ class User < ApplicationRecord
     user_image
   end
 
+  #検索機能
   def self.search_for(content, method)
     active_study_records = StudyRecord.where(is_publish: true).joins(:user)
     if method == "perfect"
@@ -41,5 +43,41 @@ class User < ApplicationRecord
       active_study_records.where("users.name LIKE ?", "%"+ content + "%")
     end
   end
+
+  #学習終了退出機能
+  def complete_study_session!(study_record_id, room_access_id, exit_type: 0)
+    
+    study_record = self.study_records.find(study_record_id)
+    if study_record.room.timer_status[:mode] == "集中" && study_record.study_intervals.exists?(ended_at: nil)
+      study_interval = study_record.study_intervals.find_by(ended_at: nil) 
+      study_interval.update!(ended_at: Time.current)
+    end
+
+    #study_intervalの学習時間の合計処理
+    study_intervals = study_record.study_intervals
+    total_seconds = 0
+    total_minutes = 0
+    study_intervals.each do |interval|
+      total_seconds += interval.ended_at - interval.started_at
+    end
+    total_minutes += (total_seconds / 60)
+
+    #study_recordの更新
+    study_record.update!(
+      ended_at: Time.current,
+      total_focus_minutes: total_minutes
+      ) 
+
+    #room_accessの更新
+    room_access = self.room_accesses.find(room_access_id)
+    room_access.update!(
+      exit_time: Time.current,
+      study_status: "finished",
+      is_active: false,
+      exit_type: exit_type
+    )
+    study_record  
+  end
+  
 end
 

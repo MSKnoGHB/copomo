@@ -1,6 +1,44 @@
 Rails.application.routes.draw do
+
   devise_for :users
-  get '/search', to: 'searches#search'
+  devise_for :admins, controllers: {
+    sessions: "admin/devise/sessions",
+    registrations: "admin/devise/registrations"
+  }
+
+  namespace :admin do
+
+    root to: "dashboards#index"
+    resources :users, only: [:index, :destroy]
+    resources :study_records, only: [:index, :destroy]
+    resources :comments, only: [:index, :destroy]
+
+    resources :rooms, only: [:index, :show] do
+      resources :chat_logs, only: [:destroy]
+    end
+
+    resources :room_accesses, only: [] do
+      member do
+        patch :force_exit
+      end
+    end
+
+    resources :study_categories, only: [:create, :edit, :index, :update] do
+      member do
+        patch :activate
+      end
+    end
+
+    resources :stamps, only: [:create, :edit, :index, :update] do
+      member do
+        patch :activate
+      end
+    end
+
+    
+    
+  end
+
   namespace :public do
     root to: 'homes#top'
     get "about", to: 'homes#about'
@@ -28,6 +66,8 @@ Rails.application.routes.draw do
     resources :follows, only: [:create, :destroy]
 
   end
-  
+
+  get '/search', to: 'searches#search'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

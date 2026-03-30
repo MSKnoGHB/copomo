@@ -3,6 +3,7 @@ import consumer from "./consumer"
 let chatSubscription;
 
 document.addEventListener("turbolinks:load", () => {
+  
   //チャット入力欄のIDが存在するか確認
   const inputElement = document.getElementById("chat-input");
   //チャット入力欄のIDが存在するか確認
@@ -35,7 +36,26 @@ document.addEventListener("turbolinks:load", () => {
     chatSubscription = consumer.subscriptions.create({ channel: "RoomChannel", room_id: roomId }, {
       //データの受取
       received(data) {
-        if (data && data.chat_log_html) {
+        if(data.type === "active_users_list"){
+          const activeUsersContainer = document.getElementById("active-users-container");
+          if(activeUsersContainer && data.active_users_list_html){
+            activeUsersContainer.innerHTML = data.active_users_list_html;
+          }
+        }
+        else if (data.type === "delete_chat"){
+          const targetChat = document.getElementById(`chat_log_${data.chat_log_id}`);
+          if (targetChat) targetChat.remove();
+        }
+        
+        else if (data.type === "force_exit"){
+          const currentUserId = document.querySelector('meta[name= "current-user-id"]')?.content;
+          if(String(currentUserId) === String(data.target_user_id)){
+            alert("管理者によって学習が終了されました。");
+            window.location.href = data.redirect_url;
+          }
+        }
+
+        else if (data.chat_log_html) {
           const chatElement = document.getElementById("chat-logs-container");
           if (chatElement) {
             //吹き出しを画面に追加する

@@ -9,16 +9,37 @@ class Public::StudyThemesController < ApplicationController
   end
 
   def create
+    room = Room.find(params[:study_theme][:room_id])
     #study_themeのレコードを作成
     study_theme = current_user.study_themes.create!(study_theme_params)
     #room_accessのレコードを作成
     room_access = current_user.room_accesses.create!(
-      room_id: params[:study_theme][:room_id],
+      room_id: room.id,
       study_theme_id: study_theme.id,
       entry_time: Time.current,
       study_status: "waiting",
       is_active: true
     )
+
+    room_accesses = room.room_accesses.where(is_active: true)
+
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end

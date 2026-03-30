@@ -1,0 +1,59 @@
+<% if is_admin %>
+  <div class="row m-0 p-2 border-bottom">
+    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
+      ユーザー名
+    </div>
+    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
+      学習テーマ
+    </div>
+    <div class="col-2 p-1 d-flex justify-content-center align_items-center">
+      ステータス
+    </div>
+    <div class="col-2 p-1 d-flex justify-content-center align_items-center">
+      強制退室
+    </div>
+  </div>
+  <% room_accesses.each do |room_access| %>
+    <div class="row mx-0 p-2 border-bottom">
+      <div class="col-4 d-flex justify-content-left align-items-center">
+        <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
+        <%= room_access.user.name %>
+      </div>
+      <div class="col-4 p-1 d-flex justify-content-left align-items-center">
+        <%= room_access.study_theme.theme_title %>
+      </div>
+      <div class="col-2 p-1 d-flex justify-content-center align-items-center">
+        <%= RoomAccess.study_statuses_i18n[room_access.study_status] %>
+      </div>
+      <div class="col-2 p-1 d-flex justify-content-center align-items-center">
+        <%= link_to "退室", force_exit_admin_room_access_path(id: room_access.id, user_id: room_access.user_id, room_access_id: room_access.id, study_record_id: room_access.user.study_records.find_by(ended_at: nil)&.id), method: :patch, remote: true, data: { confirm: "このユーザーを強制退室させますか？" }, class: "btn btn-sm btn-outline-danger" %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="row m-0 p-2 border-bottom">
+    <div class="col-5 p-1 d-flex justify-content-left align_items-center">
+      ユーザー名
+    </div>
+    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
+      学習テーマ
+    </div>
+    <div class="col-3 p-1 d-flex justify-content-center align_items-center">
+      ステータス
+    </div>
+  </div>
+  <% room_accesses.each do |room_access| %>
+    <div class="row mx-0 p-2 border-bottom">
+      <div class="col-5 p-1 d-flex justify-content-left align-items-center">
+        <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
+        <%= room_access.user.name %>
+      </div>
+      <div class="col-4 p-1 d-flex justify-content-left align-items-center">
+        <%= room_access.study_theme.theme_title %>
+      </div>
+      <div class="col-3 p-1 d-flex justify-content-center align-items-center ">
+        <%= RoomAccess.study_statuses_i18n[room_access.study_status] %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -10,8 +10,9 @@ class Public::ChatLogsController < ApplicationController
     end
     if @chat_log.save
       ActionCable.server.broadcast "room_channel_#{@chat_log.room_id}",{
-      chat_log_html: render_to_string(partial: 'public/rooms/chat_log', locals: { chat_log: @chat_log })
-    }
+        type: "chat_message",
+        chat_log_html: render_to_string(partial: 'shared/chat_log', locals: { chat_log: @chat_log })
+        }
       head :ok
     else
       head :unprocessable_entity
