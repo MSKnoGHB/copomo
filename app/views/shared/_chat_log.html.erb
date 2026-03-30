@@ -1,4 +1,4 @@
-<div class="mb-4">
+<div id="chat_log_<%= chat_log.id %>" class="mb-4">
   <div class="mb-1">
     <%= image_tag chat_log.user.user_image, style: "width:40px; height:40px; object-fit:cover;" %>
     <strong><%= chat_log.user.name %></strong>
@@ -18,7 +18,7 @@
   </div>
   <% if current_admin %>
     <div class = "d-flex justify-content-end">
-      <%= link_to "削除", admin_room_chat_log_path(chat_log.room, chat_log), method: :delete, class: "btn btn-outline-danger btn-sm" %>
+      <%= link_to "削除", admin_room_chat_log_path(chat_log.room, chat_log), method: :delete, data: {remote: true}, class: "btn btn-outline-danger btn-sm" %>
     </div>
   <% end %>
   

@@ -40,9 +40,6 @@ class Public::StudyThemesController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
-    #画面遷移_学習記録投稿画面へ
-    redirect_to edit_public_study_record_path(study_record.id)
-  end
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end
