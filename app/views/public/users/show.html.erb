@@ -1,25 +1,25 @@
-<div class = "container-fluid min-vh-100">
-  <div class = "row ">
-    <div class = "col-2">
-      <h2>ユーザ情報</h2>
-      <%= image_tag @user.get_image, class:"mb-3", style: "width:120px; height:120px; object-fit:cover;" %>
+<div class = "container-fluid min-vh-100 user-page-show">
+  <div class = "row">
+    <div class = "col-12 col-sm-12 col-md-3 col-lg-2 text-center">
+      <h3>ユーザ情報</h3>
+      <%= image_tag @user.get_image, class:"pt-0 pr-3 pl-3 pb-3", style: "width:100%; aspect-ratio: 1 / 1; object-fit:cover;" %>
       <p>ユーザ名：<%= @user_name %></p>
       <% if @user == current_user %>
         <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-success" %>
       <% end %>
     </div>
-    <div class = "col-10">
+    <div class = "col-12 col-sm-12 col-md-9 col-lg-10">
       <div class = "row">
         <div class = "col-12">
           <div class = "row">
             <div class = "col-12">
-              <h2>学習履歴</h2>
+              <h3>学習履歴</h3>
             </div>
           </div>
-          <div class = "row mb-3">
+          <div class = "row">
             <% @recent_records.each_with_index do |record, i| %>
               <% next if record.ended_at.nil? %>
-              <div class = "col-3">
+              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
                 <div class="card shadow-sm p-3 h-100">
                   <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
                     <div class = "row">
@@ -50,11 +50,11 @@
       <div class = "row">
         <div class = "col-12 mb-3">
           <div class = "row">
-            <div class = "col-6">
+            <div class = "col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
               <div class="card shadow-sm p-3 h-100">
                 <div class = "row">
                   <div class = "col-12">
-                    <h2>グラフ</h2>
+                    <h3>グラフ</h3>
                   </div>
                 </div>
                 <div class = "row">
@@ -64,11 +64,11 @@
                 </div>
               </div>
             </div>
-            <div class = "col-6">
+            <div class = "col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
               <div class="card shadow-sm p-3 h-100">
                 <div class = "row">
                   <div class = "col-12">
-                    <h2>学習テーマ一覧</h2>
+                    <h3>学習テーマ一覧</h3>
                   </div>
                 </div>
                 <div class = "row">
@@ -82,7 +82,7 @@
             </div>
           </div>
           <div class = "row">
-            <div class = "col-12 pr-5 mt-3 mb-3 d-flex justify-content-end">
+            <div class = "col-12 pr-5 mb-3 d-flex justify-content-end">
               <%= link_to "学習テーマ一覧→", public_user_study_themes_path(@user) %>
             </div>
           </div>
@@ -91,7 +91,7 @@
       <div class = "row">
         <div class = "col-12">
           <div class="card shadow-sm p-3">
-            <h2>学習カレンダー</h2>
+            <h3>学習カレンダー</h3>
             <%= month_calendar(events: @all_records, attribute: :ended_at) do |date, records| %>
               <div class="calendar-day-header">
                 <%= date.day %>
