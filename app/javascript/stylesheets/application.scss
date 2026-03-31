@@ -4,10 +4,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /*font-family: verdana, arial, helvetica, sans-serif;*/
 }
 
-
+body{
+  font-family: 
+      "Inter",                           /* 1. 欧文用（数字やアルファベットが綺麗） */
+      "system-ui",                      /* 2. OS標準のUIフォント */
+      "-apple-system",                  /* 3. iOS/Mac用 (San Francisco) */
+      "BlinkMacSystemFont",             /* 4. 古いMac Chrome用 */
+      "Hiragino Sans",                  /* 5. Mac/iOS用の高品質な日本語 */
+      "Hiragino Kaku Gothic ProN",      /* 6. 古いMac用の予備 */
+      "Segoe UI",                       /* 7. Windowsのシステムフォント */
+      "Meiryo",                         /* 8. Windowsの予備 */
+      "noto sans jp",                   /* 9. Googleフォント（読み込み設定が必要） */
+      sans-serif;                       /* 10. 最終手段（ブラウザ標準のゴシック） */
+}
 
 header {
   background-color: rgba(255, 255, 255, 0.8);
@@ -41,20 +52,6 @@ header {
   background-color: rgba(180, 230, 165, 1);
 }
 
-@media (max-width: 991.98px) {
-  .navbar-collapse.show .navbar-nav {
-    background-color: rgba(255, 255, 255, 0.9); /* 少し透ける白 */
-    padding: 1rem;            /* 中に余白を作る */
-    border-radius: 8px;       /* 角を丸くする */
-    margin-top: 10px;         /* ボタンとの間に少し隙間を作る */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 軽い影をつけて浮かせる */
-    width: 50%;
-    margin-left: auto;
-  }
-}
-  
-
-
 body.registrations-new,
 body.sessions-new {
   background-color: rgb(253, 237, 237);
@@ -77,6 +74,39 @@ body.homes-about {
   background-position: center;
   background-attachment: fixed;
 }
+
+@media (max-width: 991.98px) {
+  
+  .navbar-collapse.show .navbar-nav {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    width: 50%;
+    margin-left: auto;
+  }
+
+  body.homes-top,
+  body.homes-about {
+    background-image: 
+      linear-gradient(
+        rgba(0,0,0,0.6),
+      ), url("../image/dog2.jpeg");
+  }
+  
+  .title-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+  
+.bg-pale{
+  background: rgba(248,249,250,0.5);
+}
+
+
 
 body.users-show {
   background-image: url("../image/watercolor_yellow.jpeg");
@@ -101,12 +131,14 @@ body.users-edit {
   background-attachment: fixed;
 }
 
-.study_records_timeline {
+.timeline-page,
+.search-page {
   background-image: url("../image/watercolor_green.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
+
 
 .site-title,
 .site-hero {

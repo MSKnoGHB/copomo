@@ -1,7 +1,7 @@
-<div class = "container-fluid study_records_timeline">
+<div class = "container-fluid timeline-page">
   <div class = "row">
     <div class = "col-10 offset-1">
-      <h3>学習タイムライン</h3>
+      <h3 class="title-heading">学習タイムライン</h3>
       <div class="mb-3 d-flex justify-content-end">
         <%= render 'searches/form' %>
       </div>
@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class = "row mt-3">
-              <div class = "col-4 mb-3">
+              <div class = "col-12 col-sm-12 col-md-12 col-lg-4 mb-3">
                 <p>
                   学習テーマ：
                   <%= study_record.study_theme.theme_title %> / 
@@ -28,7 +28,7 @@
                   <%= study_record.total_focus_minutes %>分
                 </p>
               </div>
-              <div class = "col-8 mb-3 text-break">
+              <div class = "col-12 col-sm-12 col-md-12 col-lg-8 mb-3 text-break">
                 <p>
                   <%= study_record.record_body %>
                 </p>
