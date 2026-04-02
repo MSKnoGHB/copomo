@@ -1,4 +1,5 @@
 class Public::RoomsController < ApplicationController
+
   def index
     #学習ルーム選択
     @rooms = Room.all
@@ -41,18 +42,18 @@ class Public::RoomsController < ApplicationController
 
     #study_intervalを一意にする
     if  @study_record.present?
-      interval = @study_record.study_intervals.find_by(ended_at: nil)
+      @interval = @study_record.study_intervals.find_by(ended_at: nil)
     end
 
     #集中モードへの切り替わり時にstudy_intervalのレコードを作成
-    if @timer[:mode] == "集中" && @study_status == "studying" && interval.nil?
+    if @timer[:mode] == "集中" && @study_status == "studying" && @interval.nil?
       @study_record.study_intervals.create!(
         started_at: Time.current
       )
     end
     #休憩モードへの切り替わり時にstudy_intervalのレコードを更新
-    if @timer[:mode] == "休憩" && @study_status == "studying" && interval.present?
-       interval.update!(
+    if @timer[:mode] == "休憩" && @study_status == "studying" && @interval.present?
+       @interval.update!(
         ended_at: Time.current
       )
     end

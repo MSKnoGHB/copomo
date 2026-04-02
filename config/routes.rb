@@ -58,7 +58,13 @@ Rails.application.routes.draw do
         patch :post
       end
     end
-    resources :study_intervals, only: [:index, :create, :update, :destroy]
+
+    resources :study_intervals, only: [:index, :create, :update, :destroy] do
+      collection do
+        post :auto_paused
+      end
+    end
+
     resources :study_categories, only: [:index]
     resources :study_themes, only: [:index,:create, :edit, :update, :destroy]
     resources :stamps, only: [:index]

@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" } do |f| %>
+      <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" }, data: { skip_auto_paused: "true" } do |f| %>
         <div class="row">
           <div class="col-12 mt-3">
             <%= f.hidden_field :room_id, value: @room.id %>
@@ -99,17 +99,17 @@
       <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
       <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
       <% if @study_status == "waiting" %>
-        <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-success w-100 mt-3 mb-3", form_class: "w-100"%>
+        <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, remote: true, data: { skip_auto_paused: "true" },  class: "btn btn-success w-100 mt-3 mb-3", form_class: "w-100"%>
       <% end %>
       <% if @study_record %>
         <% if @study_status == "studying" %>
-          <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-warning w-100 mt-3", form_class: "w-100 mt-3" %>
+          <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, remote: true, data: { skip_auto_paused: "true" }, class: "btn btn-warning w-100 mt-3", form_class: "w-100 mt-3" %>
         <% end %>
         <% if @study_status == "paused" %>
-          <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-outline-success w-100 mt-3", form_class: "w-100 mt-3" %> 
+          <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, remote: true, data: { skip_auto_paused: "true" },  class: "btn btn-outline-success w-100 mt-3", form_class: "w-100 mt-3" %> 
         <% end %>
         <% if @study_status != "waiting" %>
-          <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-danger w-100 m-3" %>
+          <%= button_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { skip_auto_paused: "true", confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-danger w-100 m-3" %>
         <% end %>        
       <% end %>
     </div>
@@ -132,18 +132,64 @@
 
 <% unless current_user.room_accesses.exists?( is_active: true ) %>
   <script>
-    document.addEventListener('turbolinks:load', function() {
-      var modalElement = document.getElementById('entryModal');
-
-      if (modalElement) {
-        var myModal = new bootstrap.Modal(modalElement, {
-          backdrop: 'static',
-          keyboard: false
-        });
-        myModal.show();
-      }
-    });
+    const ActiveAccess = <%= !!@active_room_access %>;
+    if (!ActiveAccess) {
+      document.addEventListener('turbolinks:load', function() {
+        var modalElement = document.getElementById('entryModal');
+        if (modalElement) {
+          var myModal = new bootstrap.Modal(modalElement, {
+            backdrop: 'static',
+            keyboard: false
+          });
+          myModal.show();
+        }
+      });
+    }
   </script>
-<% end %>
+<% end%>
 
+<script>
+  let skipAutoPaused = false;
+  let isSending = false;
 
+  document.addEventListener("turbolinks:load", () => {
+    skipAutoPaused = false;
+    isSending = false;
+
+    // 対象のボタンを全て取得
+    const skipButtons = document.querySelectorAll('button[data-skip-auto-paused="true"], a[data-skip-auto-paused="true"]');
+    
+    skipButtons.forEach(btn => {
+      // マウスが乗った瞬間にフラグを立てる（クリックより確実に早い）
+      btn.addEventListener("mouseenter", () => {
+        skipAutoPaused = true;
+        console.log("🎯 MouseEnter: skipAutoPaused = true");
+      });
+
+      // ボタンから外れたら戻す（他のリンクで離脱する時のため）
+      btn.addEventListener("mouseleave", () => {
+        skipAutoPaused = false;
+        console.log("🏳️ MouseLeave: skipAutoPaused = false");
+      });
+
+      // タッチデバイス（スマホ）対策
+      btn.addEventListener("touchstart", () => {
+        skipAutoPaused = true;
+      }, { passive: true });
+    });
+  });
+
+  function sendAutoPaused(event) {
+    if (skipAutoPaused || isSending) {
+      console.log("⛔ スキップ成功:", { skipAutoPaused, isSending });
+      return; 
+    }
+
+    console.log("🚀 auto_paused送信");
+    isSending = true;
+    navigator.sendBeacon("/public/study_intervals/auto_paused");
+  }
+
+  window.addEventListener("beforeunload", sendAutoPaused);
+  document.addEventListener("turbolinks:before-visit", sendAutoPaused);
+</script>

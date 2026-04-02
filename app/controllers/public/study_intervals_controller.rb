@@ -1,4 +1,5 @@
 class Public::StudyIntervalsController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:auto_paused]
 
   def index
     @study_intervals = StudyInterval.all
@@ -35,7 +36,7 @@ class Public::StudyIntervalsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
-
+    #head :ok 
     redirect_to public_room_path(study_record.room_id)
   end
 
@@ -43,6 +44,7 @@ class Public::StudyIntervalsController < ApplicationController
     #study_intervalのレコードを更新
     study_record = current_user.study_records.find(params[:study_record_id])
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
+    return unless study_interval
     room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval.update!(ended_at: Time.current)
@@ -70,11 +72,23 @@ class Public::StudyIntervalsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
-    #roomにリダイレクト
+    #head :ok 
     redirect_to public_room_path(study_record.room_id)
    
   end
 
+  def auto_paused
+    study_record = current_user.study_records.find_by(ended_at: nil)
+    study_interval = study_record.study_intervals.find_by(ended_at: nil)
+    return unless study_interval
+    room_access = current_user.room_accesses.find_by(is_active: true)
+
+    if study_interval
+      study_interval.update!(ended_at: Time.current)
+      room_access.update!(study_status: "paused")
+    end
+    head :ok
+  end
   #def destroy 
   #end
 

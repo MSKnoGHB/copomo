@@ -70,7 +70,7 @@ class Public::StudyRecordsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
-
+    #head :ok 
     redirect_to public_room_path(room_access.room_id)
   end
 
