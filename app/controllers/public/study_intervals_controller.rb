@@ -37,7 +37,14 @@ class Public::StudyIntervalsController < ApplicationController
       active_users_list_html: admin_html
     }
     #head :ok 
-    redirect_to public_room_path(study_record.room_id)
+    #redirect_to public_room_path(study_record.room_id)
+    @active_room_access = room_access
+    @study_record = study_record
+    @study_status = @active_room_access.study_status
+    @interval = study_interval
+    respond_to do |format|
+      format.js { render 'shared/study_control' }
+    end
   end
 
   def update #一時停止処理
@@ -73,8 +80,14 @@ class Public::StudyIntervalsController < ApplicationController
       active_users_list_html: admin_html
     }
     #head :ok 
-    redirect_to public_room_path(study_record.room_id)
-   
+    #redirect_to public_room_path(study_record.room_id)
+    @active_room_access = room_access
+    @study_record = study_record
+    @study_status = @active_room_access.study_status
+    @interval = study_interval
+    respond_to do |format|
+      format.js { render 'shared/study_control' }
+    end
   end
 
   def auto_paused
