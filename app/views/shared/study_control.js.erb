@@ -1,6 +1,6 @@
 var studyControlArea = document.getElementById("study-control-area");
 if (studyControlArea) {
-  studyControlArea.innerHTML = "<%= j(render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval) %>";
+  studyControlArea.innerHTML = "<%= j(render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval, current_mode: @timer[:mode]) %>";
   
   console.log("Study buttons updated: <%= @study_status %>");
 }

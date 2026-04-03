@@ -98,8 +98,8 @@
     <div class="col-12 order-1 w-25 col-md-2 order-md-2 w-100 pt-5 d-flex flex-column justify-content-center align-items-center">
       <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
       <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
-      <div id = study-control-area>
-        <%= render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval %>
+      <div id = study-control-area, class = "d-flex flex-column justify-content-center w-100">
+        <%= render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval, current_mode: @timer[:mode] %>
       </div>
     </div>
     <div class="col-12 order-3 col-md-5 order-md-3 mb-3 d-flex flex-column">
@@ -138,47 +138,23 @@
 <% end%>
 
 <script>
-  let skipAutoPaused = false;
-  let isSending = false;
-
   document.addEventListener("turbolinks:load", () => {
-    skipAutoPaused = false;
-    isSending = false;
+    window.autoPausedSent = false;
+    window.skipAutoPaused = false;
 
-    // 対象のボタンを全て取得
-    const skipButtons = document.querySelectorAll('button[data-skip-auto-paused="true"], a[data-skip-auto-paused="true"]');
-    
-    skipButtons.forEach(btn => {
-      // マウスが乗った瞬間にフラグを立てる（クリックより確実に早い）
-      btn.addEventListener("mouseenter", () => {
-        skipAutoPaused = true;
-        console.log("🎯 MouseEnter: skipAutoPaused = true");
-      });
+    document.addEventListener("click", (event) => {
+      const btn = event.target.closest('[data-skip-auto-paused="true"]');
+      if (btn) {
+        window.skipAutoPaused = true;
+      }
+    }, { once: true });
 
-      // ボタンから外れたら戻す（他のリンクで離脱する時のため）
-      btn.addEventListener("mouseleave", () => {
-        skipAutoPaused = false;
-        console.log("🏳️ MouseLeave: skipAutoPaused = false");
-      });
-
-      // タッチデバイス（スマホ）対策
-      btn.addEventListener("touchstart", () => {
-        skipAutoPaused = true;
-      }, { passive: true });
-    });
-  });
-
-  function sendAutoPaused(event) {
-    if (skipAutoPaused || isSending) {
-      console.log("⛔ スキップ成功:", { skipAutoPaused, isSending });
-      return; 
+    function sendAutoPaused() {
+      if (window.autoPausedSent || window.skipAutoPaused) return;
+      window.autoPausedSent = true;
+      navigator.sendBeacon("/public/study_intervals/auto_paused");
     }
-
-    console.log("🚀 auto_paused送信");
-    isSending = true;
-    navigator.sendBeacon("/public/study_intervals/auto_paused");
-  }
-
-  window.addEventListener("beforeunload", sendAutoPaused);
-  document.addEventListener("turbolinks:before-visit", sendAutoPaused);
+    
+    window.addEventListener("beforeunload", sendAutoPaused);
+  });
 </script>

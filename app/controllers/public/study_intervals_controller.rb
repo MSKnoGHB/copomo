@@ -42,6 +42,7 @@ class Public::StudyIntervalsController < ApplicationController
     @study_record = study_record
     @study_status = @active_room_access.study_status
     @interval = study_interval
+    @timer = room.timer_status
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end
@@ -51,7 +52,6 @@ class Public::StudyIntervalsController < ApplicationController
     #study_intervalのレコードを更新
     study_record = current_user.study_records.find(params[:study_record_id])
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
-    return unless study_interval
     room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval.update!(ended_at: Time.current)
@@ -85,22 +85,35 @@ class Public::StudyIntervalsController < ApplicationController
     @study_record = study_record
     @study_status = @active_room_access.study_status
     @interval = study_interval
+    @timer = room.timer_status
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end
   end
+
+  
 
   def auto_paused
     study_record = current_user.study_records.find_by(ended_at: nil)
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
     return unless study_interval
     room_access = current_user.room_accesses.find_by(is_active: true)
+    room = room_access.room
 
     if study_interval
       study_interval.update!(ended_at: Time.current)
       room_access.update!(study_status: "paused")
     end
-    head :ok
+    
+    @active_room_access = room_access
+    @study_record = study_record
+    @study_status = @active_room_access.study_status
+    @interval = study_interval
+    @timer = room.timer_status
+
+    respond_to do |format|
+      format.js { render 'shared/study_control' }
+    end
   end
   #def destroy 
   #end

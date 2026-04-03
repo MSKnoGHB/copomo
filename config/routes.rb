@@ -47,9 +47,16 @@ Rails.application.routes.draw do
       resources :study_records, only: [:index] 
       resources :study_themes, only: [:index]
     end
+
     resources :rooms, only: [:index, :show]
-    resources :room_accesses, only: [:create, :update]
+    resources :room_accesses, only: [:create, :update] do
+      collection do
+        patch :status_change
+      end
+    end
+
     resources :chat_logs, only: [:create]
+    
     resources :study_records do
       resources :comments, only: [:create, :destroy]
       resource :likes, only: [:create, :destroy]
