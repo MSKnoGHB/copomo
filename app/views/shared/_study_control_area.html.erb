@@ -1,8 +1,10 @@
-<% if study_status == "waiting" %>
-  <%= button_to "学習を開始", public_study_records_path(room_access_id: active_room_access.id), method: :post, remote: true, class: "btn btn-success w-100 mt-3 mb-3", form_class: "w-100"%>
-<% end %>
+<% if study_record.nil? %>
 
-<% if study_record %>
+  <% if study_status == "waiting" %>
+    <%= button_to "学習を開始", public_study_records_path(room_access_id: active_room_access.id), method: :post, remote: true, class: "btn btn-success w-100 mt-3 mb-3", form_class: "w-100"%>
+  <% end %>
+
+<% else %>
 
   <% if current_mode == "集中"%>
 

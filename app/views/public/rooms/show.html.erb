@@ -96,9 +96,9 @@
       <% end %>  
     </div>
     <div class="col-12 order-1 w-25 col-md-2 order-md-2 w-100 pt-5 d-flex flex-column justify-content-center align-items-center">
-      <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
-      <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
-      <div id = study-control-area, class = "d-flex flex-column justify-content-center w-100">
+      <span id="mode" style="font-size: 50px;"><%=@timer[:mode]%></span>
+      <span id="timer" style="font-size: 50px;"><%=@timer[:remaining]%></span>
+      <div id = "study-control-area" class = "d-flex flex-column justify-content-center w-100">
         <%= render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval, current_mode: @timer[:mode] %>
       </div>
     </div>
@@ -156,5 +156,31 @@
     }
     
     window.addEventListener("beforeunload", sendAutoPaused);
+  });
+</script>
+
+
+
+
+<script>
+  document.addEventListener("turbolinks:load", () =>{
+    const stampBtn = document.getElementById("stamp-btn")
+    const stampModal = document.getElementById("stamp_modal")
+
+    if (stampBtn && stampModal){
+      stampBtn.addEventListener("click", () => {
+        stampModal.classList.toggle("d-none")
+        stampModal.classList.toggle("d-flex")
+      })
+      document.querySelectorAll(".stamp-item").forEach(item => {
+        item.addEventListener("click",()=>{
+          document.getElementById("stamp-id").value = item.dataset.id
+          stampModal.classList.add("d-none")
+          stampModal.classList.remove("d-flex")
+          document.getElementById("chat-form").requestSubmit()
+          document.getElementById("stamp-id").value = ""
+        })
+      })
+    }
   });
 </script>

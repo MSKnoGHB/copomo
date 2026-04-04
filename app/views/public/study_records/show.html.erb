@@ -101,6 +101,9 @@
                   <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
                     <%= f.text_area :comment_body, class: "form-control mb-0  bg-pale", rows: 2, placeholder: "コメントを入力..." %>
                     <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
+                      <i class="fa-regular fa-pen-to-square mr-3">
+                        <%= @comments.count %>コメント
+                      </i>
                       <% if @study_record.likes_by?(current_user) %>
                         <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :delete, class: "liked " do %>
                           <i class="fa-solid fa-hands-clapping mr-3">

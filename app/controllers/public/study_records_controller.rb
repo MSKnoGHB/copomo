@@ -77,6 +77,9 @@ class Public::StudyRecordsController < ApplicationController
     @study_status = @active_room_access.study_status
     @interval = study_interval
     @timer = room.timer_status
+    p "DEBUG: study_status = #{@study_status}"
+    p "DEBUG: interval = #{@interval.inspect}"
+    p "DEBUG: timer_mode = #{@timer[:mode]}"
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end

@@ -51,23 +51,4 @@ document.addEventListener("turbolinks:load", () =>{
       }
     }
   }, 1000)
-
-  const stampBtn = document.getElementById("stamp-btn")
-  const stampModal = document.getElementById("stamp_modal")
-
-  if (stampBtn && stampModal){
-    stampBtn.addEventListener("click", () => {
-      stampModal.classList.toggle("d-none")
-      stampModal.classList.toggle("d-flex")
-    })
-    document.querySelectorAll(".stamp-item").forEach(item => {
-      item.addEventListener("click",()=>{
-        document.getElementById("stamp-id").value = item.dataset.id
-        stampModal.classList.add("d-none")
-        stampModal.classList.remove("d-flex")
-        document.getElementById("chat-form").requestSubmit()
-        document.getElementById("stamp-id").value = ""
-      })
-    })
-  }
-})
+});
