@@ -22,33 +22,42 @@
               <%= image_tag "copomo_logo_t2.png", style: "height: 100%;" %>
             <% end %>
           </div>
-          <div class = "col-8 px-0 py-0">
-            <ul class = "header-list d-flex list-unstyled h-100 mb-0 justify-content-end align-items-center">
-              <% if user_signed_in? %>
-                <li class = "header-item">
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-                </li>
-                <li class = "h-100">
-                  <%= link_to "マイページ", public_user_path(current_user.id) %>
-                </li>
-                <li class = "h-100">
-                  <%= link_to "学習ルーム", public_rooms_path %>
-                </li>
-                <li class = "h-100">
-                  <%= link_to "タイムライン",public_study_records_path %>
-                </li>
-              <% else %>
-                <li class = "h-100">
-                  <%= link_to "新規登録", new_user_registration_path %>
-                </li>
-                <li class = "h-100">
-                  <%= link_to "ログイン", new_user_session_path %>
-                </li>
-              <% end %>
-              <li class = "h-100">
-                <%= link_to "COPOMOとは", public_about_path %>
-              </li>
-            </ul>
+          <div class = "col-8 px-0 py-0 d-flex justify-content-end">
+            <nav class="navbar navbar-expand-lg navbar-light w-100 p-0 justify-content-end">
+      
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse h-100 justify-content-end" id="navbarNav">
+                <ul class="navbar-nav header-list list-unstyled mb-0 h-100 align-items-center">
+                  <% if user_signed_in? %>
+                    <li class = "nav-item">
+                      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %>
+                    </li>
+                    <li class = "h-100 nav-item">
+                      <%= link_to "マイページ", public_user_path(current_user.id), class: "nav-link" %>
+                    </li>
+                    <li class = "h-100 nav-item">
+                      <%= link_to "学習ルーム", public_rooms_path, class: "nav-link" %>
+                    </li>
+                    <li class = "h-100 nav-item">
+                      <%= link_to "タイムライン",public_study_records_path, class: "nav-link" %>
+                    </li>
+                  <% else %>
+                    <li class = "h-100 nav-item">
+                      <%= link_to "新規登録", new_user_registration_path, class: "nav-link" %>
+                    </li>
+                    <li class = "h-100 nav-item">
+                      <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
+                    </li>
+                  <% end %>
+                  <li class = "h-100 nav-item">
+                    <%= link_to "COPOMOとは", public_about_path, class: "nav-link" %>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
         </div>
       </div>

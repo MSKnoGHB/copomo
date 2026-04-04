@@ -53,67 +53,31 @@
 
 <!-- メイン画面_学習ルーム画面 -->
 <div class = "container-fluid">
-  <div class = "row">
-    <div class = "col-5">
+  <div class = "row mt-2">
+    <div class = "col-12 order-2 col-md-5 order-md-1">
       <div class = "row m-0">
-        <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
+        <div class = "col-12 p-0 border d-flex justify-content-center align_items-center bg-pale"
           <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>チャット</strong></h3>
         </div>
       </div>
       <div class = "row m-0">
         <div class = "col-12 p-0">
-          <div class = "p-3 overflow-auto border" id = "chat-logs-container" data-room-id = "<%= @room.id %>" style="height: 500px;">
+          <div class = "p-3 overflow-auto border bg-pale" id = "chat-logs-container" data-room-id = "<%= @room.id %>" style="height: 50vh;">
             <% @chat_logs.each do |log| %>
               <%= render "shared/chat_log", chat_log: log %>
             <% end %>
           </div>
         </div>
       </div>
-    </div>
-    <div class = "col-7">
-      <div class = "row">
-        <div class="col-3 pt-5 pr-0 pl-0 d-flex flex-column justify-content-center align-items-center">
-          <span id="mode" style="font-size: 50px;"><%= @timer[:mode] %></span>
-          <span id="timer" style="font-size: 50px;"><%= @timer[:remaining] %></span>
-          <% if @study_status == "waiting" %>
-            <%= button_to "学習を開始", public_study_records_path(room_access_id: @active_room_access.id), method: :post, class: "btn btn-success" %>
-          <% end %>
-          <% if @study_record %>
-            <% if @study_status == "studying" %>
-              <%= button_to "一時離席", public_study_interval_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, class: "btn btn-warning w-100", form_class: "w-100 mt-3" %>
-            <% end %>
-            <% if @study_status == "paused" %>
-              <%= button_to "学習を再開", public_study_intervals_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :post, class: "btn btn-outline-success w-100", form_class: "w-100 mt-3" %> 
-            <% end %>
-            <% if @study_status != "waiting" %>
-              <%= link_to "学習を終了", finish_public_study_record_path(study_record_id: @study_record.id, room_access_id: @active_room_access.id), method: :patch, data: { confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-danger w-100 m-3", form_class: "w-100" %>
-            <% end %>        
-          <% end %>
-        </div>
-        <div class="col-9 mb-3  d-flex flex-column">
-          <div class = "row m-0">
-            <div class = "col-12 p-0 border d-flex justify-content-center align_items-center">
-              <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>現在参加者</strong></h3>
-            </div>
-          </div>  
-          <div class="row m-0 border" style="min-height: 400px; align-content: flex-start;">
-            <div class="col-12">
-              <div id = "active-users-container">
-                <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: false %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" } do |f| %>
+      <%= form_with model: @chat_log, url: public_chat_logs_path, local: false, html: { id: "chat-form" }, data: { skip_auto_paused: "true" } do |f| %>
         <div class="row">
-          <div class="col-10 pr-0 pl-0">
+          <div class="col-12 mt-3">
             <%= f.hidden_field :room_id, value: @room.id %>
-            <%= f.text_area :message, class: "mb-3 form-control", id: "chat-input", rows: 3, placeholder: "チャットメッセージを入力..." %>
+            <%= f.text_area :message, class: "mb-3 form-control", id: "chat-input", rows: 1, placeholder: "チャットメッセージを入力..." %>
           </div>
-          <div class="col-2">
+          <div class="col-12  mb-3">
             <%= f.hidden_field :stamp_id, id: "stamp-id" %>
-            <button type = "button" class = "w-100 mb-1 btn btn-secondary" id = "stamp-btn">😊</button>
+            <button type = "button" class = "w-100 mb-1 btn btn-secondary" id = "stamp-btn">スタンプ</button>
             <%= f.submit "送信", class: "w-100 btn btn-primary"%>
           </div>
         </div>
@@ -129,25 +93,94 @@
             </div>
           </div>
         </div>
-      <% end %>
+      <% end %>  
+    </div>
+    <div class="col-12 order-1 w-25 col-md-2 order-md-2 w-100 pt-5 d-flex flex-column justify-content-center align-items-center">
+      <span id="mode" style="font-size: 50px;"><%=@timer[:mode]%></span>
+      <span id="timer" style="font-size: 50px;"><%=@timer[:remaining]%></span>
+      <div id = "study-control-area" class = "d-flex flex-column justify-content-center w-100">
+        <%= render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval, current_mode: @timer[:mode] %>
+      </div>
+    </div>
+    <div class="col-12 order-3 col-md-5 order-md-3 mb-3 d-flex flex-column">
+      <div class = "row m-0">
+        <div class = "col-12 p-0 border bg-pale d-flex justify-content-center align_items-center">
+          <h3 class = "mb-0 p-3" style= "font-size: 20px;"><strong>現在参加者</strong></h3>
+        </div>
+      </div>  
+      <div class="row m-0 overflow-auto border bg-pale" style="height: 65vh; align-content: flex-start;">
+        <div class="col-12">
+          <div id = "active-users-container">
+            <%= render "shared/active_users_list", room_accesses: @room_accesses, is_admin: false %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <% unless current_user.room_accesses.exists?( is_active: true ) %>
   <script>
-    document.addEventListener('turbolinks:load', function() {
-      var modalElement = document.getElementById('entryModal');
-
-      if (modalElement) {
-        var myModal = new bootstrap.Modal(modalElement, {
-          backdrop: 'static',
-          keyboard: false
-        });
-        myModal.show();
-      }
-    });
+    const ActiveAccess = <%= !!@active_room_access %>;
+    if (!ActiveAccess) {
+      document.addEventListener('turbolinks:load', function() {
+        var modalElement = document.getElementById('entryModal');
+        if (modalElement) {
+          var myModal = new bootstrap.Modal(modalElement, {
+            backdrop: 'static',
+            keyboard: false
+          });
+          myModal.show();
+        }
+      });
+    }
   </script>
-<% end %>
+<% end%>
+
+<script>
+  document.addEventListener("turbolinks:load", () => {
+    window.autoPausedSent = false;
+    window.skipAutoPaused = false;
+
+    document.addEventListener("click", (event) => {
+      const btn = event.target.closest('[data-skip-auto-paused="true"]');
+      if (btn) {
+        window.skipAutoPaused = true;
+      }
+    }, { once: true });
+
+    function sendAutoPaused() {
+      if (window.autoPausedSent || window.skipAutoPaused) return;
+      window.autoPausedSent = true;
+      navigator.sendBeacon("/public/study_intervals/auto_paused");
+    }
+    
+    window.addEventListener("beforeunload", sendAutoPaused);
+  });
+</script>
 
 
+
+
+<script>
+  document.addEventListener("turbolinks:load", () =>{
+    const stampBtn = document.getElementById("stamp-btn")
+    const stampModal = document.getElementById("stamp_modal")
+
+    if (stampBtn && stampModal){
+      stampBtn.addEventListener("click", () => {
+        stampModal.classList.toggle("d-none")
+        stampModal.classList.toggle("d-flex")
+      })
+      document.querySelectorAll(".stamp-item").forEach(item => {
+        item.addEventListener("click",()=>{
+          document.getElementById("stamp-id").value = item.dataset.id
+          stampModal.classList.add("d-none")
+          stampModal.classList.remove("d-flex")
+          document.getElementById("chat-form").requestSubmit()
+          document.getElementById("stamp-id").value = ""
+        })
+      })
+    }
+  });
+</script>

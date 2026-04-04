@@ -1,43 +1,50 @@
 <div class="container-fluid d-flex flex-column "> 
   <div class="row flex-fill quick-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <% if @active_room_access.nil? || @active_room_access.room_id == @rooms[0].id %>
-        <%= link_to "クイックルーム", public_room_path(@rooms[0]) %>
+        <%= link_to public_room_path(@rooms[0]), class:"d-flex justify-content-center align-items-center w-100 h-100" do %>
+          クイックルーム
+        <% end %>
       <% else %>
         <span class="text-muted" onclick="alert('他のルームに入室中です。退室してから移動してください。')">
           クイックルーム（入室不可）
         </span>
       <% end %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
-      <p>集中時間 15分 + 休憩時間 3分の学習ルーム<br>小さな達成感を積み重ねやすい</p>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
+      集中時間 15分 + 休憩時間 3分の学習ルーム<br>小さな達成感を積み重ねやすい
     </div>
   </div>
   <div class="row flex-fill standard-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <% if @active_room_access.nil? || @active_room_access.room_id == @rooms[1].id %>
-        <%= link_to "スタンダードルーム", public_room_path(@rooms[1]) %>
+        <%= link_to public_room_path(@rooms[1]), class: "d-flex justify-content-center align-items-center w-100 h-100" do %>
+          スタンダードルーム
+        <% end %>
       <% else %>
         <span class="text-muted" onclick="alert('他のルームに入室中です。退室してから移動してください。')">
           スタンダードルーム（入室不可）
         </span>
       <% end %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
-      <p>集中時間 25分 + 休憩時間 5分の学習ルーム<br>集中力を持続させて、効率的に学習</p>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
+      集中時間 25分 + 休憩時間 5分の学習ルーム<br>集中力を持続させて、効率的に学習
     </div>
   </div>
   <div class="row flex-fill deep-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <% if @active_room_access.nil? || @active_room_access.room_id == @rooms[2].id %>
-        <%= link_to "ディープルーム", public_room_path(@rooms[2]) %>
+        <%= link_to public_room_path(@rooms[2]), class: "d-flex justify-content-center align-items-center w-100 h-100" do %>
+          ディープルーム
+        <% end %>
       <% else %>
         <span class="text-muted" onclick="alert('他のルームに入室中です。退室してから移動してください。')">
           ディープルーム（入室不可）
         </span>
       <% end %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
       <p>集中時間 50分 + 休憩時間 10分の学習ルーム<br>ガッツリ集中、どっぷり吸収</p>
     </div>
   </div>

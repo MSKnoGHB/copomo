@@ -1,120 +1,130 @@
 <div class = "container-fluid">
-  <div class = "row mb-3">
-    <!-- 画面タイトル -->
-    <div class = "col-12">
-      <h2>学習記録詳細</h2>
-    </div>
-  </div>
   <div class = "row ">
     <!-- study_record詳細一覧 -->
-    <div class = "col-6">
-      <h3 class = "mb-3">学習ルーム: <%= @room %></h3>
-      <h3 class = "mb-3">学習カテゴリ: <%= @study_category %></h3>
-      <h3 class = "mb-3">学習テーマ: <%= @study_theme %></h3>
-      <h3 class = "mb-3">学習開始時間: <%= @started_at %></h3>
-      <h3 class = "mb-3">学習終了時間: <%= @ended_at %></h3>
-      <h3 class = "mb-3">学習集中時間: <%= "#{@total_focus_minutes}分" %></h3>
-      <h3 class = "mb-3">投稿内容: <%= @record_body %></h3>
+    <div class = "col-12 col-md-12 col-lg-6">
+      <h3>学習記録詳細</h3>
+      <p class = "mb-3", style = "">学習ルーム: <%= @room %></p>
+      <p class = "mb-3">学習カテゴリ: <%= @study_category %></p>
+      <p class = "mb-3">学習テーマ: <%= @study_theme %></p>
+      <p class = "mb-3">学習開始時間: <%= @started_at %></p>
+      <p class = "mb-3">学習終了時間: <%= @ended_at %></p>
+      <p class = "mb-3">学習集中時間: <%= "#{@total_focus_minutes}分" %></p>
+      <p class = "mb-3">投稿内容: <%= @record_body %></p>
     </div>
-    <!-- study_interval詳細_カラム表示 -->
-    <div class = "col-6">
-      <div class = "row mx-auto p-3 border-bottom">
-        <div class = "col-3 d-flex justify-content-center">
-          <p class = "mb-0">No.</p>
-        </div>      
-        <div class = "col-3 d-flex justify-content-center">
-          <p class = "mb-0">集中開始時刻</p>
-        </div>
-        <div class = "col-3 d-flex justify-content-center ">
-          <p class = "mb-0">集中終了時刻</p>
-        </div>
-        <div class = "col-3 d-flex justify-content-center ">
-          <p class = "mb-0">集中時間</p>
-        </div> 
-      </div>
-      <!-- study_interval詳細_格納データ表示 -->
-      <% @study_intervals.each.with_index(1) do |study_interval, i| %>
-        <div class = "row mx-auto p-3 border-bottom ">
-          <div class = "col-3 d-flex justify-content-center align-items-center">
-            <p class = "mb-0"><%= i %></p>
-          </div>
-          <div class = "col-3 d-flex justify-content-center align-items-center">
-            <p class = "mb-0"><%= study_interval.started_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-3 d-flex justify-content-center align-items-center">
-            <p class = "mb-0"><%= study_interval.ended_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-3 d-flex justify-content-center align-items-center">
-            <p class = "mb-0"><%= ((study_interval.ended_at - study_interval.started_at)/60).to_i %>分</p>
-          </div>
-        </div>
-      <% end %> 
-      <div class = "row flex-fill mt-3">
-        <div class = "col-12">
-          <% @comments.each do |comment|%>
-            <div class="card shadow-sm pt-0 pr-3 pl-3 pb-0 mb-3">
-              <div class = "row">
-                <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
-                  <p class=" d-flex arign-items-center pt-1 pb-1 mb-0">
-                    <%= link_to public_user_path(comment.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
-                      <%= image_tag comment.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
-                      <%= comment.user.name %>
-                    <% end %>
-                  </p>
-                </div>
-              </div>
-              <div class = "row">
-                <div class = "col-11 offset-1 mt-3 mb-3 text-break">
-                  <p class = "mb-0">
-                    <%= comment.comment_body %>
-                  </p>
-                </div>
-              </div>
-              <div class = "row">
-                <div class = "col-12">
-                  <% if comment.user == current_user%>
-                    <p class="d-flex justify-content-end align-items-center mb-0">
-                      <%= link_to "削除する",public_study_record_comment_path(@study_record, comment), method: :delete, data: { confirm: "本当に削除しますか？" }%>
-                    </p>
-                  <% end %>
-                  <p class="d-flex justify-content-end align-items-center mb-0">
-                    <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
 
-        <% if @study_record.user == current_user %>
-          <div class = "col-12 d-flex justify-content-end align-items-center">
-            <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-success" %>
-            <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success" %>
-            <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+    <!-- study_interval詳細_カラム表示 -->
+    <div class = "col-12 col-md-12 col-lg-6">
+      <div class = "row mr-3">
+        <div class = "col-12 m-3">
+          <div class="row p-3 border">
+            <div class = "col-3 d-flex justify-content-center">
+              No.
+            </div>      
+            <div class = "col-3 d-flex justify-content-center">
+              集中開始時刻
+            </div>
+            <div class = "col-3 d-flex justify-content-center ">
+              集中終了時刻
+            </div>
+            <div class = "col-3 d-flex justify-content-center ">
+              集中時間
+            </div>
           </div>
-        <% else %>
-          <div class = "col-12 d-flex  align-items-center">
-            <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
-              <%= f.text_area :comment_body, class: "form-control mb-0", rows: 5 %>
-              <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
-                <% if @study_record.likes_by?(current_user) %>
-                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :delete, class: "liked " do %>
-                    <i class="fa-solid fa-hands-clapping mr-3">
-                      <%= @study_record.likes.count %>いいね
-                    </i>
-                  <% end %>
-                <% else %>
-                  <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :post, class: "not-liked" do %>
-                    <i class="fa-solid fa-hands-clapping mr-3">
-                      <%= @study_record.likes.count %>いいね
-                    </i>
-                  <% end %>
-                <% end %>
-              </div>
-              <%= f.submit "コメントを投稿する", class: "btn btn-outline-success w-100 mb-3" %>
-            <% end %>
+          <!-- study_interval詳細_格納データ表示 -->
+          <div class="row mb-3", style="height: 25vh;">
+            <div class = "col-12 h-100 overflow-auto border  bg-pale">
+              <% @study_intervals.each.with_index(1) do |study_interval, i| %>
+                <div class = "row p-3 border-bottom">
+                  <div class = "col-3 d-flex justify-content-center align-items-center">
+                    <p class = "mb-0"><%= i %></p>
+                  </div>
+                  <div class = "col-3 d-flex justify-content-center align-items-center">
+                    <p class = "mb-0"><%= study_interval.started_at.strftime("%H:%M:%S") %></p>
+                  </div>
+                  <div class = "col-3 d-flex justify-content-center align-items-center">
+                    <p class = "mb-0"><%= study_interval.ended_at.strftime("%H:%M:%S") %></p>
+                  </div>
+                  <div class = "col-3 d-flex justify-content-center align-items-center">
+                    <p class = "mb-0"><%= ((study_interval.ended_at - study_interval.started_at)/60).to_i %>分</p>
+                  </div>
+                </div>
+              <% end %> 
+            </div>
           </div>
-        <% end %>
+          <div class="row mb-3", style="height: 25vh;">
+            <div class = "col-12 border h-100   overflow-auto  bg-pale">
+              <% @comments.each do |comment|%>
+                <div class="card shadow-sm pt-0 pr-3 pl-3 pb-0 mb-3">
+                  <div class = "row">
+                    <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
+                      <p class=" d-flex arign-items-center pt-1 pb-1 mb-0">
+                        <%= link_to public_user_path(comment.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
+                          <%= image_tag comment.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
+                          <%= comment.user.name %>
+                        <% end %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class = "row">
+                    <div class = "col-11 offset-1 mt-3 mb-3 text-break">
+                      <p class = "mb-0">
+                        <%= comment.comment_body %>
+                      </p>
+                    </div>
+                  </div>
+                  <div class = "row">
+                    <div class = "col-12">
+                      <% if comment.user == current_user%>
+                        <p class="d-flex justify-content-end align-items-center mb-0">
+                          <%= link_to "削除する",public_study_record_comment_path(@study_record, comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class:"btn btn-sm btn-outline-danger"%>
+                        </p>
+                      <% end %>
+                      <p class="d-flex justify-content-end align-items-center mb-0">
+                        <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="row">
+            <div class = "col-12 p-0">
+              <% if @study_record.user == current_user %>
+                <div class = "col-12 p-0 d-flex justify-content-end align-items-center">
+                  <%= link_to "マイページ", public_user_path(current_user), class: "btn btn-primary w-100" %>
+                  <%= link_to "学習記録の編集", edit_public_study_record_path(@study_record), class: "btn btn-success w-100 mr-3 ml-3" %>
+                  <%= link_to "学習記録の削除", public_study_record_path(@study_record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger w-100" %>
+                </div>
+              <% else %>
+                <div class = "col-12 p-0 d-flex align-items-center">
+                  <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
+                    <%= f.text_area :comment_body, class: "form-control mb-0  bg-pale", rows: 2, placeholder: "コメントを入力..." %>
+                    <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
+                      <i class="fa-regular fa-pen-to-square mr-3">
+                        <%= @comments.count %>コメント
+                      </i>
+                      <% if @study_record.likes_by?(current_user) %>
+                        <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :delete, class: "liked " do %>
+                          <i class="fa-solid fa-hands-clapping mr-3">
+                            <%= @study_record.likes.count %>いいね
+                          </i>
+                        <% end %>
+                      <% else %>
+                        <%= link_to public_study_record_likes_path(@study_record, redirect_to: "show"), method: :post, class: "not-liked" do %>
+                          <i class="fa-solid fa-hands-clapping mr-3">
+                            <%= @study_record.likes.count %>いいね
+                          </i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <%= f.submit "コメントを投稿する", class: "btn btn-success w-100 mb-3" %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

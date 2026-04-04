@@ -1,0 +1,45 @@
+<% if study_record.nil? %>
+
+  <% if study_status == "waiting" %>
+    <%= button_to "学習を開始", public_study_records_path(room_access_id: active_room_access.id), method: :post, remote: true, class: "btn btn-success w-100 mt-3 mb-3", form_class: "w-100"%>
+  <% end %>
+
+<% else %>
+
+  <% if current_mode == "集中"%>
+
+    <% if study_status == "studying" && study_interval %>
+      <%= button_to "一時離席", public_study_interval_path(study_interval, study_record_id: study_record.id, room_access_id: active_room_access.id), method: :patch, remote: true, class: "btn btn-warning w-100 mt-3" %>
+    <% else %>
+      <%= button_to "学習を再開", public_study_intervals_path(study_record_id: study_record.id, room_access_id: active_room_access.id), method: :post, remote: true, class: "btn btn-outline-success w-100 mt-3" %>
+    <% end %>
+
+  <% else %>
+
+    <% if study_status == "studying"%> 
+      <%= button_to "一時離席", status_change_public_room_accesses_path(study_record_id: study_record.id, room_access_id: active_room_access.id), method: :patch, remote: true, class: "btn btn-warning w-100 mt-3" %>
+    <% else %>
+      <%= button_to "学習を再開", status_change_public_room_accesses_path(study_record_id: study_record.id, room_access_id: active_room_access.id), method: :patch, remote: true, class: "btn btn-outline-success w-100 mt-3" %>
+    <% end %>
+
+  <% end %>
+
+  <% if study_status != "waiting" %>
+    <%= button_to "学習を終了", finish_public_study_record_path(study_record, room_access_id: active_room_access.id), method: :patch, data: { skip_auto_paused: "true", confirm: "学習を終了し、退室します。\n本当によろしいですか？" }, class: "btn btn-outline-danger w-100 mt-3 mb-3"%>
+  <% end %>    
+
+<%  end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

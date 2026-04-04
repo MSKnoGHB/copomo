@@ -70,18 +70,29 @@ class Public::StudyRecordsController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
-
-    redirect_to public_room_path(room_access.room_id)
+    #head :ok 
+    #redirect_to public_room_path(room_access.room_id)
+    @active_room_access = room_access
+    @study_record = study_record
+    @study_status = @active_room_access.study_status
+    @interval = study_interval
+    @timer = room.timer_status
+    p "DEBUG: study_status = #{@study_status}"
+    p "DEBUG: interval = #{@interval.inspect}"
+    p "DEBUG: timer_mode = #{@timer[:mode]}"
+    respond_to do |format|
+      format.js { render 'shared/study_control' }
+    end
   end
 
 
   def finish
-    target_record = current_user.study_records.find(params[:study_record_id])
+    target_record = current_user.study_records.find(params[:id])
     room = target_record.room
     #学習中に終了ボタンを押した際のstudy_intervalの更新
     #ADMIN共通メソッドとしてUSERモデルに処理を記載(compleate_study_session)
     study_record = current_user.complete_study_session!(
-      params[:study_record_id],
+      params[:id],
       params[:room_access_id]
     )
 

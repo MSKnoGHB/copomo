@@ -13,12 +13,13 @@ import "bootstrap";
 import "../stylesheets/application"; 
 
 import Chart from 'chart.js/auto';
-import 'chartjs-adapter-date-fns'; // ← これを追加！(importするだけでOK)
+import 'chartjs-adapter-date-fns'; 
 import Chartkick from 'chartkick';
 window.Chart = Chart;
 
 import * as bootstrap from 'bootstrap'; 
-window.bootstrap = bootstrap; // ブラウザ全体で bootstrap を使えるようにする
+import { event } from "jquery";
+window.bootstrap = bootstrap;
 
 Rails.start()
 Turbolinks.start()
@@ -50,23 +51,4 @@ document.addEventListener("turbolinks:load", () =>{
       }
     }
   }, 1000)
-
-  const stampBtn = document.getElementById("stamp-btn")
-  const stampModal = document.getElementById("stamp_modal")
-
-  if (stampBtn && stampModal){
-    stampBtn.addEventListener("click", () => {
-      stampModal.classList.toggle("d-none")
-      stampModal.classList.toggle("d-flex")
-    })
-    document.querySelectorAll(".stamp-item").forEach(item => {
-      item.addEventListener("click",()=>{
-        document.getElementById("stamp-id").value = item.dataset.id
-        stampModal.classList.add("d-none")
-        stampModal.classList.remove("d-flex")
-        document.getElementById("chat-form").requestSubmit()
-        document.getElementById("stamp-id").value = ""
-      })
-    })
-  }
-})
+});

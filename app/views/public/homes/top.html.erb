@@ -1,12 +1,12 @@
 <div class="container-fluid top-container d-flex flex-column flex-fill">
   <div class = "row m-0 pt-5 pr-5 pl-5 pb-0"> 
-    <div class = "col-7 site-title p-0">
+    <div class = "col-12 col-sm-12 col-md-12 col-lg-6 site-title p-0">
       <h1 class="mb-2">COPOMO</h1>
       <h2 class="ml-3">〜学習継続支援型コミュニティ〜</h2>
     </div>
   </div>
   <div class = "row m-0 p-5">
-    <div class = "col-7 site-hero p-0">
+    <div class = "col-12 col-sm-12 col-md-12 col-lg-6 site-hero p-0">
       <h3 class="ml-3 mb-4">新感覚の学習スタイルを。</h3>
       <h3 class="ml-3 mb-4">ポモドーロタイマー ✕ みんなで共有。</h3>
       <h3 class="ml-3 mb-4">集中も休憩も、ひとりじゃない。</h3>
@@ -15,18 +15,18 @@
   </div>
   <div class = "row mt-auto justify-content-center">
   <% if user_signed_in? %>
-    <div class = "col-2 mr-3 offset-6">
+    <div class = "col-12  mr-lg-3 offset-lg-6 col-sm-12 col-md-6 col-lg-2">
       <%= link_to public_rooms_path, class: "btn btn-warning btn-lg w-100 mb-3 py-5" do %>
         <i class="fa-solid fa-pencil">  学習開始</i>
       <% end %>
     </div>
   <% else %>
-    <div class = "col-2 mr-3 offset-6">
+    <div class = "col-12  mr-lg-3 offset-lg-6 col-sm-12 col-md-6 col-lg-2">
       <%= link_to new_user_registration_path, class: "btn btn-success btn-lg w-100 mb-3 py-5" do %>
         <i class="fa-solid fa-user-plus">  新規登録</i>
       <% end %>
     </div>
-    <div class = "col-2">
+    <div class = "col-12 col-sm-12 col-md-6 col-lg-2">
       <%= link_to new_user_session_path, class: "btn btn-primary btn-lg w-100 mb-3 py-5" do %>
         <i class="fa-solid fa-right-to-bracket">  ログイン</i>
       <% end %>
