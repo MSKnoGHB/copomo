@@ -46,11 +46,11 @@ class User < ApplicationRecord
 
   #学習終了退出機能
   def complete_study_session!(study_record_id, room_access_id, exit_type: 0)
-    
     study_record = self.study_records.find(study_record_id)
     if study_record.room.timer_status[:mode] == "集中" && study_record.study_intervals.exists?(ended_at: nil)
       study_interval = study_record.study_intervals.find_by(ended_at: nil) 
       study_interval.update!(ended_at: Time.current)
+      Rails.logger.debug "study_interval changes: #{study_interval.saved_changes}"
     end
 
     #study_intervalの学習時間の合計処理
@@ -66,7 +66,8 @@ class User < ApplicationRecord
     study_record.update!(
       ended_at: Time.current,
       total_focus_minutes: total_minutes
-      ) 
+    ) 
+    Rails.logger.debug "study_record changes: #{study_record.saved_changes}"
 
     #room_accessの更新
     room_access = self.room_accesses.find(room_access_id)
@@ -76,6 +77,8 @@ class User < ApplicationRecord
       is_active: false,
       exit_type: exit_type
     )
+    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+
     study_record  
   end
   

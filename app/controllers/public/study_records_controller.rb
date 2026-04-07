@@ -39,16 +39,19 @@ class Public::StudyRecordsController < ApplicationController
         study_theme_id: room_access.study_theme.id,
         started_at: Time.current
       )
+      Rails.logger.debug "作成されたデータ: #{study_record}"
 
     #study_intervalのレコードを作成
     if study_record.room.timer_status[:mode] == "集中"
       study_interval = study_record.study_intervals.create!(
         started_at: Time.current
       )
+      Rails.logger.debug "作成されたデータ: #{study_interval}"
     end
     
     #room_accessの学習ステータスを更新
     room_access.update!(study_status: "studying")
+    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
 
     #Actioncableによるリアルタイム表示
     room_accesses = room.room_accesses.where(is_active: true)
@@ -77,9 +80,6 @@ class Public::StudyRecordsController < ApplicationController
     @study_status = @active_room_access.study_status
     @interval = study_interval
     @timer = room.timer_status
-    p "DEBUG: study_status = #{@study_status}"
-    p "DEBUG: interval = #{@interval.inspect}"
-    p "DEBUG: timer_mode = #{@timer[:mode]}"
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end
@@ -135,7 +135,9 @@ class Public::StudyRecordsController < ApplicationController
   def post
     #学習後の記録
     @study_record = current_user.study_records.find(params[:id])
+
     if @study_record.update(study_record_params)
+      Rails.logger.debug "study_record changes: #{@study_record.saved_changes}"
       redirect_to public_study_record_path(@study_record.id)
     else
       @room = @study_record.room.room_name
