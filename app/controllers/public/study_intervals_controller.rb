@@ -97,7 +97,7 @@ class Public::StudyIntervalsController < ApplicationController
     end
   end
 
-  def auto_pause 
+  def auto_paused
     study_record = current_user.study_records.find_by(ended_at: nil)
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
     room_access = current_user.room_accesses.find_by(is_active: true)
