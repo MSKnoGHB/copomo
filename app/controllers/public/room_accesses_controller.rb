@@ -10,7 +10,7 @@ class Public::RoomAccessesController < ApplicationController
         is_active: true
       )
     )
-    Rails.logger.debug "作成されたデータ: #{room_access}"
+    Rails.logger.info "作成されたデータ: #{room_access}"
 
     room_accesses = @room.room_accesses.where(is_active: true)
 
@@ -43,10 +43,10 @@ class Public::RoomAccessesController < ApplicationController
 
     if room_access.studying?
       room_access.update!(study_status: "paused")
-      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+      Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     else
       room_access.update!(study_status: "studying")
-      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+      Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     end
 
     room = room_access.room

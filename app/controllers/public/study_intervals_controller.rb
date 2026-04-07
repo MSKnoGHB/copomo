@@ -12,13 +12,13 @@ class Public::StudyIntervalsController < ApplicationController
 
     if study_record.room.timer_status[:mode] == "集中"
       study_interval = study_record.study_intervals.create!(started_at: Time.current)
-      Rails.logger.debug "作成されたデータ: #{study_interval}"
+      Rails.logger.info "作成されたデータ: #{study_interval}"
     end
     
     #room_accessの学習ステータスの更新
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "studying")
-    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+    Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     #roomにリダイレクト
 
     room_accesses = room.room_accesses.where(is_active: true)
@@ -59,12 +59,12 @@ class Public::StudyIntervalsController < ApplicationController
     room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval.update!(ended_at: Time.current)
-      Rails.logger.debug "study_interval changes: #{study_interval.saved_changes}"
+      Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
     end
     #room_accessのレコードを更新
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "paused")
-    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+    Rails.logger.info "room_access changes: #{room_access.saved_changes}"
 
     room_accesses = room.room_accesses.where(is_active: true)
 
@@ -107,10 +107,10 @@ class Public::StudyIntervalsController < ApplicationController
 
     if study_interval
       study_interval.update!(ended_at: Time.current)
-      Rails.logger.debug "study_interval changes: #{study_interval.saved_changes}"
+      Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
 
       room_access.update!(study_status: "paused")
-      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+      Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     end
     
     @active_room_access = room_access

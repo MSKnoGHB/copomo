@@ -39,19 +39,19 @@ class Public::StudyRecordsController < ApplicationController
         study_theme_id: room_access.study_theme.id,
         started_at: Time.current
       )
-      Rails.logger.debug "作成されたデータ: #{study_record}"
+      Rails.logger.info "作成されたデータ: #{study_record}"
 
     #study_intervalのレコードを作成
     if study_record.room.timer_status[:mode] == "集中"
       study_interval = study_record.study_intervals.create!(
         started_at: Time.current
       )
-      Rails.logger.debug "作成されたデータ: #{study_interval}"
+      Rails.logger.info "作成されたデータ: #{study_interval}"
     end
     
     #room_accessの学習ステータスを更新
     room_access.update!(study_status: "studying")
-    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
+    Rails.logger.info "room_access changes: #{room_access.saved_changes}"
 
     #Actioncableによるリアルタイム表示
     room_accesses = room.room_accesses.where(is_active: true)
@@ -137,7 +137,7 @@ class Public::StudyRecordsController < ApplicationController
     @study_record = current_user.study_records.find(params[:id])
 
     if @study_record.update(study_record_params)
-      Rails.logger.debug "study_record changes: #{@study_record.saved_changes}"
+      Rails.logger.info "study_record changes: #{@study_record.saved_changes}"
       redirect_to public_study_record_path(@study_record.id)
     else
       @room = @study_record.room.room_name
@@ -147,8 +147,7 @@ class Public::StudyRecordsController < ApplicationController
       @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
       @total_focus_minutes = @study_record.total_focus_minutes
       #study_intervalを表示
-      @study_intervals = @study_record.study_intervals
-      render :edit
+      @study_intervals = @study_record.study_intervals      render :edit
     end
   end
 
