@@ -41,16 +41,17 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Mount Action Cable outside main process or domain.
-  #config.action_cable.mount_path = nil
-  config.action_cable.url = "ws://13.231.229.234/cable"
-  config.action_cable.allowed_request_origins = [ "http://13.231.229.234" ]
+  # config.action_cable.mount_path = nil
+  # config.action_cable.url = 'wss://example.com/cable'
+  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
-  config.log_level = :info
+  # config.log_level = :info
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   config.log_tags = [ :request_id ]
