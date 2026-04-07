@@ -10,6 +10,7 @@ class Public::RoomAccessesController < ApplicationController
         is_active: true
       )
     )
+    Rails.logger.debug "作成されたデータ: #{room_access}"
 
     room_accesses = @room.room_accesses.where(is_active: true)
 
@@ -42,20 +43,19 @@ class Public::RoomAccessesController < ApplicationController
 
     if room_access.studying?
       room_access.update!(study_status: "paused")
+      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
     else
       room_access.update!(study_status: "studying")
+      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
     end
 
     room = room_access.room
     room_accesses = room.room_accesses.where(is_active: true)
-    
 
     public_html = render_to_string(
       partial: "shared/active_users_list",
       locals:{room_accesses: room_accesses, is_admin: false}
     )
-  
-
     admin_html = render_to_string(
       partial: "shared/active_users_list",
       locals:{room_accesses: room_accesses, is_admin: true}
@@ -69,6 +69,7 @@ class Public::RoomAccessesController < ApplicationController
       type: "active_users_list", 
       active_users_list_html: admin_html
     }
+
     @active_room_access = room_access
     @study_record = current_user.study_records.find(params[:study_record_id])
     @study_status = @active_room_access.study_status

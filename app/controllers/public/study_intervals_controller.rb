@@ -9,12 +9,16 @@ class Public::StudyIntervalsController < ApplicationController
     #study_intervalのレコードを作成
     study_record = current_user.study_records.find(params[:study_record_id])
     room = study_record.room
+
     if study_record.room.timer_status[:mode] == "集中"
       study_interval = study_record.study_intervals.create!(started_at: Time.current)
+      Rails.logger.debug "作成されたデータ: #{study_interval}"
     end
+    
     #room_accessの学習ステータスの更新
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "studying")
+    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
     #roomにリダイレクト
 
     room_accesses = room.room_accesses.where(is_active: true)
@@ -55,10 +59,12 @@ class Public::StudyIntervalsController < ApplicationController
     room = study_record.room
     if study_record.room.timer_status[:mode] == "集中"
       study_interval.update!(ended_at: Time.current)
+      Rails.logger.debug "study_interval changes: #{study_interval.saved_changes}"
     end
     #room_accessのレコードを更新
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "paused")
+    Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
 
     room_accesses = room.room_accesses.where(is_active: true)
 
@@ -91,18 +97,20 @@ class Public::StudyIntervalsController < ApplicationController
     end
   end
 
-  
-
-  def auto_paused
+  def auto_pause 
     study_record = current_user.study_records.find_by(ended_at: nil)
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
-    return unless study_interval
     room_access = current_user.room_accesses.find_by(is_active: true)
     room = room_access.room
 
+    return unless study_interval
+
     if study_interval
       study_interval.update!(ended_at: Time.current)
+      Rails.logger.debug "study_interval changes: #{study_interval.saved_changes}"
+
       room_access.update!(study_status: "paused")
+      Rails.logger.debug "room_access changes: #{room_access.saved_changes}"
     end
     
     @active_room_access = room_access
@@ -115,7 +123,5 @@ class Public::StudyIntervalsController < ApplicationController
       format.js { render 'shared/study_control' }
     end
   end
-  #def destroy 
-  #end
 
 end
