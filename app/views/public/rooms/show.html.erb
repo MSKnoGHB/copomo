@@ -141,6 +141,7 @@
   document.addEventListener("turbolinks:load", () => {
     window.autoPausedSent = false;
     window.skipAutoPaused = false;
+    window.isAutoReload = false;
 
     document.addEventListener("pointerdown", (event) => {
       const btn = event.target.closest('[data-skip-auto-paused="true"]');
@@ -150,7 +151,7 @@
     });
 
     function sendAutoPaused() {
-      if (window.autoPausedSent || window.skipAutoPaused ) return;
+      if (window.isAutoReload || window.autoPausedSent || window.skipAutoPaused) return;
       window.autoPausedSent = true;
       navigator.sendBeacon("/public/study_intervals/auto_paused");
     }
