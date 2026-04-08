@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class = "row">
     <div class = "col-11 mx-auto">
-      <div class = "row mb-3">
+      <div class = "row mb-3", style="border-bottom: 2px solid black;">
         <div class = "col-12">
-          <h1>スタンプ一覧</h1>
+          <h3>スタンプ編集</h3>
         </div>
       </div>
       <div class = "row mb-3 d-flex align-items-center">
@@ -42,7 +42,7 @@
       </div>
       <div class = "row mb-3 d-flex align-items-center">
         <div class = "col-12">
-          <h3>新規フォーム</h3>
+          <h3>更新フォーム</h3>
         </div>
       </div>
       <%= form_with model: [:admin, @stamp] do |f| %>
