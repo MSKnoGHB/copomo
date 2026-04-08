@@ -1,7 +1,9 @@
 class Admin::StudyRecordsController < ApplicationController
   layout "admin"
+  
   def index
-    @study_records = StudyRecord.all
+    @study_records = StudyRecord.order(created_at: :desc)
+    @finished_records = @study_records.where.not(ended_at: nil)
   end
 
   def destroy
