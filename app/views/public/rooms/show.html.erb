@@ -141,7 +141,9 @@
   document.addEventListener("turbolinks:load", () => {
     window.autoPausedSent = false;
     window.skipAutoPaused = false;
-    window.isAutoReload = false;
+    if (window.isAutoReload === undefined) {
+      window.isAutoReload = false;
+    }
 
     document.addEventListener("pointerdown", (event) => {
       const btn = event.target.closest('[data-skip-auto-paused="true"]');
