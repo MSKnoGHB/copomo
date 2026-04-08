@@ -39,7 +39,7 @@ document.addEventListener("turbolinks:load", () =>{
 
   updateDisplay()
 
-  setInterval(() =>{
+  const intervalId = setInterval(() =>{
     remaining -= 1
     updateDisplay()
     if (remaining <= 0){
@@ -47,6 +47,8 @@ document.addEventListener("turbolinks:load", () =>{
       if (modalOpen) {
         remaining = 10;
       } else {
+        window.isAutoReload = true;
+        clearInterval(intervalId);
         location.reload();
       }
     }

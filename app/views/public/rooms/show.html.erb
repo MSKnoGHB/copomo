@@ -142,25 +142,22 @@
     window.autoPausedSent = false;
     window.skipAutoPaused = false;
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("pointerdown", (event) => {
       const btn = event.target.closest('[data-skip-auto-paused="true"]');
       if (btn) {
         window.skipAutoPaused = true;
       }
-    }, { once: true });
+    });
 
     function sendAutoPaused() {
-      if (window.autoPausedSent || window.skipAutoPaused) return;
+      if (window.autoPausedSent || window.skipAutoPaused ) return;
       window.autoPausedSent = true;
       navigator.sendBeacon("/public/study_intervals/auto_paused");
     }
-    
     window.addEventListener("beforeunload", sendAutoPaused);
+    document.addEventListener("turbolinks:before-visit", sendAutoPaused);
   });
 </script>
-
-
-
 
 <script>
   document.addEventListener("turbolinks:load", () =>{

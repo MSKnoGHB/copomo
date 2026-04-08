@@ -99,20 +99,44 @@ class Public::StudyIntervalsController < ApplicationController
 
   def auto_paused
     study_record = current_user.study_records.find_by(ended_at: nil)
-    study_interval = study_record.study_intervals.find_by(ended_at: nil)
-    room_access = current_user.room_accesses.find_by(is_active: true)
-    room = room_access.room
+    return unless study_record
 
+    study_interval = study_record.study_intervals.find_by(ended_at: nil)
     return unless study_interval
 
-    if study_interval
-      study_interval.update!(ended_at: Time.current)
-      Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
+    room_access = current_user.room_accesses.find_by(is_active: true)
+    return unless room_access
 
+    room = room_access.room
+    study_status = room_access.study_status
+    
+    study_interval.update!(ended_at: Time.current)
+    Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
+
+    if study_status == "studying"
       room_access.update!(study_status: "paused")
       Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     end
     
+    room_accesses = room.room_accesses.where(is_active: true)
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
+
     @active_room_access = room_access
     @study_record = study_record
     @study_status = @active_room_access.study_status

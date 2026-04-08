@@ -28,7 +28,6 @@ class Public::RoomsController < ApplicationController
     @study_theme = StudyTheme.new
     @study_categories = StudyCategory.all
  
-
     #ボタン表示を制御するために現状の学習ステータスを格納する
     @study_status = @active_room_access&.study_status
     #study_recordを一意にする
