@@ -26,7 +26,7 @@ class Public::RoomsController < ApplicationController
 
     #modal_テーマ新規作成後の入室
     @study_theme = StudyTheme.new
-    @study_categories = StudyCategory.all
+    @study_categories = StudyCategory.where(is_active: true)
  
     #ボタン表示を制御するために現状の学習ステータスを格納する
     @study_status = @active_room_access&.study_status
@@ -59,6 +59,6 @@ class Public::RoomsController < ApplicationController
 
     @chat_logs = @room.chat_logs.includes(:user).last(100)
     @chat_log = ChatLog.new
-    @stamps = Stamp.all
+    @stamps = Stamp.where(is_active: true)
   end
 end
