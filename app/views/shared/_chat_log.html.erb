@@ -16,7 +16,8 @@
       </div>
     <% end %>
   </div>
-  <% if current_admin %>
+  
+  <% if is_admin %>
     <div class = "d-flex justify-content-end">
       <%= link_to "削除", admin_room_chat_log_path(chat_log.room, chat_log), method: :delete, data: {remote: true}, class: "btn btn-outline-danger btn-sm" %>
     </div>
