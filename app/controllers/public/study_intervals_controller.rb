@@ -98,26 +98,28 @@ class Public::StudyIntervalsController < ApplicationController
   end
 
   def auto_paused
+    #学習開始前の画面遷移時は処理をスキップ
     study_record = current_user.study_records.find_by(ended_at: nil)
     return unless study_record
-
-    study_interval = study_record.study_intervals.find_by(ended_at: nil)
-    return unless study_interval
-
+    #入室前の画面遷移時は処理をスキップ
     room_access = current_user.room_accesses.find_by(is_active: true)
     return unless room_access
-
-    room = room_access.room
+    #一時離席時の画面遷移時は処理をスキップ
+    study_interval = study_record.study_intervals.find_by(ended_at: nil)
     study_status = room_access.study_status
-    
-    study_interval.update!(ended_at: Time.current)
-    Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
+    return if study_interval.nil? && study_status == "paused"
+ 
+    if study_interval
+      study_interval.update!(ended_at: Time.current)
+      Rails.logger.info "study_interval changes: #{study_interval.saved_changes}"
+    end
 
     if study_status == "studying"
       room_access.update!(study_status: "paused")
       Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     end
-    
+
+    room = room_access.room
     room_accesses = room.room_accesses.where(is_active: true)
     public_html = render_to_string(
       partial: "shared/active_users_list",
