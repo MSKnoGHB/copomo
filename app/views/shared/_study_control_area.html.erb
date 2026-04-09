@@ -8,8 +8,10 @@
 
   <% if current_mode == "集中"%>
 
-    <% if study_status == "studying" && study_interval %>
-      <%= button_to "一時離席", public_study_interval_path(study_interval, study_record_id: study_record.id, room_access_id: active_room_access.id), method: :patch, remote: true, class: "btn btn-warning w-100 mt-3" %>
+    <% if study_status == "studying" %>
+      <% if study_interval.present? %>
+        <%= button_to "一時離席", public_study_interval_path(study_interval, study_record_id: study_record.id, room_access_id: active_room_access.id), method: :patch, remote: true, class: "btn btn-warning w-100 mt-3" %>
+      <% end %>
     <% else %>
       <%= button_to "学習を再開", public_study_intervals_path(study_record_id: study_record.id, room_access_id: active_room_access.id), method: :post, remote: true, class: "btn btn-outline-success w-100 mt-3" %>
     <% end %>

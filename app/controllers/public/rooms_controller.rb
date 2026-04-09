@@ -46,7 +46,7 @@ class Public::RoomsController < ApplicationController
 
     #集中モードへの切り替わり時にstudy_intervalのレコードを作成
     if @timer[:mode] == "集中" && @study_status == "studying" && @interval.nil?
-      @study_record.study_intervals.create!(
+      @interval = @study_record.study_intervals.create!(
         started_at: Time.current
       )
     end
