@@ -28,8 +28,8 @@ class Admin::RoomAccessesController < ApplicationController
       active_users_list_html: public_html
     }
     ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-        type: "active_users_list",
-        active_users_list_html: admin_html
+      type: "active_users_list",
+      active_users_list_html: admin_html
     }
  
     #対象ユーザーだけに「編集画面へ飛べ」という命令を送る
