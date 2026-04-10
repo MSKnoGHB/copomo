@@ -47,9 +47,9 @@ document.addEventListener("turbolinks:load", () =>{
       if (modalOpen) {
         remaining = 10;
       } else {
-        window.isAutoReload = true;
+        sessionStorage.setItem("isAutoReload", "true");
         clearInterval(intervalId);
-        location.reload();
+        window.location.reload();
       }
     }
   }, 1000)

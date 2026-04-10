@@ -138,28 +138,49 @@
 <% end%>
 
 <script>
+  function sendAutoPaused() {
+
+
+
+
+    const isAutoReload = sessionStorage.getItem("isAutoReload") === "true";
+
+    if (window.autoPausedSent){
+      console.log("送信済み → return")
+      return;
+    } 
+
+    if (window.skipAutoPaused) {
+    console.log("skipフラグ検知 → return");
+    return;
+   }
+
+    if (isAutoReload){
+      console.log("autoReload検知 → return");
+      sessionStorage.removeItem("isAutoReload");
+      return;
+    }
+
+  console.log("autoPaused送信");
+  window.autoPausedSent = true;
+  navigator.sendBeacon("/public/study_intervals/auto_paused");
+  }
+
+  window.addEventListener("beforeunload", sendAutoPaused);
+  document.addEventListener("turbolinks:before-visit", sendAutoPaused);
+
   document.addEventListener("turbolinks:load", () => {
     window.autoPausedSent = false;
     window.skipAutoPaused = false;
-    if (window.isAutoReload === undefined) {
-      window.isAutoReload = false;
-    }
-
-    document.addEventListener("pointerdown", (event) => {
-      const btn = event.target.closest('[data-skip-auto-paused="true"]');
-      if (btn) {
-        window.skipAutoPaused = true;
-      }
-    });
-
-    function sendAutoPaused() {
-      if (window.isAutoReload || window.autoPausedSent || window.skipAutoPaused) return;
-      window.autoPausedSent = true;
-      navigator.sendBeacon("/public/study_intervals/auto_paused");
-    }
-    window.addEventListener("beforeunload", sendAutoPaused);
-    document.addEventListener("turbolinks:before-visit", sendAutoPaused);
   });
+
+  document.addEventListener("pointerdown", (event) => {
+    const btn = event.target.closest('[data-skip-auto-paused="true"]');
+    if (btn) {
+      window.skipAutoPaused = true;
+    }
+  });
+
 </script>
 
 <script>
