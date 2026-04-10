@@ -13,14 +13,15 @@ ja:
         password: "パスワード"
         name: "ユーザー名"
         password_confirmation: "確認用パスワード"
-        
+
   errors:
     messages:
       blank: "を入力してください"
       confirmation: "と一致していません"
       too_short: "は%{count}文字以上で入力してください"
       too_long: "は%{count}文字以内で入力してください"
-
+      taken: "はすでに使用されています"
+      
   devise:
     failure:
       invalid: "メールアドレスまたはパスワードが正しくありません。"
