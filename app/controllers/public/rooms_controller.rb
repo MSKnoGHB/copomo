@@ -53,10 +53,10 @@ class Public::RoomsController < ApplicationController
     end
     #休憩モードへの切り替わり時にstudy_intervalのレコードを更新
     if @timer[:mode] == "休憩" && @study_status == "studying" && @interval.present?
-       @interval.update!(
+      @interval.update!(
         ended_at: Time.current
       )
-      Rails.logger.info "room_access changes: #{@interval.saved_changes}"
+      Rails.logger.info "study_interval changes: #{@interval.saved_changes}"
     end
 
     @chat_logs = @room.chat_logs.includes(:user).last(100)
