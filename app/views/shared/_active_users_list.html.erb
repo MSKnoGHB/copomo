@@ -16,7 +16,7 @@
   <% room_accesses.each do |room_access| %>
     <div class="row mx-0 p-2 border-bottom">
       <div class="col-4 d-flex justify-content-left align-items-center">
-        <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
+        <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
         <%= room_access.user.name %>
       </div>
       <div class="col-4 p-1 d-flex justify-content-left align-items-center">
@@ -45,7 +45,7 @@
   <% room_accesses.each do |room_access| %>
     <div class="row mx-0 p-2 border-bottom">
       <div class="col-5 p-1 d-flex justify-content-left align-items-center">
-        <span class = "mr-3"><%= image_tag room_access.user.user_image, style: "width:30px; height:30px; object-fit:cover;" %></span>
+        <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
         <%= room_access.user.name %>
       </div>
       <div class="col-4 p-1 d-flex justify-content-left align-items-center">

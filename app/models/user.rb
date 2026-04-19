@@ -30,6 +30,15 @@ class User < ApplicationRecord
     user_image
   end
 
+  def get_image_resize
+    get_image
+    bucket_name = "copomo-img-files-resize"
+    region = "ap-northeast-1"
+    key = user_image.key
+    extension = user_image.content_type.split('/').pop
+    "https://#{bucket_name}.s3-#{region}.amazonaws.com/#{key}-thumbnail.#{extension}"
+  end
+
   #検索機能
   def self.search_for(content, method)
     active_study_records = StudyRecord.where(is_publish: true).joins(:user)

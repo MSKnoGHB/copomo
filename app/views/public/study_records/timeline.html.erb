@@ -12,7 +12,7 @@
               <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
                 <p class=" pt-3 pb-3 mb-0">
                   <%= link_to public_user_path(study_record.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
-                    <%= image_tag study_record.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
+                    <%= image_tag study_record.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
                     <%= study_record.user.name %>
                   <% end %>
                 </p>
