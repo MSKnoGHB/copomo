@@ -24,6 +24,7 @@ class Public::UsersController < ApplicationController
     @user = current_user
     #ユーザ情報を更新
     if @user.update(user_params)
+      sleep(3)
       redirect_to public_user_path(@user)
     else
       render :edit

@@ -23,7 +23,7 @@ gem 'redis', '~> 4.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -60,6 +60,7 @@ gem 'enum_help'
 gem 'chartkick'
 gem 'groupdate'
 gem "simple_calendar", "~> 2.4"
+gem "aws-sdk-s3", require: false
 
 gem 'dotenv-rails'
 group :production do

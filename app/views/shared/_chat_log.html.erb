@@ -1,6 +1,6 @@
 <div id="chat_log_<%= chat_log.id %>" class="mb-4">
   <div class="mb-1">
-    <%= image_tag chat_log.user.user_image, style: "width:40px; height:40px; object-fit:cover;" %>
+    <%= image_tag chat_log.user.get_image_resize, style: "width:40px; height:40px; object-fit:cover;" %>
     <strong><%= chat_log.user.name %></strong>
   </div>
   <div>

@@ -59,7 +59,7 @@
                     <div class = "col-12" style = "background-color: rgba(0, 0, 0, 0.05);">
                       <p class=" d-flex arign-items-center pt-1 pb-1 mb-0">
                         <%= link_to public_user_path(comment.user_id), class: "text-decoration-none text-dark fw-bold d-inline-flex align-items-center" do %>
-                          <%= image_tag comment.user.user_image, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
+                          <%= image_tag comment.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;", class: "mr-2" %>  
                           <%= comment.user.name %>
                         <% end %>
                       </p>

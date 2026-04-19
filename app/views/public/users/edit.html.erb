@@ -17,7 +17,7 @@
             <div class="mb-3">
               <%= f.label :user_image, "ユーザアイコン" %></br>
               <% if @user.user_image.attached? %>
-                <%= image_tag @user.user_image, style: "width:120px; height:120px; object-fit:cover;",class:"mb-3" %>
+                <%= image_tag @user.get_image_resize, style: "width:120px; height:120px; object-fit:cover;",class:"mb-3" %>
               <% else %>
                 <%= image_tag "no_image.jpg", style: "width:120px; height:120px; object-fit:cover;" %>
               <% end %></br>
