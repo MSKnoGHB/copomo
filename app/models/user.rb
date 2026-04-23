@@ -91,5 +91,17 @@ class User < ApplicationRecord
     study_record  
   end
   
+  def self.guest
+    random_value = SecureRandom.hex(4)
+    create!(email: "guest_#{random_value}@example.com") do |user|
+      user.password = SecureRandom.hex(10)
+      user.name = "guest_#{random_value}" 
+    end
+  end
+
+  def guest_user?
+    email.start_with?("guest_") && email.end_with?("@example.com")
+  end
+
 end
 
