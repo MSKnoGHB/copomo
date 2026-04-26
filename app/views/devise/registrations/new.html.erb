@@ -10,8 +10,8 @@
     </div>
   </div>  
   <div class="row">
-    <div class="col-12 card-body p-0 ">
-      <div class="card w-50 pt-3 pl-5 pr-5 mx-auto shadow-lg">
+    <div class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 card-body p-0 ">
+      <div class="card w-100 pt-3 pl-5 pr-5 mx-auto shadow-lg">
         <%= form_with model: @user, url: user_registration_path do |f| %>
           <% if @user.errors.any? %>
             <%= @user.errors.count %>件のエラーが発生しました

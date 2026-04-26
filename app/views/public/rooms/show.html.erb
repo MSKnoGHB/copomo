@@ -15,7 +15,7 @@
             <div class="col-12">
               <%= form_with model: [:public, @room_access] do |f| %>
                 <%= f.hidden_field :room_id, value: @room.id %>
-                <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100 " %>
+                <%= f.label :theme_title, "学習テーマ名", class: "form-label w-100 " %>
                 <%= f.collection_select :study_theme_id, @study_themes, :id, :theme_title, { prompt: "学習テーマを選択" },{ required: true, class: "form-select w-100 mb-3" } %>
                 <%= f.submit "入室する", class: "btn btn-outline-primary w-100" %>
               <% end %>
