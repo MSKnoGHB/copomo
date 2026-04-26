@@ -3,57 +3,41 @@
     <div class = "col-11 mx-auto">
       <div class = "row mb-3", style="border-bottom: 2px solid black;">
         <div class = "col-12">
-          <h3>ユーザ一覧</h3>
+          <h3 class="pt-3 pb-3 m-0">ユーザ一覧</h3>
         </div>
       </div>
-      <div class = "row mb-3">
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>No.</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>ID</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>ユーザー名</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>メールアドレス</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>アカウント作成日時</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>ステータス</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>退会ボタン</p>
-        </div>
-      </div>
-      <% @users.each_with_index do |user, i| %>
-        <div class = "row mb-3">
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= i + 1 %></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= user.id %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= user.name %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= user.email %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= user.created_at.strftime("%Y年%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[user.created_at.wday] %>)</p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= user.is_active %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+      <div class = "row">
+        <div class = "col-12">
+          <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class= "align-middle text-center">No.</th>
+                  <th class= "align-middle text-center">ID</th>
+                  <th class= "align-middle ">ユーザー名</th>
+                  <th class= "align-middle ">メールアドレス</th>
+                  <th class= "align-middle text-center">アカウント作成日時</th>
+                  <th class= "align-middle text-center">ステータス</th>
+                  <th class= "align-middle text-center">退会ボタン</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @users.each_with_index do |user, i| %>
+                  <tr>
+                    <td class= "align-middle text-center"><%= i + 1 %></td>
+                    <td class= "align-middle text-center"><%= user.id %></td>
+                    <td class= "align-middle"><%= user.name %></td>
+                    <td class= "align-middle"><%= user.email %></td>
+                    <td class= "align-middle text-center"><%= user.created_at.strftime("%Y年%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[user.created_at.wday] %>)</td>
+                    <td class= "align-middle text-center"><%= user.is_active %></td>
+                    <td class= "align-middle text-center"><%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger w-100" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
-      <% end %>
+      </div>        
     </div>
   </div>
 </div>

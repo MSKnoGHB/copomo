@@ -3,76 +3,50 @@
     <div class = "col-11 mx-auto">
       <div class = "row">
         <div class = "col-12">
-          <h1>学習記録一覧</h1>
+          <h3 class="pt-3 pb-3 m-0">学習記録一覧</h3>
         </div>
       </div>
       <div class = "row">
-        <div class = "col-1">
-          <p>No.</p>
-        </div>
-        <div class = "col-2">
-          <p>学習日</p>
-        </div>
-        <div class = "col-1">
-          <p>開始時間</p>
-        </div>
-        <div class = "col-1">
-          <p>終了時間</p>
-        </div>
-        <div class = "col-1">
-          <p>集中時間</p>
-        </div>
-        <div class = "col-1">
-          <p>学習ルーム</p>
-        </div>
-        <div class = "col-1">
-          <p>学習カテゴリ</p>
-        </div>
-        <div class = "col-1">
-          <p>学習テーマ</p>
-        </div>
-        <div class = "col-1">
-          <p>投稿表示</p>
+        <div class = "col-12">
+          <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class= "align-middle text-center">No.</th>
+                  <th class= "align-middle text-center">学習日</th>
+                  <th class= "align-middle text-center">開始 / 終了</th>
+                  <th class= "align-middle text-center">集中時間</th>
+                  <th class= "align-middle text-center">ルーム</th>
+                  <th class= "align-middle text-center">カテゴリ</th>
+                  <th class= "align-middle text-center">テーマ</th>
+                  <th class= "align-middle text-center">投稿表示</th>
+                  <th class= "align-middle text-center"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @study_records.each_with_index do |record, i| %>
+                  <tr>
+                    <td class= "align-middle text-center"><%= i + 1 %></td>
+                    <td class= "align-middle text-center"><%= record.started_at.strftime("%Y/%m/%d") %></td>
+                    <td class= "align-middle text-center"><%= record.started_at.strftime("%H:%M") %> 〜 <%= record.ended_at.strftime("%H:%M") %></td>
+                    <td class= "align-middle text-center"><%= record.total_focus_minutes %>分</td>
+                    <td class= "align-middle text-center"><%= record.room.room_name %></td>
+                    <td class= "align-middle text-center"><%= record.study_theme.study_category.category_title %></td>
+                    <td class= "align-middle text-center"><%= record.study_theme.theme_title %></td>
+                    <td class= "align-middle text-center"><%= record.is_publish ? "表示" : "非表示" %></td>
+                    <td class= "align-middle text-center">
+                      <% if @user == current_user %>
+                        <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
+                        <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <% @study_records.each_with_index do |record, i| %>
-        <% next if record.ended_at.nil? %>
-        <div class = "row">
-          <div class = "col-1">
-            <p> <%= i + 1 %> </p>
-          </div>
-          <div class = "col-2">
-            <p><%= record.started_at.strftime("%Y年%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.started_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.ended_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= "#{record.total_focus_minutes}分" %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.room.room_name %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.study_theme.study_category.category_title %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.study_theme.theme_title %></p>
-          </div>
-          <div class = "col-1">
-            <p><%= record.is_publish ? "表示" : "非表示" %></p>
-          </div>
-          <% if @user == current_user %>
-            <div class = "col-2">
-              <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
-              <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

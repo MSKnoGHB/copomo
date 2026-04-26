@@ -1,63 +1,57 @@
 <% if is_admin %>
-  <div class="row m-0 p-2 border-bottom">
-    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
-      ユーザー名
-    </div>
-    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
-      学習テーマ
-    </div>
-    <div class="col-2 p-1 d-flex justify-content-center align_items-center">
-      ステータス
-    </div>
-    <div class="col-2 p-1 d-flex justify-content-center align_items-center">
-      強制退室
-    </div>
-  </div>
-  <% room_accesses.each do |room_access| %>
-    <%= link_to public_user_path(room_access.user) do%>
-      <div class="row mx-0 p-2 border-bottom">
-        <div class="col-4 d-flex justify-content-left align-items-center">
-          <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
-          <%= room_access.user.name %>
-        </div>
-        <div class="col-4 p-1 d-flex justify-content-left align-items-center">
-          <%= room_access.study_theme.theme_title %>
-        </div>
-        <div class="col-2 p-1 d-flex justify-content-center align-items-center">
-          <%= RoomAccess.study_statuses_i18n[room_access.study_status] %>
-        </div>
-        <div class="col-2 p-1 d-flex justify-content-center align-items-center">
-          <%= link_to "退室", force_exit_admin_room_access_path(id: room_access.id, user_id: room_access.user_id, room_access_id: room_access.id, study_record_id: room_access.user.study_records.find_by(ended_at: nil)&.id), method: :patch, remote: true, data: { confirm: "このユーザーを強制退室させますか？" }, class: "btn btn-sm btn-outline-danger" %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-<% else %>
-  <div class="row m-0 p-2 border-bottom">
-    <div class="col-5 p-1 d-flex justify-content-left align_items-center">
-      ユーザー名
-    </div>
-    <div class="col-4 p-1 d-flex justify-content-left align_items-center">
-      学習テーマ
-    </div>
-    <div class="col-3 p-1 d-flex justify-content-center align_items-center">
-      ステータス
-    </div>
-  </div>
-  <% room_accesses.each do |room_access| %>
-    <div class="row mx-0 p-2 border-bottom">
-        <div class="col-5 p-1 d-flex justify-content-left align-items-center">
-          <%= link_to public_user_path(room_access.user), class:"user-show-link" do%>
-            <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
-            <%= room_access.user.name %>
+  <div class=" active-users-header row">
+    <div class="col-12 p-0">    
+      <table class="table table-hover text-nowrap">
+        <thead>
+          <tr>
+            <th class= "align-middle">ユーザー名</th>
+            <th class= "align-middle">学習テーマ</th>
+            <th class= "align-middle text-center">ステータス</th>
+            <th class= "align-middle text-center">強制退室</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% room_accesses.each do |room_access| %>
+            <tr>
+              <td class= "align-middle">
+                <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
+                <%= room_access.user.name %>
+              </td>
+              <td class= "align-middle"><%= room_access.study_theme.theme_title %></td>
+              <td class= "align-middle text-center"><%= RoomAccess.study_statuses_i18n[room_access.study_status] %></td>
+              <td class= "align-middle text-center"><%= link_to "退室", force_exit_admin_room_access_path(id: room_access.id, user_id: room_access.user_id, room_access_id: room_access.id, study_record_id: room_access.user.study_records.find_by(ended_at: nil)&.id), method: :patch, remote: true, data: { confirm: "このユーザーを強制退室させますか？" }, class: "btn btn-sm btn-outline-danger w-100" %></td>
+            </tr>
           <% end %>
-        </div>
-      <div class="col-4 p-1 d-flex justify-content-left align-items-center">
-        <%= room_access.study_theme.theme_title %>
-      </div>
-      <div class="col-3 p-1 d-flex justify-content-center align-items-center ">
-        <%= RoomAccess.study_statuses_i18n[room_access.study_status] %>
-      </div>
+        </tbody>
+      </table>
     </div>
-  <% end %>
+  </div>
+<% else %>
+  <div class=" active-users-header row">
+    <div class="col-12 p-0">    
+      <table class="table table-hover text-nowrap">
+        <thead>
+          <tr>
+            <th class= "align-middle">ユーザー名</th>
+            <th class= "align-middle">学習テーマ</th>
+            <th class= "align-middle text-center">ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% room_accesses.each do |room_access| %>
+            <tr>
+              <td class= "align-middle">
+                <%= link_to public_user_path(room_access.user), class:"user-show-link" do%>
+                  <span class = "mr-3"><%= image_tag room_access.user.get_image_resize, style: "width:30px; height:30px; object-fit:cover;" %></span>
+                  <%= room_access.user.name %>
+                <% end %>
+              </td>
+              <td class= "align-middle"><%= room_access.study_theme.theme_title %></td>
+              <td class= "align-middle text-center"><%= RoomAccess.study_statuses_i18n[room_access.study_status] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% end %>
