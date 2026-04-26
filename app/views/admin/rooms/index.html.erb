@@ -1,25 +1,25 @@
 <div class="container-fluid d-flex flex-column "> 
   <div class="row flex-fill quick-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <%= link_to "クイックルーム", admin_room_path(@rooms[0]) %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
       <p style="font-size: 25px;">現在の参加者:<%= @room1_users.count %></p>
     </div>
   </div>
   <div class="row flex-fill standard-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <%= link_to "スタンダードルーム", admin_room_path(@rooms[1]) %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
       <p style="font-size: 25px;">現在の参加者:<%= @room2_users.count %></p>
     </div>
   </div>
   <div class="row flex-fill deep-room">
-    <div class="col-6 d-flex justify-content-center align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
       <%= link_to "ディープルーム", admin_room_path(@rooms[2]) %>
     </div>
-    <div class="col-5 offset-1 d-flex justify-content-right align-items-center">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-5 offset-lg-1 d-flex justify-content-center align-items-center">
       <p style="font-size: 25px;">現在の参加者:<%= @room3_users.count %></p>
     </div>
   </div>

@@ -2,58 +2,42 @@
   <div class = "row">
     <div class = "col-11 mx-auto">
       <div class = "row mb-3", style="border-bottom: 2px solid black;">
-        <div class = "col-12" >
-          <h3>コメント一覧</h3>
+        <div class = "col-12">
+          <h3 class="pt-3 pb-3 m-0">コメント一覧</h3>
         </div>
       </div>
-      <div class = "row mb-3">
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>ID</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>投稿日時</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>コメント者</p>
-        </div>
-        <div class = "col-4 d-flex justify-content-center align-items-center">
-          <p>コメント内容</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>学習者</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>学習記録ID</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>削除ボタン</p>
-        </div>
-      </div>
-      <% @comments.each do |comment| %>
-        <div class = "row mb-3">
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= comment.id %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= comment.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[comment.created_at.wday] %>) </p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= comment.user.name %></p>
-          </div>
-          <div class = "col-4 d-flex justify-content-center align-items-center">
-            <p><%= comment.comment_body%></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= comment.study_record.user.name%></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= comment.study_record.id%></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm btn-danger" %></p>
+      <div class = "row">
+        <div class = "col-12">
+          <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class= "align-middle text-center">ID</th>
+                  <th class= "align-middle text-center">投稿日時</th>
+                  <th class= "align-middle">コメント者</th>
+                  <th class= "align-middle">コメント内容</th>
+                  <th class= "align-middle">学習者</th>
+                  <th class= "align-middle text-center">学習記録ID</th>
+                  <th class= "align-middle text-center">削除ボタン</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @comments.each do |comment| %>
+                  <tr>
+                    <td class= "align-middle text-center"><%= comment.id %></td>
+                    <td class= "align-middle text-center"><%= comment.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[comment.created_at.wday] %>) </td>
+                    <td class= "align-middle"><%= comment.user.name %></td>
+                    <td class= "align-middle"><%= comment.comment_body%></td>
+                    <td class= "align-middle"><%= comment.study_record.user.name%></td>
+                    <td class= "align-middle text-center"><%= comment.study_record.id%></td>
+                    <td class= "align-middle text-center"><%= link_to "削除", admin_comment_path(comment), method: :delete, class: "btn btn-sm btn-danger w-100" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
-      <% end %>
+      </div>        
     </div>
   </div>
 </div>

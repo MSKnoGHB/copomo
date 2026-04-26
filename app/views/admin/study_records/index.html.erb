@@ -3,75 +3,47 @@
     <div class = "col-11 mx-auto">
       <div class = "row mb-3", style="border-bottom: 2px solid black;">
         <div class = "col-12">
-          <h3>学習記録一覧</h3>
+          <h3 class="pt-3 pb-3 m-0">学習記録一覧</h3>
         </div>
       </div>
-      <div class = "row mb-3">
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>ID</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>学習日</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>ユーザー名</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>学習テーマ</p>
-        </div>
-        <div class = "col-2 d-flex justify-content-center align-items-center">
-          <p>学習カテゴリ</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>学習ルーム</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>開始時間</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>終了時間</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>集中時間</p>
-        </div>
-        <div class = "col-1 d-flex justify-content-center align-items-center">
-          <p>削除ボタン</p>
+      <div class = "row">
+        <div class = "col-12">
+          <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class= "align-middle text-center">ID</th>
+                  <th class= "align-middle text-center">学習日</th>
+                  <th class= "align-middle">ユーザー名</th>
+                  <th class= "align-middle">学習テーマ</th>
+                  <th class= "align-middle">学習カテゴリ</th>
+                  <th class= "align-middle text-center">学習ルーム</th>
+                  <th class= "align-middle text-center">開始時間</th>
+                  <th class= "align-middle text-center">終了時間</th>
+                  <th class= "align-middle text-center">集中時間</th>
+                  <th class= "align-middle text-center">削除ボタン</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @finished_records.each do |study_record| %>
+                  <tr>
+                    <td class= "align-middle text-center"><%= study_record.id %></td>
+                    <td class= "align-middle text-center"><%= study_record.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_record.created_at.wday] %>) </td>
+                    <td class= "align-middle"><%= study_record.user.name %></td>
+                    <td class= "align-middle"><%= study_record.study_theme.theme_title%></td>
+                    <td class= "align-middle"><%= study_record.study_theme.study_category.category_title%></td>
+                    <td class= "align-middle text-center"><%= study_record.room.room_name%></td>
+                    <td class= "align-middle text-center"><%= study_record.started_at.strftime("%H:%M:%S") %></td>
+                    <td class= "align-middle text-center"><%= study_record.ended_at.strftime("%H:%M:%S") %></td>
+                    <td class= "align-middle text-center"><%= study_record.total_focus_minutes %></td>
+                    <td class= "align-middle text-center"><%= link_to "削除", admin_study_record_path(study_record), method: :delete, class: "btn btn-sm btn-danger w-100" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <% @finished_records.each do |study_record| %>
-        <div class = "row mb-3">
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.id %></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= study_record.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_record.created_at.wday] %>) </p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.user.name %></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.study_theme.theme_title%></p>
-          </div>
-          <div class = "col-2 d-flex justify-content-center align-items-center">
-            <p><%= study_record.study_theme.study_category.category_title%></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.room.room_name%></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.started_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.ended_at.strftime("%H:%M:%S") %></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= study_record.total_focus_minutes %></p>
-          </div>
-          <div class = "col-1 d-flex justify-content-center align-items-center">
-            <p><%= link_to "削除", admin_study_record_path(study_record), method: :delete, class: "btn btn-sm btn-danger" %></p>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

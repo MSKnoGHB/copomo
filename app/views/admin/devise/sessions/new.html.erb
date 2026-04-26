@@ -10,8 +10,8 @@
     </div>
   </div>  
   <div class="row">
-    <div class="col-12 card-body p-0 ">
-      <div class="card w-50 pt-3 pl-5 pr-5 mx-auto shadow-lg">
+    <div class="col-10 offset-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 card-body p-0 ">
+      <div class="card w-100 pt-3 pl-5 pr-5 mx-auto shadow-lg">
         <%= form_with model: @admin, url: session_path(resource_name), local: true do |f| %>
           <% if flash[:alert] %>
             <div class="alert alert-danger">
@@ -22,19 +22,16 @@
             <%= f.label :email, "メールアドレス" %><br />
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
           </div>
-
           <div class="field mb-3">
             <%= f.label :password, "パスワード" %><br />
             <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
           </div>
-          
           <% if devise_mapping.rememberable? %>
             <div class="field mb-3">
               <%= f.check_box :remember_me %>
               <%= f.label :remember_me, "ログイン状態を保存する" %>
             </div>
           <% end %>
-
           <div class="actions mb-1">
             <%= f.submit "ログイン", class: "btn btn-primary btn-lg w-100 mb-2"   %>
           </div>

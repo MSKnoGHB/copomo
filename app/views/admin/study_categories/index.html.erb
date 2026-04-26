@@ -3,94 +3,71 @@
     <div class = "col-11 mx-auto">
       <div class = "row mb-3", style="border-bottom: 2px solid black;">
         <div class = "col-12">
-          <h3>学習カテゴリ一覧</h3>
+          <h3 class="pt-3 pb-3 m-0">学習カテゴリ一覧</h3>
         </div>
       </div>
-      <div class = "row mb-3 d-flex align-items-center">
-        <div class = "col-1 text-center">
-          <p>ID</p>
-        </div>
-        <div class = "col-2 text-center">
-          <p>カテゴリ名</p>
-        </div>
-        <div class = "col-4 text-center">
-          <p>カテゴリ説明</p>
-        </div>
-        <div class = "col-2 text-center">
-          <p>更新日</p>
-        </div>
-        <div class = "col-1 text-center">
-          <p>ステータス</p>
-        </div>
-        <div class = "col-1 text-center">
-          <p>公開設定</p>
-        </div>
-        <div class = "col-1 text-center">
-          <p>編集</p>
-        </div>
-      </div>
-      <% @study_categories.each do |study_category| %>
-        <div class = "row mb-3 d-flex align-items-center">
-          <div class = "col-1 text-center">
-            <p><%= study_category.id %></p>
-          </div>
-          <div class = "col-2 text-center">
-            <p><%= study_category.category_title %></p>
-          </div>
-          <div class = "col-4 text-center">
-            <p><%= study_category.category_body %></p>
-          </div>
-          <div class = "col-2 text-center">
-            <p><%= study_category.updated_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_category.updated_at.wday] %>)</p>
-          </div>
-          <div class = "col-1 text-center">
-            <p><%= study_category.is_active ? "有効" : "無効" %></p>
-          </div>
-          <% if study_category.is_active %>
-            <div class = "col-1 text-center">
-              <p><%= link_to "無効化", activate_admin_study_category_path(study_category), method: :patch, class: "btn btn-sm btn-danger" %></p>
-            </div>
-          <% else %>
-            <div class = "col-1 text-center">
-              <p><%= link_to "有効化", activate_admin_study_category_path(study_category), method: :patch, class: "btn btn-sm btn-success" %></p>
-            </div>
-          <% end %>
-          <div class = "col-1 text-center">
-            <p><%= link_to "編集", edit_admin_study_category_path(study_category), class: "btn btn-sm btn-success" %></p>
-          </div>
-        </div>
-      <% end %>
-      <div class = "row mb-3 d-flex align-items-center">
+
+      <div class = "row">
         <div class = "col-12">
-          <h3>新規フォーム</h3>
+          <div class="table-responsive">
+            <table class="table table-hover text-nowrap">
+              <thead class="table-light">
+                <tr>
+                  <th class= "align-middle text-center">ID</th>
+                  <th class= "align-middle">カテゴリ名</th>
+                  <th class= "align-middle">カテゴリ説明</th>
+                  <th class= "align-middle text-center">更新日</th>
+                  <th class= "align-middle text-center">ステータス</th>
+                  <th class= "align-middle text-center">公開設定</th>
+                  <th class= "align-middle text-center">編集</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @study_categories.each do |study_category| %>
+                  <tr>
+                    <td class= "align-middle text-center"><%= study_category.id %></td>
+                    <td class= "align-middle"><%= study_category.category_title %></td>
+                    <td class= "align-middle"><%= study_category.category_body %></td>
+                    <td class= "align-middle text-center"><%= study_category.updated_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_category.updated_at.wday] %>)</td>
+                    <td class= "align-middle text-center"><%= study_category.is_active ? "有効" : "無効" %></td>
+                    <td class= "align-middle text-center">
+                      <% if study_category.is_active %>
+                        <%= link_to "無効化", activate_admin_study_category_path(study_category), method: :patch, class: "btn btn-sm btn-danger w-100" %>
+                      <% else %>
+                        <%= link_to "有効化", activate_admin_study_category_path(study_category), method: :patch, class: "btn btn-sm btn-success w-100" %>
+                      <% end %>
+                    </td>
+                    <td class= "align-middle text-center"><%= link_to "編集", edit_admin_study_category_path(study_category), class: "btn btn-sm btn-success w-100" %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+              <tfoot>
+                <%= form_with model: [:admin, @study_category] do |f| %>
+                  <tr>
+                    <td class= "align-middle text-center pt-5 pb-5">追加</td>
+                    <td class= "align-middle pt-5 pb-5">
+                      <% f.label :category_title %>
+                      <%= f.text_area :category_title, class: "form-control w-100" ,rows: 3, required: true %>
+                    </td>
+                    <td class= "align-middle pt-5 pb-5">
+                      <% f.label :category_body %>
+                      <%= f.text_area :category_body, class: "form-control w-100",rows: 3 %>
+                    </td>
+                    <td class= "align-middle text-center pt-5 pb-5"><%= Time.current.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[Time.current.wday] %>)</td>
+                    <td class= "align-middle text-center pt-5 pb-5"></td>
+                    <td class= "align-middle text-center pt-5 pb-5">
+                      <% f.label :is_active %>
+                      <%= f.radio_button :is_active, true %> 有効<br>
+                      <%= f.radio_button :is_active, false %> 無効
+                    </td>
+                    <td class= "align-middle text-center pt-5 pb-5"><%= f.submit "追加", class: "btn btn-outline-success w-100" %></td>
+                  </tr>
+                <% end %>
+              </tfoot>
+            </table>
+          </div>
         </div>
-      </div>
-      <%= form_with model: [:admin, @study_category] do |f| %>
-        <div class = "row mb-3 d-flex justify-content-center align-items-center">
-          <div class = "col-1 text-center">
-            <p class="m-0">追加</p>
-          </div>
-          <div class = "col-2 text-center">
-            <% f.label :category_title %>
-            <%= f.text_area :category_title, class: "form-control w-100", required: true %>
-          </div>
-          <div class = "col-4 text-center">
-            <% f.label :category_body %>
-            <%= f.text_area :category_body, class: "form-control w-100" %>
-          </div>
-          <div class = "col-2 text-center">
-            <%= Time.current.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[Time.current.wday] %>)
-          </div>
-          <div class = "col-2 text-center">
-            <%= f.submit "追加", class: "btn btn-outline-success w-100 " %>
-          </div>
-          <div class = "col-1 text-center">
-            <% f.label :is_active %>
-            <%= f.radio_button :is_active, true %> 有効<br>
-            <%= f.radio_button :is_active, false %> 無効
-          </div>
-        </div>
-      <% end %>
+      </div>       
     </div>
   </div>
 </div>

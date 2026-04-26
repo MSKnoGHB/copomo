@@ -13,19 +13,19 @@
     <header>
       <div class = "container-fluid h-100">
         <div class = "row h-100">
-          <div class = "col-6 h-100 px-0 py-0"> 
+          <div class = "col-7 h-100 px-0 py-0"> 
             <%= link_to admin_root_path do %>
               <%= image_tag "copomo_logo_t2.png", style: "height: 100%;" %>
             <% end %>
             <strong>COPOMO管理者</strong>
           </div>
-          <div class = "col-6 px-0 py-0 d-flex justify-content-end">
+          <div class = "col-5 px-0 py-0 d-flex justify-content-end">
             <nav class="navbar navbar-expand-lg navbar-light w-100 p-0 justify-content-end">
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse h-100 justify-content-end" id="navbarNav">
-                <ul class="navbar-nav header-list list-unstyled mb-0 h-100 align-items-center">
+                <ul class="navbar-nav header-list list-unstyled mb-0 h-100 align-items-center ms-auto w-100 w-lg-auto justify-content-end">
                   <% if admin_signed_in? %>
                     <li class = "nav-item">
                       <%= link_to "管理一覧",admin_root_path, class: "nav-link" %>
