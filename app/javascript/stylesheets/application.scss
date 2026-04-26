@@ -6,73 +6,18 @@
   box-sizing: border-box;
 }
 
-@media screen and (min-width:769px) {
-  body.homes-top h1,
-  body.homes-about h1{
-    font-size: 55px;
-  }
-
-  body.homes-top h2,
-  body.homes-about h2{
-    font-size: 30px;
-  }
-
-  body.homes-top h3,
-  body.homes-about h3{
-    font-size: 25px;
-  }
-}
-
-@media screen and (max-width:768px) {
-  body.homes-top h1,
-  body.homes-about h1{
-    font-size: 50px;
-  }
-
-  body.homes-top h2,
-  body.homes-about h2{
-    font-size: 25px;
-  }
-
-  body.homes-top h3,
-  body.homes-about h3{
-    font-size: 20px;
-  }
-}
-
-@media screen and (max-width:576px) {
-  body.homes-top h1,
-  body.homes-about h1{
-    font-size: 45px;
-    text-align: center;
-  }
-
-  body.homes-top h2,
-  body.homes-about h2{
-    font-size: 20px;
-    text-align: center;
-  }
-
-  body.homes-top h3,
-  body.homes-about h3{
-    font-size: 16px;
-    text-align: center;
-  }
-}
-
-
 body{
   font-family: 
-      "Inter", 
-      "system-ui", 
-      "-apple-system", 
-      "BlinkMacSystemFont", 
-      "Hiragino Sans",
-      "Hiragino Kaku Gothic ProN", 
-      "Segoe UI",
-      "Meiryo",
-      "noto sans jp",
-      sans-serif;
+    "Inter", 
+    "system-ui", 
+    "-apple-system", 
+    "BlinkMacSystemFont", 
+    "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", 
+    "Segoe UI",
+    "Meiryo",
+    "noto sans jp",
+    sans-serif;
 }
 
 header {
@@ -130,38 +75,9 @@ body.homes-about {
   background-attachment: fixed;
 }
 
-@media (max-width: 992px) {
-  
-  .navbar-collapse.show .navbar-nav {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    width: 60%;
-    margin-left: auto;
-  }
-
-  body.homes-top,
-  body.homes-about {
-    background-image: 
-      linear-gradient(
-        rgba(0,0,0,0.6),
-      ), url("../image/dog2.jpeg");
-  }
-  
-  .title-heading{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-  
 .bg-pale{
   background: rgba(248,249,250,0.5);
 }
-
-
 
 body.users-show {
   background-image: url("../image/watercolor_yellow.jpeg");
@@ -194,7 +110,6 @@ body.users-edit {
   background-attachment: fixed;
 }
 
-
 .site-title,
 .site-hero {
   color: white;
@@ -213,6 +128,7 @@ body.users-edit {
     rgba(255, 255, 100, 0) 100%
   );
 }
+
 .standard-room{
   background: linear-gradient(
     to right,
@@ -222,6 +138,7 @@ body.users-edit {
     rgba(140, 255, 100, 0) 100%
   );
 }
+
 .deep-room{
   background: linear-gradient(
     to right,
@@ -231,6 +148,7 @@ body.users-edit {
     rgba(0, 140, 100, 0) 100%
   );
 }
+
 .quick-room a,
 .standard-room a,
 .deep-room a{
@@ -259,10 +177,6 @@ body.users-edit {
   display: inline-flex;
   align-items: center;
 }
-
-
-
-
 
 .simple-calendar {
   table-layout: fixed; 
@@ -348,11 +262,109 @@ body.users-edit {
 .simple-calendar .day {
   font-weight: bold;
 }
-@media screen and (max-width:768px) {
 
+.liked {
+  color: red
+}
+
+.not-liked {
+  color: gray
+}
+
+.dashboard-card{
+  aspect-ratio: 1 / 1;
+  color: black;
+  font-weight: bold;
+}
+
+.dashboard-card:hover {
+  color: rgb(29, 156, 0);
+}
+
+footer {
+  background-color: rgba(255, 255, 255, 0.8);
+  height: 5rem;
+}
+
+@media (max-width: 992px) {
+  
+  .navbar-collapse.show .navbar-nav {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+    width: 60%;
+    margin-left: auto;
+  }
+
+  body.homes-top,
+  body.homes-about {
+    background-image: 
+      linear-gradient(
+        rgba(0,0,0,0.6),
+      ), url("../image/dog2.jpeg");
+  }
+  
+  .title-heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width:769px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 55px;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 30px;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 50px;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 25px;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 20px;
+  }
 }
 
 @media screen and (max-width:576px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 45px;
+    text-align: center;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 20px;
+    text-align: center;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 16px;
+    text-align: center;
+  }
+
   .calendar-heading {
     gap: 20px;
     font-size: 25px;
@@ -377,26 +389,4 @@ body.users-edit {
   .calendar-day-body {
     height: 40px;
   }
-}
-.liked {
-  color: red
-}
-
-.not-liked {
-  color: gray
-}
-
-.dashboard-card{
-  aspect-ratio: 1 / 1;
-  color: black;
-  font-weight: bold;
-}
-
-.dashboard-card:hover {
-  color: rgb(29, 156, 0);
-}
-
-footer {
-  background-color: rgba(255, 255, 255, 0.8);
-  height: 5rem;
 }
