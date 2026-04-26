@@ -1,36 +1,36 @@
-<div class="container-fluid top-container d-flex flex-column flex-fill">
-  <div class = "row m-0 pt-5 pr-5 pl-5 pb-0"> 
-    <div class = "col-12 col-sm-12 col-md-12 col-lg-6 site-title p-0">
-      <h1 class="mb-2">COPOMO</h1>
-      <h2 class="ml-3">〜学習継続支援型コミュニティ〜</h2>
+<div class="container-fluid top-container d-flex flex-column flex-fill m-5 m-sm-5 mt-md-5">
+  <div class = "row"> 
+    <div class = "col-12 col-sm-12 col-md-12  site-title p-0">
+      <h1 class="m-3">COPOMO</h1>
+      <h2 class="ml-sm-3 mb-5">〜学習継続支援型コミュニティ〜</h2>
     </div>
   </div>
-  <div class = "row m-0 p-5">
-    <div class = "col-12 col-sm-12 col-md-12 col-lg-6 site-hero p-0">
-      <h3 class="ml-3 mb-4">新感覚の学習スタイルを。</h3>
-      <h3 class="ml-3 mb-4">ポモドーロタイマー ✕ みんなで共有。</h3>
-      <h3 class="ml-3 mb-4">集中も休憩も、ひとりじゃない。</h3>
-      <h3 class="ml-3"><strong>COPOMO</strong>で、新しい自己学習を体験しよう。</h3>
+  <div class = "row mt-0 ml-sm-5 ml-md-5">
+    <div class = "col-12 col-sm-12 col-md-12  site-hero p-0">
+      <h3 class="mb-4">新感覚の学習スタイルを。</h3>
+      <h3 class="mb-4">ポモドーロタイマー ✕ みんなで共有。</h3>
+      <h3 class="mb-4">集中も休憩も、ひとりじゃない。</h3>
+      <h3 class="mb-5 mb-sm-5 mb-md-5"><strong>COPOMO</strong>で、新しい自己学習を体験しよう。</h3>
     </div>
   </div>
-  <div class = "row mt-auto justify-content-center">
+  <div class = "row justify-content-center">
     <% if user_signed_in? %>
-      <div class = "col-12  mr-lg-3 offset-lg-6 col-sm-12 col-md-6 col-lg-2">
-        <%= link_to public_rooms_path, class: "btn btn-warning btn-lg w-100 mb-3 py-5" do %>
+      <div class = "col-12 col-sm-12 col-md-4 offset-md-8">
+        <%= link_to public_rooms_path, class: "btn btn-warning w-100 py-5" do %>
           <i class="fa-solid fa-pencil">  学習開始</i>
         <% end %>
       </div>
     <% else %>
-      <div class = "col-12  mr-lg-3 offset-lg-6 col-sm-12 col-md-6 col-lg-2">
-        <%= link_to new_user_registration_path, class: "btn btn-success btn-lg w-100 mb-3 py-5" do %>
+      <div class = "col-12 col-sm-12 col-md-3 offset-md-6">
+        <%= link_to new_user_registration_path, class: "btn btn-success w-100 mb-3 py-md-4" do %>
           <i class="fa-solid fa-user-plus">  新規登録</i>
         <% end %>
       </div>
-      <div class = "col-12 col-sm-12 col-md-6 col-lg-2">
-        <%= link_to new_user_session_path, class: "btn btn-primary btn-lg w-100 mb-3 py-5" do %>
+      <div class = "col-12 col-sm-12 col-md-3">
+        <%= link_to new_user_session_path, class: "btn btn-primary w-100 mb-3 py-md-4" do %>
           <i class="fa-solid fa-right-to-bracket">  ログイン</i>
         <% end %>
-        <%= link_to public_users_guest_sign_in_path, class: "btn btn-secondary btn-sm w-100 mb-3 sign_in", method: :post do%>
+        <%= link_to public_users_guest_sign_in_path, class: "btn btn-secondary btn-sm w-100 sign_in", method: :post do%>
           <i class="fa-solid fa-right-to-bracket">  ゲストログイン（閲覧用）</i>
         <% end %>
       </div>

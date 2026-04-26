@@ -47,6 +47,7 @@ class Public::StudyThemesController < ApplicationController
   def edit
     @study_theme = StudyTheme.find(params[:id])
     @study_categories = StudyCategory.all
+    @user = current_user
     
   end
 

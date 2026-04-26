@@ -1,12 +1,11 @@
 <div class = "container-fluid min-vh-100 user-page-show">
   <div class = "row">
     <div class = "col-12 col-sm-12 col-md-3 col-lg-2 pr-0 pl-0 text-center">
-      <h3>ユーザ情報</h3>
-
-      <%= image_tag @user.get_image_resize, class:"d-block mx-auto w-75 w-sm-100", style: "aspect-ratio: 1 / 1; object-fit: cover;" %>
+      <h3 class="pt-3 pb-3 m-0">ユーザ情報</h3>
+      <%= image_tag @user.get_image_resize, class:"d-block mx-auto w-75 w-sm-100 mb-3", style: "aspect-ratio: 1 / 1; object-fit: cover;" %>
       <p>ユーザ名：<%= @user_name %></p>
       <% if @user == current_user && !@user.guest_user? %>
-        <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-success" %>
+        <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-success mb-3" %>
       <% end %>
     </div>
     <div class = "col-12 col-sm-12 col-md-9 col-lg-10">
@@ -14,31 +13,39 @@
         <div class = "col-12">
           <div class = "row">
             <div class = "col-12">
-              <h3>学習履歴</h3>
+              <h3 class="pt-3 pb-3 m-0">学習履歴</h3>
             </div>
           </div>
           <div class = "row">
-            <% @recent_records.each_with_index do |record, i| %>
-              <% next if record.ended_at.nil? %>
-              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+            <% if @recent_records.empty? %>
+              <div class="col-12 mb-3">
                 <div class="card shadow-sm p-3 h-100">
-                  <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
-                    <div class = "row">
-                      <div class = "col-12">
-                        <p>学習<%= i + 1 %></p>
-                      </div>
-                    </div>
-                    <div class = "row">
-                      <div class = "col-12">
-                        <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
-                        <p>学習ルーム：<%= record.room.room_name %></p>
-                        <p>学習テーマ：<%= record.study_theme.theme_title %></p>
-                        <p>集中時間：<%= record.total_focus_minutes %>分</p>
-                      </div>
-                    </div>
-                  <% end %>
+                  有効な学習履歴がありません
                 </div>
               </div>
+            <% else %>
+              <% @recent_records.each_with_index do |record, i| %>
+                <% next if record.ended_at.nil? %>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-3">
+                  <div class="card shadow-sm p-3 h-100">
+                    <%= link_to public_study_record_path(record), class: "text-decoration-none text-dark" do %>
+                      <div class = "row">
+                        <div class = "col-12">
+                          <p>学習<%= i + 1 %></p>
+                        </div>
+                      </div>
+                      <div class = "row">
+                        <div class = "col-12">
+                          <p>実施日：<%= record.ended_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[record.ended_at.wday] %>)</p>
+                          <p>学習ルーム：<%= record.room.room_name %></p>
+                          <p>学習テーマ：<%= record.study_theme.theme_title %></p>
+                          <p>集中時間：<%= record.total_focus_minutes %>分</p>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
             <% end %>
           </div>
           <div class = "row mb-3" >
@@ -74,9 +81,18 @@
                 </div>
                 <div class = "row">
                   <div class = "col-12">
-                    <% @study_themes.each_with_index do |study_theme, i| %>
-                      <p>テーマ<%= i + 1 %>：<%= study_theme.theme_title %></p>
-                    <% end %>
+                    <% if @study_themes.empty? %>
+                      有効な学習テーマがありません
+                    <% else %>
+                      <% @display_study_themes.each_with_index do |study_theme, i| %>
+                        <p>テーマ<%= i + 1 %>：<%= study_theme.theme_title %></p>
+                      <% end %>
+                      <% if @other_study_themes_count > 0 %>
+                        <p class = "mb-0 d-flex justify-content-end ">
+                          その他"<strong><%=@other_study_themes_count%>件</strong>"の学習テーマあり
+                        </p>
+                      <% end %>
+                    <% end%>
                   </div>
                 </div>
               </div>
@@ -97,7 +113,7 @@
               <div class="calendar-day-header">
                 <%= date.day %>
                 <% if records.present? %>
-                  <strong class="text-primary" style="font-size: 0.75rem;">
+                  <strong class="text-primary">
                     <%= records.sum(&:total_focus_minutes) %>分
                   </strong>
                 <% end %>
@@ -107,6 +123,9 @@
                   <div class="calendar-theme-breakdown">
                     <%= title %>: <%= minutes %>分
                   </div>
+
+
+                  
                 <% end %>
               </div>
             <% end %>

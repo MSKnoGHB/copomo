@@ -6,18 +6,73 @@
   box-sizing: border-box;
 }
 
+@media screen and (min-width:769px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 55px;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 30px;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width:768px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 50px;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 25px;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width:576px) {
+  body.homes-top h1,
+  body.homes-about h1{
+    font-size: 45px;
+    text-align: center;
+  }
+
+  body.homes-top h2,
+  body.homes-about h2{
+    font-size: 20px;
+    text-align: center;
+  }
+
+  body.homes-top h3,
+  body.homes-about h3{
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
+
 body{
   font-family: 
-      "Inter",                           /* 1. 欧文用（数字やアルファベットが綺麗） */
-      "system-ui",                      /* 2. OS標準のUIフォント */
-      "-apple-system",                  /* 3. iOS/Mac用 (San Francisco) */
-      "BlinkMacSystemFont",             /* 4. 古いMac Chrome用 */
-      "Hiragino Sans",                  /* 5. Mac/iOS用の高品質な日本語 */
-      "Hiragino Kaku Gothic ProN",      /* 6. 古いMac用の予備 */
-      "Segoe UI",                       /* 7. Windowsのシステムフォント */
-      "Meiryo",                         /* 8. Windowsの予備 */
-      "noto sans jp",                   /* 9. Googleフォント（読み込み設定が必要） */
-      sans-serif;                       /* 10. 最終手段（ブラウザ標準のゴシック） */
+      "Inter", 
+      "system-ui", 
+      "-apple-system", 
+      "BlinkMacSystemFont", 
+      "Hiragino Sans",
+      "Hiragino Kaku Gothic ProN", 
+      "Segoe UI",
+      "Meiryo",
+      "noto sans jp",
+      sans-serif;
 }
 
 header {
@@ -75,14 +130,14 @@ body.homes-about {
   background-attachment: fixed;
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 992px) {
   
   .navbar-collapse.show .navbar-nav {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    width: 50%;
+    width: 60%;
     margin-left: auto;
   }
 
@@ -183,12 +238,31 @@ body.users-edit {
   font-size: 30px;
   text-decoration: none;
 }
+
 .quick-room a:hover,
 .standard-room a:hover,
 .deep-room a:hover{ 
   color: #666;
-
 }
+
+.user-show-link {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+.user-show-link:hover {
+  text-decoration:none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+
+
 
 .simple-calendar {
   table-layout: fixed; 
@@ -212,7 +286,6 @@ body.users-edit {
   font-size: 1rem;
   font-weight: bold;
 }
-
 
 .simple-calender table{
   table-layout: fixed;
@@ -275,7 +348,36 @@ body.users-edit {
 .simple-calendar .day {
   font-weight: bold;
 }
+@media screen and (max-width:768px) {
 
+}
+
+@media screen and (max-width:576px) {
+  .calendar-heading {
+    gap: 20px;
+    font-size: 25px;
+  }
+  .calendar-heading a {
+    padding: 2px 5px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: normal;
+  }
+
+  .calendar-day-header{
+    font-size: 8px;
+    padding: 2px; 
+  }
+  .calendar-theme-breakdown{
+    font-size: 5px;
+  }
+  .simple-calendar td {
+    height: 40px; 
+  }
+  .calendar-day-body {
+    height: 40px;
+  }
+}
 .liked {
   color: red
 }
