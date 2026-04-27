@@ -23,7 +23,8 @@
 - 集中して学習に励みたいとき
 
 ## 設計書
-​後ほど作成
+​<img width="1722" height="1331" alt="AWS構成図_COPOMO" src="https://github.com/user-attachments/assets/dec87acb-c151-4525-a77b-613bc4f1dcf4" />
+
 
 ## 開発環境
 - OS：MAC
@@ -33,4 +34,8 @@
 - IDE：Visual Studio Code（VSCode）
 ​
 ## 使用素材
-後ほど作成
+- ページアイコン：Font Awesome
+- TOP／ABOUT画面背景: フリー素材ぱくたそ
+- 各ページ水彩画背景: illustAC
+- サイトアイコン: Google Gemini (AI生成画像)
+- チャットスタンプ: 友人の作品（※本人の許可を得て使用）
