@@ -2,10 +2,11 @@ class Admin::StudyCategoriesController < ApplicationController
   layout "admin"
 
   def create
-    study_category = StudyCategory.new(study_category_params)
-    if study_category.save
-      redirect_to admin_study_categories_path
+    @study_category = StudyCategory.new(study_category_params)
+    if @study_category.save
+      redirect_to admin_study_categories_path, notice: "学習カテゴリを作成しました"
     else
+      @study_categories = StudyCategory.all
       render :index
     end
   end
@@ -20,9 +21,9 @@ class Admin::StudyCategoriesController < ApplicationController
   end
 
   def update
-    study_category = StudyCategory.find(params[:id])
-    if study_category.update(study_category_params)
-      redirect_to admin_study_categories_path
+    @study_category = StudyCategory.find(params[:id])
+    if @study_category.update(study_category_params)
+      redirect_to admin_study_categories_path, notice: "学習カテゴリを更新しました"
     else
       render :edit
     end
