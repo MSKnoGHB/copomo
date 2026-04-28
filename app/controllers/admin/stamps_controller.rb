@@ -4,8 +4,9 @@ class Admin::StampsController < ApplicationController
   def create
     @stamp = Stamp.new(stamp_params)
     if @stamp.save
-      redirect_to admin_stamps_path
+      redirect_to admin_stamps_path, notice: "スタンプを作成しました"
     else
+      @stamps = Stamp.all
       render :index
     end
   end
@@ -22,7 +23,7 @@ class Admin::StampsController < ApplicationController
   def update
     @stamp = Stamp.find(params[:id])
     if @stamp.update(stamp_params)
-      redirect_to admin_stamps_path
+      redirect_to admin_stamps_path, notice: "スタンプを更新しました"
     else
       render :edit
     end

@@ -8,30 +8,45 @@
       </div>
       <div class = "row">
         <div class = "col-12">
+          <% if flash[:notice] %>
+            <div class="alert alert-success">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
           <div class="table-responsive">
-            <table class="table table-hover text-nowrap">
-              <thead class="table-light">
-                <tr>
-                  <th class= "align-middle text-center">ID</th>
-                  <th class= "align-middle">スタンプ名</th>
-                  <th class= "align-middle">スタンプイメージ</th>
-                  <th class= "align-middle text-center">更新日</th>
-                  <th class= "align-middle text-center">ステータス</th>
-                  <th class= "align-middle text-center"></th>
-                </tr>
-              </thead>
-              <tbody>
+            <%= form_with model: [:admin, @stamp] do |f| %>
+              <% if @stamp.errors.any? %>
+                <div class="alert alert-danger">
+                  <strong><%= @stamp.errors.count %>件のエラーが発生しました</strong>
+                  <ul>
+                    <% @stamp.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <table class="table table-hover text-nowrap">
+                <thead class="table-light">
                   <tr>
-                    <td class= "align-middle text-center"><%= @stamp.id %></td>
-                    <td class= "align-middle"><%= @stamp.stamp_name %></td>
-                    <td class= "align-middle"><%= image_tag @stamp.stamp_image, width: 100 %></td>
-                    <td class= "align-middle text-center"><%= @stamp.updated_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[@stamp.updated_at.wday] %>)</td>
-                    <td class= "align-middle text-center"><%= @stamp.is_active ? "有効" : "無効" %></td>
-                    <td class= "align-middle text-center"></td>
+                    <th class= "align-middle text-center">ID</th>
+                    <th class= "align-middle">スタンプ名</th>
+                    <th class= "align-middle">スタンプイメージ</th>
+                    <th class= "align-middle text-center">更新日</th>
+                    <th class= "align-middle text-center">ステータス</th>
+                    <th class= "align-middle text-center"></th>
                   </tr>
-              </tbody>
-              <tfoot>
-                <%= form_with model: [:admin, @stamp] do |f| %>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td class= "align-middle text-center"><%= @stamp.id %></td>
+                      <td class= "align-middle"><%= @stamp.stamp_name_was || @stamp.stamp_name %></td>
+                      <td class= "align-middle"><%= image_tag @stamp.stamp_image, width: 100 %></td>
+                      <td class= "align-middle text-center"><%= @stamp.updated_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[@stamp.updated_at.wday] %>)</td>
+                      <td class= "align-middle text-center"><%= @stamp.is_active ? "有効" : "無効" %></td>
+                      <td class= "align-middle text-center"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
                   <tr>
                     <td class= "align-middle text-center pt-5 pb-5">編集</td>
                     <td class= "align-middle pt-5 pb-5">
@@ -54,9 +69,9 @@
                       <%= f.submit "更新", class: "btn btn-outline-success w-100 " %>
                     </td>
                   </tr>
-                <% end %>
-              </tfoot>
-            </table>
+                </tfoot>
+              </table>
+            <% end %>
           </div>
         </div>
       </div> 
