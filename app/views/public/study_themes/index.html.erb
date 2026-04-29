@@ -1,6 +1,15 @@
 <div class="container-fluid">
   <div class = "row">
-    <div class = "col-11 mx-auto">
+    <div class = "col-11 text-center">
+      <div class = "row">
+        <div class = "col-12">
+          <% if flash[:notice] %>
+            <div class="alert alert-success">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
+        </div>
+      </div>
       <div class = "row">
         <div class = "col-12">
           <h3 class="pt-3 pb-3 m-0">学習テーマ一覧</h3>

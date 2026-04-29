@@ -15,7 +15,8 @@ class User < ApplicationRecord
   
   has_one_attached :user_image
   
-  validates :name, presence: true, uniqueness: true, length: { maximum: 20}
+  NAME_MAX_LENGTH = 20
+  validates :name, presence: true, uniqueness: true, length: { maximum: NAME_MAX_LENGTH}
 
   #Activestorage
   def get_image

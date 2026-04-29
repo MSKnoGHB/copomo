@@ -116,7 +116,7 @@ class Public::StudyRecordsController < ApplicationController
       active_users_list_html: admin_html
     }
     #画面遷移_学習記録投稿画面へ
-    redirect_to edit_public_study_record_path(study_record.id)
+    redirect_to edit_public_study_record_path(study_record.id), notice: "学習を正常に終了しました"
   end
 
   def edit
@@ -138,7 +138,7 @@ class Public::StudyRecordsController < ApplicationController
 
     if @study_record.update(study_record_params)
       Rails.logger.info "study_record changes: #{@study_record.saved_changes}"
-      redirect_to public_study_record_path(@study_record.id)
+      redirect_to public_study_record_path(@study_record.id), notice: "学習を記録しました"
     else
       @room = @study_record.room.room_name
       @study_category = @study_record.study_theme.study_category.category_title
@@ -147,14 +147,15 @@ class Public::StudyRecordsController < ApplicationController
       @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
       @total_focus_minutes = @study_record.total_focus_minutes
       #study_intervalを表示
-      @study_intervals = @study_record.study_intervals      render :edit
+      @study_intervals = @study_record.study_intervals 
+      render :edit
     end
   end
 
   def destroy
     @study_record = current_user.study_records.find(params[:id])
     @study_record.destroy
-    redirect_to public_user_study_records_path(@study_record.user)
+    redirect_to public_user_study_records_path(@study_record.user), notice: "学習を削除しました"
   end
 
   private

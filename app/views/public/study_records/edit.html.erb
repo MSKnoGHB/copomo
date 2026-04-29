@@ -1,8 +1,16 @@
 <div class = "container-fluid">
+  <div class = "row">
+    <div class = "col-12 text-center">
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <div class = "row ">
-    
     <div class = "col-12 col-md-12 col-lg-6">
-      <h3>学習記録詳細</h3>
+      <h3>学習記録編集</h3>
       <%= form_with model: [:public, @study_record], url: post_public_study_record_path(@study_record), method: :patch do |f| %>
       <p class = "mb-3">学習ルーム: <%= @room %></p>
       <p class = "mb-3">学習カテゴリ: <%= @study_category %></p>
@@ -14,17 +22,23 @@
         <%= f.label :is_publish, "タイムラインに表示する" %>
         <%= f.check_box :is_publish, checked: true %>
       </div>
-        <%= f.label :record_body, "投稿内容", class: "form-label" %>
+        <%= f.label :record_body, "投稿内容(#{StudyRecord::RECORD_BODY_MAX_LENGTH}文字以下)", class: "form-label" %>
         <% if @study_record.errors.any? %>
-          <% @study_record.errors.full_messages.each do |message| %>
-            <p><%= message %></p>
-          <% end %>
-        <% end %>
+          <div class="alert alert-danger">
+            <strong><%= @study_record.errors.count %>件のエラーが発生しました</strong>
+            <ul>
+              <% @study_record.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>         
         <%= f.text_area :record_body, class: "form-control mb-3", rows: 5 %>
         <%= f.submit "学習内容を投稿する", class: "btn btn-outline-success w-100 mb-3" %>
       <% end %>  
+     
     </div>
-    
+
     <div class = "col-12 col-md-12 col-lg-6">
       <div class = "row mr-3">
         <div class = "col-12 m-3">
