@@ -57,6 +57,7 @@ class Public::StudyThemesController < ApplicationController
       redirect_to public_user_study_themes_path(@study_theme.user)
     else
       @study_categories = StudyCategory.all
+      @user = current_user
       render :edit
     end
   end
@@ -66,8 +67,6 @@ class Public::StudyThemesController < ApplicationController
     @study_theme.update(is_active: false)
     redirect_to public_user_study_themes_path(@study_theme.user)
   end
-
-
 
   private
 

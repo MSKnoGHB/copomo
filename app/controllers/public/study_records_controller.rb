@@ -147,7 +147,8 @@ class Public::StudyRecordsController < ApplicationController
       @ended_at = @study_record.ended_at.strftime("%Y/%m/%d %H:%M:%S")
       @total_focus_minutes = @study_record.total_focus_minutes
       #study_intervalを表示
-      @study_intervals = @study_record.study_intervals      render :edit
+      @study_intervals = @study_record.study_intervals 
+      render :edit
     end
   end
 

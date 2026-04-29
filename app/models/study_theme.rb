@@ -4,8 +4,10 @@ class StudyTheme < ApplicationRecord
   belongs_to :user
   belongs_to :study_category
 
-  validates :theme_title, presence: true, uniqueness:{ scope: :user_id }, length: { maximum: 20 }
-  validates :theme_body, length: { maximum: 100 }
+  THEME_TITLE_MAX_LENGTH = 20
+  THEME_BODY_MAX_LENGTH = 100
+  validates :theme_title, presence: true, uniqueness:{ scope: :user_id }, length: { maximum: THEME_TITLE_MAX_LENGTH }
+  validates :theme_body, length: { maximum: THEME_BODY_MAX_LENGTH }
   validates :theme_color, presence: true
 
   enum theme_color: {

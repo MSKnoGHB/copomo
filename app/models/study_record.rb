@@ -5,8 +5,9 @@ class StudyRecord < ApplicationRecord
   belongs_to :user
   belongs_to :room
   belongs_to :study_theme
-  
-  validates :record_body, length: { maximum: 500 }
+
+  RECORD_BODY_MAX_LENGTH = 500
+  validates :record_body, length: { maximum: RECORD_BODY_MAX_LENGTH  }
 
   def self.search_for(content, method)
     active_study_records = StudyRecord.where(is_publish: true).joins(:study_theme)

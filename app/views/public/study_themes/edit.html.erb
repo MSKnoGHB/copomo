@@ -6,6 +6,16 @@
           <h3>学習テーマ選択</h3>
         </div>
       </div>
+      <% if @study_theme.errors.any? %>
+        <div class="alert alert-danger">
+          <strong><%= @study_theme.errors.count %>件のエラーが発生しました</strong>
+          <ul>
+            <% @study_theme.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <div class="row mx-auto">
         <div class="col-12">
           <%= form_with model: [:public, @study_theme] do |f| %>
@@ -13,14 +23,9 @@
             <%= f.collection_select :study_category_id, @study_categories, :id, :category_title, { prompt: "学習カテゴリを選択" }, { class: "form-select w-100 mb-3" } %>
             <%= f.label :theme_color, "学習テーマ色", class: "form-label  w-100"  %>
             <%= f.select :theme_color, StudyTheme.theme_colors_i18n.invert, { include_blank: "学習テーマ色を選択"}, { class: "form-select  w-100 mb-3" }%>
-            <%= f.label :theme_title, "学習テーマ名", class: "form-label  w-100" %>
+            <%= f.label :theme_title, "学習テーマ名(#{StudyTheme::THEME_TITLE_MAX_LENGTH}文字以下)", class: "form-label  w-100" %>
             <%= f.text_area :theme_title, class: "form-control mb-3", rows: 1 %>
-            <%= f.label :theme_body, "学習テーマ説明", class: "form-label  w-100"  %>
-            <% if @study_theme.errors.any? %>
-              <% @study_theme.errors.full_messages.each do |message| %>
-                <p><%= message %></p>
-              <% end%>
-            <% end%>
+            <%= f.label :theme_body, "学習テーマ説明(#{StudyTheme::THEME_BODY_MAX_LENGTH}文字以下)", class: "form-label  w-100"  %>
             <%= f.text_area :theme_body, class: "form-control mb-3", rows: 5 %>
             <%= f.submit "学習内容を更新する", class: "btn btn-outline-success w-100 mb-3" %>
           <% end %>
