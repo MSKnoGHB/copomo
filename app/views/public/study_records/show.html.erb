@@ -53,6 +53,16 @@
           </div>
           <div class="row mb-3", style="height: 25vh;">
             <div class = "col-12 border h-100   overflow-auto  bg-pale">
+              <% if @comment.errors.any? %>
+                <div class="alert alert-danger">
+                  <strong><%= @comment.errors.count %>件のエラーが発生しました</strong>
+                  <ul>
+                    <% @comment.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
               <% @comments.each do |comment|%>
                 <div class="card shadow-sm pt-0 pr-3 pl-3 pb-0 mb-3">
                   <div class = "row">
@@ -99,7 +109,7 @@
               <% else %>
                 <div class = "col-12 p-0 d-flex align-items-center">
                   <%= form_with model: [@study_record, @comment], url: public_study_record_comments_path(@study_record),html: { class: "w-100" } do |f| %>
-                    <%= f.text_area :comment_body, class: "form-control mb-0  bg-pale", rows: 2, placeholder: "コメントを入力..." %>
+                    <%= f.text_area :comment_body, class: "form-control mb-0  bg-pale", rows: 2, placeholder: "コメントを入力...(#{Comment::COMMENT_MAX_LENGTH}文字以内)" %>
                     <div class = "d-flex justify-content-end align-items-center mt-1 mb-1">
                       <i class="fa-regular fa-pen-to-square mr-3">
                         <%= @comments.count %>コメント

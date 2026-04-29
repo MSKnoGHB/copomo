@@ -16,7 +16,7 @@
               </div>
             <% end %>
             <div class="mb-3">
-              <%= f.label :name, "ユーザ名(#{User::NAME_MAX_LENGTH}文字以下)" %>
+              <%= f.label :name, "ユーザ名(#{User::NAME_MAX_LENGTH}文字以内)" %>
               <%= f.text_field :name, autocomplete: "name", class: "mb-3 form-control" %>
             </div>
             <div class="mb-3">
