@@ -1,5 +1,14 @@
 <div class = "container-fluid">
   <div class = "row">
+    <div class = "col-12 text-center">
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class = "row">
     <!-- study_record詳細一覧 -->
     <div class = "col-12 col-md-12 col-lg-6">
       <h3>学習記録詳細</h3>

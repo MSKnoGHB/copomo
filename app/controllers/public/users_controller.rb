@@ -29,7 +29,7 @@ class Public::UsersController < ApplicationController
     #ユーザ情報を更新
     if @user.update(user_params)
       sleep(3)
-      redirect_to public_user_path(@user), notice: '更新されました。'
+      redirect_to public_user_path(@user), notice: 'ユーザ情報が更新されました。'
     else
       render :edit
     end

@@ -48,13 +48,12 @@ class Public::StudyThemesController < ApplicationController
     @study_theme = StudyTheme.find(params[:id])
     @study_categories = StudyCategory.all
     @user = current_user
-    
   end
 
   def update
     @study_theme = StudyTheme.find(params[:id])
     if @study_theme.update(study_theme_params)
-      redirect_to public_user_study_themes_path(@study_theme.user)
+      redirect_to public_user_study_themes_path(@study_theme.user), notice: "学習テーマを更新しました"
     else
       @study_categories = StudyCategory.all
       @user = current_user
@@ -65,7 +64,7 @@ class Public::StudyThemesController < ApplicationController
   def destroy
     @study_theme = StudyTheme.find(params[:id])
     @study_theme.update(is_active: false)
-    redirect_to public_user_study_themes_path(@study_theme.user)
+    redirect_to public_user_study_themes_path(@study_theme.user), notice: "学習テーマを削除しました"
   end
 
   private
