@@ -40,7 +40,7 @@ class Public::UsersController < ApplicationController
     #ユーザ情報を物理削除
     @user.destroy!
     sign_out current_user
-    redirect_to new_user_registration_path
+    redirect_to new_user_registration_path, notice: '退会しました。'
     #ユーザ情報を論理削除
     #@user.update!(is_active: false)
     #sign_out current_user
