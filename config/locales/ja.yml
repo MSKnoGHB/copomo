@@ -33,6 +33,10 @@ ja:
     sessions:
       user:
         signed_in: "ログインしました。"
+        signed_out: "ログアウトしました。"
+    registrations:
+      user:
+        signed_up: "アカウント登録が完了しました。"
 
   enums:
     study_theme:

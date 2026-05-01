@@ -1,4 +1,13 @@
 <div class="container">
+  <div class = "row">
+    <div class = "col-12 text-center">
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12 text-center">
       <%= image_tag "copomo_logo_t1.png",class: "img-fluid mt-1 mb-1", style: "max-height: 100px;" %>
