@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - uses: actions/checkout@v2
-    
+
     - name: Deploy to Server 1
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
@@ -18,7 +18,7 @@ jobs:
         HOST_NAME: ${{ secrets.HOST_NAME_1 }}
       run: |
         echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} 'cd copomo &&
+        ssh -vvv -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOST_NAME} 'cd copomo &&
         git pull origin main &&
         ~/.rbenv/shims/bundle install &&
         ~/.rbenv/shims/bundle exec rails assets:precompile RAILS_ENV=production &&
