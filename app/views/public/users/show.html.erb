@@ -12,7 +12,7 @@
     <div class = "col-12 col-sm-12 col-md-3 col-lg-2 pr-0 pl-0 text-center">
       <h3 class="pt-3 pb-3 m-0">ユーザ情報</h3>
       <%= image_tag @user.get_image_resize, class:"d-block mx-auto w-75 w-sm-100 mb-3", style: "aspect-ratio: 1 / 1; object-fit: cover;" %>
-      <p>ユーザ名：<%= @user_name %></p>
+      <p>ユーザ名：<%= @user.name %></p>
       <% if @user == current_user && !@user.guest_user? %>
         <%= link_to "ユーザ名編集", edit_public_user_path(@user), class: "btn btn-success mb-3" %>
       <% end %>

@@ -7,6 +7,7 @@ class Public::StudyRecordsController < ApplicationController
     if params[:user_id]
       @user = User.find(params[:user_id])
       @study_records = @user.study_records.order(created_at: :desc)
+      @finished_records = @study_records.where.not(ended_at: nil)
     else
       @study_records = StudyRecord.order(created_at: :desc)
       @users = User.all 
@@ -15,7 +16,7 @@ class Public::StudyRecordsController < ApplicationController
   end
 
   def show
-    #学習記録詳細表示
+    #学習記録詳細表示app/views/public/study_records
     @study_record = StudyRecord.find(params[:id])
     @room = @study_record.room.room_name
     @study_category = @study_record.study_theme.study_category.category_title
