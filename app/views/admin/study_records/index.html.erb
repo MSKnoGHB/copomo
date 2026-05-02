@@ -30,9 +30,9 @@
                     <td class= "align-middle text-center"><%= study_record.id %></td>
                     <td class= "align-middle text-center"><%= study_record.created_at.strftime("%-m月%-d日") %>(<%= %w(日 月 火 水 木 金 土)[study_record.created_at.wday] %>) </td>
                     <td class= "align-middle"><%= study_record.user.name %></td>
-                    <td class= "align-middle"><%= study_record.study_theme.theme_title%></td>
-                    <td class= "align-middle"><%= study_record.study_theme.study_category.category_title%></td>
-                    <td class= "align-middle text-center"><%= study_record.room.room_name%></td>
+                    <td class= "align-middle"><%= study_record.study_theme.theme_title %></td>
+                    <td class= "align-middle"><%= study_record.study_theme.study_category.category_title %></td>
+                    <td class= "align-middle text-center"><%= study_record.room.room_name %></td>
                     <td class= "align-middle text-center"><%= study_record.started_at.strftime("%H:%M:%S") %></td>
                     <td class= "align-middle text-center"><%= study_record.ended_at.strftime("%H:%M:%S") %></td>
                     <td class= "align-middle text-center"><%= study_record.total_focus_minutes %></td>
