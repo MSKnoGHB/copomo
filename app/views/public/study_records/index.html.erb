@@ -28,12 +28,14 @@
                   <th class= "align-middle text-center">ルーム</th>
                   <th class= "align-middle text-center">カテゴリ</th>
                   <th class= "align-middle text-center">テーマ</th>
-                  <th class= "align-middle text-center">投稿表示</th>
-                  <th class= "align-middle text-center"></th>
+                  <% if @user == current_user %>
+                    <th class= "align-middle text-center">投稿表示</th>
+                    <th class= "align-middle text-center"></th>
+                  <% end %> 
                 </tr>
               </thead>
               <tbody>
-                <% @study_records.each_with_index do |record, i| %>
+                <% @finished_records.each_with_index do |record, i| %>
                   <tr>
                     <td class= "align-middle text-center"><%= i + 1 %></td>
                     <td class= "align-middle text-center"><%= record.started_at.strftime("%Y/%m/%d") %></td>
@@ -42,13 +44,15 @@
                     <td class= "align-middle text-center"><%= record.room.room_name %></td>
                     <td class= "align-middle text-center"><%= record.study_theme.study_category.category_title %></td>
                     <td class= "align-middle text-center"><%= record.study_theme.theme_title %></td>
-                    <td class= "align-middle text-center"><%= record.is_publish ? "表示" : "非表示" %></td>
-                    <td class= "align-middle text-center">
-                      <% if @user == current_user %>
+                    <% if @user == current_user %>
+                      <td class= "align-middle text-center">
+                        <%= record.is_publish ? "表示" : "非表示" %>
+                      </td>
+                      <td class= "align-middle text-center">
                         <%= link_to "詳細", public_study_record_path(record), class: "btn btn-sm btn-primary" %>
                         <%= link_to "削除", public_study_record_path(record), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-danger" %>
-                      <% end %>
-                    </td>
+                      </td>
+                    <% end %> 
                   </tr>
                 <% end %>
               </tbody>

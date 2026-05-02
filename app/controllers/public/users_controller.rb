@@ -1,14 +1,13 @@
 class Public::UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update, :destroy]
-  before_action :ensure_guest_user, only: [ :edit]
+  before_action :ensure_guest_user, only: [:edit]
 
   def show
     @user = User.find(params[:id])
-    #ユーザ情報を表示
     @all_records = @user.study_records.includes(:study_theme)
-    @user_name = @user.name
     #最新４件の学習を表示_各情報を表示
     @recent_records = @user.study_records.order(ended_at: :desc).limit(4)
+
     #study_themesはis_active_TRUEのものだけ表示
     @study_themes = @user.study_themes.where(is_active: true)
     @display_study_themes = @study_themes.limit(6)
@@ -41,10 +40,6 @@ class Public::UsersController < ApplicationController
     @user.destroy!
     sign_out current_user
     redirect_to new_user_registration_path, notice: '退会しました。'
-    #ユーザ情報を論理削除
-    #@user.update!(is_active: false)
-    #sign_out current_user
-    #redirect_to public_root_path
   end
 
   private
