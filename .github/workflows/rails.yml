@@ -10,6 +10,7 @@ jobs:
     steps:
 
     - uses: actions/checkout@v2
+    
     - name: Deploy to Server 1
       env:
         PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
