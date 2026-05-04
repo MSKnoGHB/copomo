@@ -97,7 +97,7 @@
     </div>
     <div class="col-12 order-1 w-25 col-md-2 order-md-2 w-100 pt-5 d-flex flex-column justify-content-center align-items-center">
       <span id="mode" style="font-size: 50px;"><%=@timer[:mode]%></span>
-      <span id="timer" style="font-size: 50px;"><%=@timer[:remaining]%></span>
+      <span id="timer" style="font-size: 50px;" data-mode="<%=@timer[:mode]%>"><%=@timer[:remaining]%></span>
       <div id = "study-control-area" class = "d-flex flex-column justify-content-center w-100">
         <%= render 'shared/study_control_area', study_status: @study_status, study_record: @study_record, active_room_access: @active_room_access, study_interval: @interval, current_mode: @timer[:mode] %>
       </div>
@@ -140,21 +140,15 @@
 <script>
   function sendAutoPaused() {
 
-
-
-
     const isAutoReload = sessionStorage.getItem("isAutoReload") === "true";
-
     if (window.autoPausedSent){
       console.log("送信済み → return")
       return;
     } 
-
     if (window.skipAutoPaused) {
-    console.log("skipフラグ検知 → return");
+      console.log("skipフラグ検知 → return");
     return;
    }
-
     if (isAutoReload){
       console.log("autoReload検知 → return");
       sessionStorage.removeItem("isAutoReload");
