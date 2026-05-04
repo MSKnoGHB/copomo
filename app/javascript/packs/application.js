@@ -19,6 +19,7 @@ window.Chart = Chart;
 
 import * as bootstrap from 'bootstrap'; 
 import { event } from "jquery";
+
 window.bootstrap = bootstrap;
 
 Rails.start()
@@ -26,6 +27,24 @@ Turbolinks.start()
 ActiveStorage.start()
 
 document.addEventListener("turbolinks:load", () =>{
+  console.log("preview属性:", document.documentElement.hasAttribute("data-turbolinks-preview"));
+  if (document.documentElement.hasAttribute("data-turbolinks-preview")) return;
+  console.log("turbolinks:load発火 → setInterval追加"); 
+  console.log("発火 soundPlayed:", window.soundPlayed, "playSound:", sessionStorage.getItem("playSound"));
+  const playSound = sessionStorage.getItem("playSound");
+  window.soundPlayed = false;
+  sessionStorage.removeItem("playSound"); 
+  if (playSound) {
+    const focusSound = '/audios/focus_sound.mp3';
+    const breakSound = '/audios/break_sound.mp3';
+    const sound = playSound == "集中" ? focusSound : breakSound;
+    const audio = new Audio(sound);
+    audio.play().catch((e) => {
+      console.log('音声の再生がブロックされました', e);
+    });
+    console.log("turbolinks:load 発火");
+  }
+  
   const timer = document.getElementById("timer")
   if (!timer) return
 
@@ -38,7 +57,6 @@ document.addEventListener("turbolinks:load", () =>{
   }
 
   updateDisplay()
-
   const intervalId = setInterval(() =>{
     remaining -= 1
     updateDisplay()
@@ -47,8 +65,14 @@ document.addEventListener("turbolinks:load", () =>{
       if (modalOpen) {
         remaining = 10;
       } else {
+        const timer = document.getElementById("timer");
+        if (!timer) return;
+        const currentMode = timer.dataset.mode;
+   
         sessionStorage.setItem("isAutoReload", "true");
+        sessionStorage.setItem("playSound", currentMode);
         clearInterval(intervalId);
+        console.log("リロード実行");
         window.location.reload();
       }
     }
