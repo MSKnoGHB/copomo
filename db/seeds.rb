@@ -8,8 +8,8 @@
 #Room.destroy_all
 
 Room.find_or_create_by!(room_name: "クイック") do |room|
-  room.focus_minutes = 1
-  room.break_minutes = 1
+  room.focus_minutes = 15
+  room.break_minutes = 5
   room.cycle_started_at = Time.current
 end
 
@@ -24,6 +24,13 @@ Room.find_or_create_by!(room_name: "ディープ") do |room|
   room.break_minutes = 10
   room.cycle_started_at = Time.current
 end
+
+Room.find_or_create_by!(room_name: "テスト") do |room|
+  room.focus_minutes = 1
+  room.break_minutes = 1
+  room.cycle_started_at = Time.current
+end
+
 
 StudyCategory.find_or_create_by!(category_title: "学校・受験") do |study_category|
   study_category.category_body = nil
