@@ -63,4 +63,9 @@ class Public::RoomsController < ApplicationController
     @chat_log = ChatLog.new
     @stamps = Stamp.where(is_active: true)
   end
+
+  def check_timer
+    @room = Room.find(params[:id])
+    render json: @room.timer_status
+  end
 end

@@ -27,6 +27,11 @@ Turbolinks.start()
 ActiveStorage.start()
 
 document.addEventListener("turbolinks:load", () =>{
+
+
+  const timer = document.getElementById("timer")
+  if (!timer) return  
+
   console.log("preview属性:", document.documentElement.hasAttribute("data-turbolinks-preview"));
   if (document.documentElement.hasAttribute("data-turbolinks-preview")) return;
   console.log("turbolinks:load発火 → setInterval追加"); 
@@ -45,8 +50,7 @@ document.addEventListener("turbolinks:load", () =>{
     console.log("turbolinks:load 発火");
   }
   
-  const timer = document.getElementById("timer")
-  if (!timer) return
+
 
   let remaining = parseInt(timer.innerText)
   function updateDisplay(){
@@ -56,24 +60,28 @@ document.addEventListener("turbolinks:load", () =>{
     timer.innerText = minutes + ":" + seconds
   }
 
-  updateDisplay()
   const intervalId = setInterval(() =>{
     remaining -= 1
     updateDisplay()
-    if (remaining <= 0){
+    if (remaining <= 10) {
       const modalOpen = document.body.classList.contains('modal-open');
       if (modalOpen) {
         remaining = 10;
       } else {
-        const timer = document.getElementById("timer");
-        if (!timer) return;
-        const currentMode = timer.dataset.mode;
-   
-        sessionStorage.setItem("isAutoReload", "true");
-        sessionStorage.setItem("playSound", currentMode);
-        clearInterval(intervalId);
-        console.log("リロード実行");
-        window.location.reload();
+        const roomId = timer.dataset.roomId;
+        fetch(`/public/rooms/${roomId}/check_timer`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.remaining <= 0) {
+              const currentMode = timer.dataset.mode;
+              sessionStorage.setItem("isAutoReload", "true");
+              sessionStorage.setItem("playSound", currentMode);
+              clearInterval(intervalId);
+              window.location.reload();
+            } else {
+              remaining = data.remaining;
+            }
+          })
       }
     }
   }, 1000)
