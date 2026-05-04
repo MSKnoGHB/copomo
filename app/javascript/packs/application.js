@@ -28,31 +28,20 @@ ActiveStorage.start()
 
 document.addEventListener("turbolinks:load", () =>{
 
-
+  // リターン条件　タイマー表示有無
   const timer = document.getElementById("timer")
-  if (!timer) return  
+  if (!timer) return
+  console.log("リターンしました(!timer)");
 
-  console.log("preview属性:", document.documentElement.hasAttribute("data-turbolinks-preview"));
-  if (document.documentElement.hasAttribute("data-turbolinks-preview")) return;
-  console.log("turbolinks:load発火 → setInterval追加"); 
-  console.log("発火 soundPlayed:", window.soundPlayed, "playSound:", sessionStorage.getItem("playSound"));
-  const playSound = sessionStorage.getItem("playSound");
-  window.soundPlayed = false;
-  sessionStorage.removeItem("playSound"); 
-  if (playSound) {
-    const focusSound = '/audios/focus_sound.mp3';
-    const breakSound = '/audios/break_sound.mp3';
-    const sound = playSound == "集中" ? focusSound : breakSound;
-    const audio = new Audio(sound);
-    audio.play().catch((e) => {
-      console.log('音声の再生がブロックされました', e);
-    });
-    console.log("turbolinks:load 発火");
-  }
-  
+  // リターン条件　モーダル有無
+  const modalOpen = document.body.classList.contains('modal-open');
+  if (modalOpen) return
+  console.log("リターンしました(modalOpen)");
 
-
+  // ページ読み込み時のサーバーの残り秒数を取得
   let remaining = parseInt(timer.innerText)
+
+  //分:秒形式に変換しタイマーに表示
   function updateDisplay(){
     let minutes = Math.floor(remaining / 60)
     let seconds = remaining % 60
@@ -60,29 +49,62 @@ document.addEventListener("turbolinks:load", () =>{
     timer.innerText = minutes + ":" + seconds
   }
 
+  //関数　モード切り替え時にタイマー音を鳴らす
+  function playTimerSound(mode){
+    const focusSound = '/audios/focus_sound.mp3';
+    const breakSound = '/audios/break_sound.mp3';
+    const sound = mode == "集中" ? focusSound : breakSound;
+    console.log(`${mode}でサウンドを再生します`);
+    new Audio(sound).play();
+    console.log(`${sound}の音声を再生しました`);
+  }
+
+  //関数呼び出し　タイマー音
+  const savedMode = sessionStorage.getItem("playSound");
+  console.log(`${savedMode}を取得しました`);
+  if (savedMode){
+    playTimerSound(savedMode);
+    console.log(`${savedMode}の音声を呼び出しました`);
+    sessionStorage.removeItem("playSound"); 
+    console.log(`アイテム(playSound)をリムーブしました(${savedMode})`);
+  }
+
+  //1秒毎にカウントダウンタイマーを更新
   const intervalId = setInterval(() =>{
-    remaining -= 1
-    updateDisplay()
-    if (remaining <= 10) {
-      const modalOpen = document.body.classList.contains('modal-open');
-      if (modalOpen) {
-        remaining = 10;
-      } else {
-        const roomId = timer.dataset.roomId;
-        fetch(`/public/rooms/${roomId}/check_timer`)
-          .then(res => res.json())
-          .then(data => {
-            if (data.remaining <= 0) {
-              const currentMode = timer.dataset.mode;
-              sessionStorage.setItem("isAutoReload", "true");
-              sessionStorage.setItem("playSound", currentMode);
-              clearInterval(intervalId);
-              window.location.reload();
-            } else {
-              remaining = data.remaining;
-            }
-          })
-      }
+    if (remaining > 0){
+      remaining -= 1
+      updateDisplay()
+    } else {
+      //サーバーのタイマーチェック
+      const roomId = timer.dataset.roomId;
+      fetch(`/public/rooms/${roomId}/check_timer`)
+        .then(res => res.json())
+        .then(server_data => {
+          //リロード処理
+          console.log(`サーバーからタイマーを取得、チェックを開始します`);
+          if (server_data.remaining <= 0) {
+            const currentModeSave = timer.dataset.mode;
+            sessionStorage.setItem("isAutoReload", "true");
+            sessionStorage.setItem("playSound", currentModeSave);
+            console.log(`アイテム(playSound)に保存しました(${currentModeSave})`);
+            clearInterval(intervalId);
+            console.log(`チェックが完了しました リロードします`);
+            window.location.reload();
+          } else {
+            remaining = server_data.remaining;
+            console.log(`サーバー内タイマーを同期しました`)
+            const currentModeSave = timer.dataset.mode;
+            sessionStorage.setItem("isAutoReload", "true");
+            sessionStorage.setItem("playSound", currentModeSave);
+            console.log(`アイテム(playSound)に保存しました(${currentModeSave})`);
+            clearInterval(intervalId);
+            console.log(`チェックが完了しました リロードします`);
+            window.location.reload();
+          }
+        })
     }
   }, 1000)
+
+
+  
 });
