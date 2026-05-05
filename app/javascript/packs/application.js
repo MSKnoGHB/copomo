@@ -30,11 +30,13 @@ document.addEventListener("turbolinks:load", () =>{
 
   // リターン条件　タイマー表示有無
   const timer = document.getElementById("timer")
-  console.log("timer:", timer) 
-  if (!timer) return
-  console.log("リターンを回避しました(!timer)");
-
-  // リターン条件　モーダル有無
+  if (timer) {
+    console.log("RoomPageのため処理を実行します");
+  } else { 
+    console.log("RoomPageではないため処理を中断します");
+    return;
+  };
+ 
   const entryModal = document.getElementById('entryModal');
   const showModal = timer.dataset.showModal === 'true';
 
@@ -72,9 +74,7 @@ document.addEventListener("turbolinks:load", () =>{
       const focusSound = '/audios/focus_sound.mp3';
       const breakSound = '/audios/break_sound.mp3';
       const sound = mode == "集中" ? focusSound : breakSound;
-      console.log(`${mode}でサウンドを再生します`);
       new Audio(sound).play();
-      console.log(`${sound}の音声を再生しました`);
     }
 
     //関数　リロード処理
@@ -93,13 +93,23 @@ document.addEventListener("turbolinks:load", () =>{
     //auto_paused実行判断
     function sendAutoPaused() {
       const skipJudgement = sessionStorage.getItem("skipAutoPaused")
-      console.log(`skipAutoPausedをセットしました${skipJudgement}`);
+      console.log(`アイテムskipAutoPausedを取得しスキップをジャッジします${skipJudgement}`);
       if(skipJudgement){
+        clearInterval(intervalId);
         console.log(`sendAutoPausedをスキップしました`);
+        window.removeEventListener("beforeunload", sendAutoPaused);
+        console.log(`beforeunloadをリセットしました`);
+        document.removeEventListener("turbolinks:before-visit", sendAutoPaused);
+        console.log(`turbolinks:before-visitをリセットしました`);
         return;
       } else {
+        clearInterval(intervalId);
         navigator.sendBeacon("/public/study_intervals/auto_paused");
         console.log(`sendAutoPausedを実行しました`);
+        window.removeEventListener("beforeunload", sendAutoPaused);
+        console.log(`beforeunloadをリセットしました`);
+        document.removeEventListener("turbolinks:before-visit", sendAutoPaused);
+        console.log(`turbolinks:before-visitをリセットしました`);
       };
     }
 
