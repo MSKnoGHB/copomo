@@ -1,12 +1,12 @@
 @use '~bootstrap/scss/bootstrap';
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   font-family: 
     "Inter", 
     "system-ui", 
@@ -44,7 +44,6 @@ header {
   color: black;
   font-size: large;
   text-decoration: none;
-
 }
 
 .nav-item :hover {
@@ -69,18 +68,18 @@ body.homes-about {
     rgba(0,0,0,0.7) 50%,
     rgba(0,0,0,0.4) 60%,
     rgba(0,0,0,0) 70%
-    ),url("../image/dog2.jpeg");
+    ),url("../images/bg_dog.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
-.bg-pale{
+.bg-pale {
   background: rgba(248,249,250,0.5);
 }
 
 body.users-show {
-  background-image: url("../image/watercolor_yellow.jpeg");
+  background-image: url("../images/bg_watercolor_yellow.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -88,7 +87,7 @@ body.users-show {
 
 body.rooms-show,
 body.study_records-edit {
-  background-image: url("../image/watercolor_blue.jpeg");
+  background-image: url("../images/bg_watercolor_blue.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -96,7 +95,7 @@ body.study_records-edit {
 
 body.study_records-show,
 body.users-edit {
-  background-image: url("../image/watercolor_pink.jpeg");
+  background-image: url("../images/bg_watercolor_pink.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -104,7 +103,7 @@ body.users-edit {
 
 .timeline-page,
 .search-page {
-  background-image: url("../image/watercolor_green.jpeg");
+  background-image: url("../images/bg_watercolor_green.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -115,11 +114,11 @@ body.users-edit {
   color: white;
 }
 
-.about-body{
+.about-body {
   color: white;
 }
 
-.quick-room{
+.quick-room {
   background: linear-gradient(
     to right,
     rgb(255, 255, 100) 0%,
@@ -129,7 +128,7 @@ body.users-edit {
   );
 }
 
-.standard-room{
+.standard-room {
   background: linear-gradient(
     to right,
     rgb(140, 255, 100) 0%,
@@ -139,7 +138,7 @@ body.users-edit {
   );
 }
 
-.deep-room{
+.deep-room {
   background: linear-gradient(
     to right,
     rgb(0, 140, 255) 0%,
@@ -151,7 +150,7 @@ body.users-edit {
 
 .quick-room a,
 .standard-room a,
-.deep-room a{
+.deep-room a {
   color: black;
   font-size: 30px;
   text-decoration: none;
@@ -159,7 +158,7 @@ body.users-edit {
 
 .quick-room a:hover,
 .standard-room a:hover,
-.deep-room a:hover{ 
+.deep-room a:hover { 
   color: #666;
 }
 
@@ -191,6 +190,7 @@ body.users-edit {
   margin-bottom: 20px;
   font-size: 2rem;
 }
+
 .calendar-heading a {
   background-color: #17a2b8;
   color: white;
@@ -201,7 +201,7 @@ body.users-edit {
   font-weight: bold;
 }
 
-.simple-calender table{
+.simple-calender table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
@@ -213,6 +213,7 @@ body.users-edit {
   width: 14.28%; 
   word-break: break-all; 
 }
+
 .simple-calendar th {
   padding: 10px;
   text-align: center;
@@ -287,7 +288,6 @@ footer {
 }
 
 @media (max-width: 992px) {
-  
   .navbar-collapse.show .navbar-nav {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 1rem;
@@ -302,7 +302,7 @@ footer {
     background-image: 
       linear-gradient(
         rgba(0,0,0,0.6),
-      ), url("../image/dog2.jpeg");
+      ), url("../images/bg_dog.jpeg");
   }
   
   .title-heading{
@@ -369,6 +369,7 @@ footer {
     gap: 20px;
     font-size: 25px;
   }
+
   .calendar-heading a {
     padding: 2px 5px;
     border-radius: 20px;
@@ -380,12 +381,15 @@ footer {
     font-size: 8px;
     padding: 2px; 
   }
+
   .calendar-theme-breakdown{
     font-size: 5px;
   }
+
   .simple-calendar td {
     height: 40px; 
   }
+
   .calendar-day-body {
     height: 40px;
   }
