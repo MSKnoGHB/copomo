@@ -48,7 +48,12 @@ Rails.application.routes.draw do
       resources :study_themes, only: [:index]
     end
 
-    resources :rooms, only: [:index, :show]
+    resources :rooms, only: [:index, :show] do
+      member do 
+        get :check_timer
+      end
+    end
+    
     resources :room_accesses, only: [:create, :update] do
       collection do
         patch :status_change

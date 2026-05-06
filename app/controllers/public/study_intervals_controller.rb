@@ -98,16 +98,14 @@ class Public::StudyIntervalsController < ApplicationController
   end
 
   def auto_paused
-    #学習開始前の画面遷移時は処理をスキップ
+
     study_record = current_user.study_records.find_by(ended_at: nil)
-    return unless study_record
-    #入室前の画面遷移時は処理をスキップ
     room_access = current_user.room_accesses.find_by(is_active: true)
-    return unless room_access
-    #一時離席時の画面遷移時は処理をスキップ
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
     study_status = room_access.study_status
+    #一時離席時の画面遷移時は処理をスキップ
     return if study_interval.nil? && study_status == "paused"
+    Rails.logger.debug "auto_pausedがreturnされませんでした、処理を続けます"
  
     if study_interval
       study_interval.update!(ended_at: Time.current)
