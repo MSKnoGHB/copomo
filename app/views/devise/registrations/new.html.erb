@@ -10,7 +10,7 @@
   </div>
   <div class="row">
     <div class="col-12 text-center">
-      <%= image_tag "copomo_logo_t1.png",class: "img-fluid mt-1 mb-1", style: "max-height: 100px;" %>
+      <%= image_tag "logo_copomo_type2.png", class: "img-fluid mt-1 mb-1", style: "max-height: 100px;" %>
     </div>
   </div>
   <div class="row">
@@ -32,18 +32,15 @@
               </ul>
             </div>
           <% end %>
-
           <div class="mb-3">
             <%= f.label :name, "ユーザー名" %>
             <em>(20文字以下)</em><br />
             <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
           </div>
-
           <div class="mb-3">
             <%= f.label :email, "メールアドレス" %><br />
             <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
           </div>
-
           <div class="mb-3">
             <%= f.label :password, "パスワード" %>
             <% if @minimum_password_length %>
@@ -51,17 +48,14 @@
             <% end %><br />
             <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
           </div>
-
           <div class="mb-3">
             <%= f.label :password_confirmation, "パスワード(確認用)" %><br />
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
           </div>
-
           <div class="actions">
             <%= f.submit "新規登録", class: "btn btn-success btn-lg w-100 mb-2"  %>
           </div>
         <% end %>
-        
         <%= render "devise/shared/links" %>
       </div>
     </div>  
