@@ -9,7 +9,7 @@
 
 Room.find_or_create_by!(room_name: "クイック") do |room|
   room.focus_minutes = 15
-  room.break_minutes = 5
+  room.break_minutes = 3
   room.cycle_started_at = Time.current
 end
 
