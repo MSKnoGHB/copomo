@@ -125,7 +125,6 @@ document.addEventListener("turbolinks:load", () =>{
           console.log(`サーバーからタイマー情報を取得しました`);
           if (server_data.remaining <= 0) {
             intervalReloadProcess();
-            
           } else {
             remaining = server_data.remaining;
             console.log(`サーバー内タイマーを同期しました`)
@@ -135,9 +134,9 @@ document.addEventListener("turbolinks:load", () =>{
     }
   }, 1000)
   
+  //モーダル表示　スタンプ選択
   const stampBtn = document.getElementById("stamp-btn")
   const stampModal = document.getElementById("stamp_modal")
-
   if (stampBtn && stampModal){
     stampBtn.addEventListener("click", () => {
       stampModal.classList.toggle("d-none")
@@ -155,7 +154,6 @@ document.addEventListener("turbolinks:load", () =>{
   }
 
   //学習終了ボタンを押したときに"skipAutoPaused"のフラグを立てる
-
   Rails.confirm = (message, element) => {
     console.log('Rails.confirm が呼ばれました');
     console.log('element:', element);
@@ -169,6 +167,7 @@ document.addEventListener("turbolinks:load", () =>{
     return result;
   };
   
+  //画面遷移前処理
   window.addEventListener("beforeunload", sendAutoPaused);
   document.addEventListener("turbolinks:before-visit", sendAutoPaused);
 
