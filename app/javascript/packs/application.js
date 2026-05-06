@@ -37,146 +37,139 @@ document.addEventListener("turbolinks:load", () =>{
     return;
   };
  
+  // リターン条件　モーダル表示有無
   const entryModal = document.getElementById('entryModal');
   const showModal = timer.dataset.showModal === 'true';
-
-  if (entryModal && showModal) {
-    // モーダルあり・表示条件あり → モーダル表示してから処理
+  if (showModal){
     const myModal = new bootstrap.Modal(entryModal, {
       backdrop: 'static',
       keyboard: false
     });
     myModal.show();
-    entryModal.addEventListener('hidden.bs.modal', initAll, { once: true });
-  } else {
-    // モーダルなし or 表示不要 → 直接処理
-    initAll();
+    console.log(`モーダルを表示のためreturnします`);
+    return;
+  };
+  console.log(`モーダルを非表示のため処理を実行します`);
+  //変数定義 ページ読み込み時のサーバーの残り秒数を取得
+  let remaining = parseInt(timer.innerText)
+
+  //関数　分:秒形式に変換しタイマーに表示
+  function updateDisplay(){
+    let minutes = Math.floor(remaining / 60)
+    let seconds = remaining % 60
+    seconds = seconds.toString().padStart(2, '0')
+    timer.innerText = minutes + ":" + seconds
   }
 
-  function initAll() {
-    // ページ読み込み時のサーバーの残り秒数を取得
-    let remaining = parseInt(timer.innerText)
+  //関数　モード切り替え時にタイマー音を鳴らす
+  function playTimerSound(mode){
+    const focusSound = '/audios/focus_sound.mp3';
+    const breakSound = '/audios/break_sound.mp3';
+    const sound = mode == "集中" ? focusSound : breakSound;
+    new Audio(sound).play();
+  }
 
-    //オートポーズスキップフラグをリセットする
+  //関数　インターバルリロード処理
+  function intervalReloadProcess(){
+    const currentModeSave = timer.dataset.mode;
+    sessionStorage.setItem("playSound", currentModeSave);
+    sessionStorage.setItem("skipAutoPaused", "true");
+    clearInterval(intervalId);
+    console.log(`リロードします`);
+    window.location.reload();
+  }
+
+  //auto_paused実行判断
+  function sendAutoPaused() {
+    const skipJudgement = sessionStorage.getItem("skipAutoPaused")
+    console.log(`skipJudgement = ${skipJudgement}`);
+    if(skipJudgement){
+      console.log(`sendAutoPausedをスキップしました`);
+      resetProcess()
+      return;
+    } else {
+      navigator.sendBeacon("/public/study_intervals/auto_paused");
+      console.log(`sendAutoPausedを実行しました`);
+      resetProcess()
+    };
+  }
+
+  // リセット処理
+  function resetProcess(){
+    clearInterval(intervalId);
     sessionStorage.removeItem("skipAutoPaused"); 
-    console.log(`skipAutoPausedをリセットしました${sessionStorage.getItem("skipAutoPaused")}`);
-
-    //関数　分:秒形式に変換しタイマーに表示
-    function updateDisplay(){
-      let minutes = Math.floor(remaining / 60)
-      let seconds = remaining % 60
-      seconds = seconds.toString().padStart(2, '0')
-      timer.innerText = minutes + ":" + seconds
-    }
-
-    //関数　モード切り替え時にタイマー音を鳴らす
-    function playTimerSound(mode){
-      const focusSound = '/audios/focus_sound.mp3';
-      const breakSound = '/audios/break_sound.mp3';
-      const sound = mode == "集中" ? focusSound : breakSound;
-      new Audio(sound).play();
-    }
-
-    //関数　リロード処理
-    function reloadProcess(){
-      const currentModeSave = timer.dataset.mode;
-      sessionStorage.setItem("skipAutoPaused", "true");
-      console.log(`skipAutoPausedをセットしました${sessionStorage.getItem("skipAutoPaused")}`);
-      sessionStorage.setItem("playSound", currentModeSave);
-      console.log(`アイテム(playSound)に保存しました(${currentModeSave})`);
-      clearInterval(intervalId);
-      console.log(`チェックが完了しました リロードします`);
-      //window.skipAutoPaused = false;
-      window.location.reload();
-    }
-
-    //auto_paused実行判断
-    function sendAutoPaused() {
-      const skipJudgement = sessionStorage.getItem("skipAutoPaused")
-      console.log(`アイテムskipAutoPausedを取得しスキップをジャッジします${skipJudgement}`);
-      if(skipJudgement){
-        clearInterval(intervalId);
-        console.log(`sendAutoPausedをスキップしました`);
-        window.removeEventListener("beforeunload", sendAutoPaused);
-        console.log(`beforeunloadをリセットしました`);
-        document.removeEventListener("turbolinks:before-visit", sendAutoPaused);
-        console.log(`turbolinks:before-visitをリセットしました`);
-        return;
-      } else {
-        clearInterval(intervalId);
-        navigator.sendBeacon("/public/study_intervals/auto_paused");
-        console.log(`sendAutoPausedを実行しました`);
-        window.removeEventListener("beforeunload", sendAutoPaused);
-        console.log(`beforeunloadをリセットしました`);
-        document.removeEventListener("turbolinks:before-visit", sendAutoPaused);
-        console.log(`turbolinks:before-visitをリセットしました`);
-      };
-    }
-
-    //関数呼び出し　タイマー音
-    const savedMode = sessionStorage.getItem("playSound");
-    console.log(`${savedMode}を取得しました`);
-    if (savedMode){
-      playTimerSound(savedMode);
-      sessionStorage.removeItem("playSound"); 
-      console.log(`アイテム(playSound)をリムーブしました(${savedMode})`);
-    }
-
-    //1秒毎にカウントダウンタイマーを更新
-    const intervalId = setInterval(() =>{
-      if (remaining > 0){
-        remaining -= 1
-        updateDisplay()
-      } else {
-        //サーバーのタイマーチェック
-        const roomId = timer.dataset.roomId;
-        fetch(`/public/rooms/${roomId}/check_timer`)
-          .then(res => res.json())
-          .then(server_data => {
-            //リロード処理
-            console.log(`サーバーからタイマーを取得、チェックを開始します`);
-            if (server_data.remaining <= 0) {
-              reloadProcess();
-            } else {
-              remaining = server_data.remaining;
-              console.log(`サーバー内タイマーを同期しました`)
-              reloadProcess();
-            }
-          })
-      }
-    }, 1000)
-    
-
-    //学習終了ボタンを押したときに"skipAutoPaused"のフラグを立てる
-    document.addEventListener("pointerdown", (event) => {
-      const skip_btn = event.target.closest('[data-skip-auto-paused="true"]');
-      if (skip_btn) {
-        sessionStorage.setItem("skipAutoPaused", "true");
-        console.log(`skipAutoPaused="true" をセットしました`);
-      }
-    });
-
-
-    const stampBtn = document.getElementById("stamp-btn")
-    const stampModal = document.getElementById("stamp_modal")
-
-    if (stampBtn && stampModal){
-      stampBtn.addEventListener("click", () => {
-        stampModal.classList.toggle("d-none")
-        stampModal.classList.toggle("d-flex")
-      })
-      document.querySelectorAll(".stamp-item").forEach(item => {
-        item.addEventListener("click",()=>{
-          document.getElementById("stamp-id").value = item.dataset.id
-          stampModal.classList.add("d-none")
-          stampModal.classList.remove("d-flex")
-          document.getElementById("chat-form").requestSubmit()
-          document.getElementById("stamp-id").value = ""
-        })
-      })
-    }
-
-    window.addEventListener("beforeunload", sendAutoPaused);
-    document.addEventListener("turbolinks:before-visit", sendAutoPaused);
+    window.removeEventListener("beforeunload", sendAutoPaused);
+    document.removeEventListener("turbolinks:before-visit", sendAutoPaused);
+    console.log(`4件のリセット処理を実行しました`);
   }
+
+  //関数呼び出し　タイマー音
+  const savedMode = sessionStorage.getItem("playSound");
+  if (savedMode){
+    playTimerSound(savedMode);
+    sessionStorage.removeItem("playSound"); 
+  }
+
+  //フロント側タイマーカウントダウン
+  const intervalId = setInterval(() =>{
+    if (remaining > 0){
+      remaining -= 1
+      updateDisplay()
+    } else {
+      //サーバー側のタイマーチェック
+      const roomId = timer.dataset.roomId;
+      fetch(`/public/rooms/${roomId}/check_timer`)
+        .then(res => res.json())
+        .then(server_data => {
+          //関数呼出し　インターバルリロード処理
+          console.log(`サーバーからタイマー情報を取得しました`);
+          if (server_data.remaining <= 0) {
+            intervalReloadProcess();
+            
+          } else {
+            remaining = server_data.remaining;
+            console.log(`サーバー内タイマーを同期しました`)
+            intervalReloadProcess();
+          }
+        })
+    }
+  }, 1000)
+  
+  const stampBtn = document.getElementById("stamp-btn")
+  const stampModal = document.getElementById("stamp_modal")
+
+  if (stampBtn && stampModal){
+    stampBtn.addEventListener("click", () => {
+      stampModal.classList.toggle("d-none")
+      stampModal.classList.toggle("d-flex")
+    })
+    document.querySelectorAll(".stamp-item").forEach(item => {
+      item.addEventListener("click",()=>{
+        document.getElementById("stamp-id").value = item.dataset.id
+        stampModal.classList.add("d-none")
+        stampModal.classList.remove("d-flex")
+        document.getElementById("chat-form").requestSubmit()
+        document.getElementById("stamp-id").value = ""
+      })
+    })
+  }
+
+  //学習終了ボタンを押したときに"skipAutoPaused"のフラグを立てる
+
+  Rails.confirm = (message, element) => {
+    console.log('Rails.confirm が呼ばれました');
+    console.log('element:', element);
+    console.log('element.dataset:', element.dataset);
+    const result = window.confirm(message);
+    console.log('result:', result);
+    if (result && element.dataset.skipAutoPaused === "true") {
+      sessionStorage.setItem("skipAutoPaused", "true");
+      console.log(`skipAutoPaused="true" をセットしました`);
+    }
+    return result;
+  };
+  
+  window.addEventListener("beforeunload", sendAutoPaused);
+  document.addEventListener("turbolinks:before-visit", sendAutoPaused);
+
 });
