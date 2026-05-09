@@ -1,5 +1,4 @@
 class Public::StudyIntervalsController < ApplicationController
-
   skip_before_action :verify_authenticity_token, only: [:auto_paused]
 
   def index
@@ -20,12 +19,29 @@ class Public::StudyIntervalsController < ApplicationController
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "studying")
     Rails.logger.info "room_access changes: #{room_access.saved_changes}"
+    #roomにリダイレクト
+
     room_accesses = room.room_accesses.where(is_active: true)
 
-    #RoomModel内のメソッドでブロードキャスト
-    room = room_access.room
-    room.broadcast_active_users
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
 
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
+    #head :ok 
+    #redirect_to public_room_path(study_record.room_id)
     @active_room_access = room_access
     @study_record = study_record
     @study_status = @active_room_access.study_status
@@ -52,10 +68,25 @@ class Public::StudyIntervalsController < ApplicationController
 
     room_accesses = room.room_accesses.where(is_active: true)
 
-    #RoomModel内のメソッドでブロードキャスト
-    room = room_access.room
-    room.broadcast_active_users
- 
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
+    #head :ok 
+    #redirect_to public_room_path(study_record.room_id)
     @active_room_access = room_access
     @study_record = study_record
     @study_status = @active_room_access.study_status
@@ -66,12 +97,12 @@ class Public::StudyIntervalsController < ApplicationController
     end
   end
 
-  def auto_paused #学習中の画面遷移時の処理
+  def auto_paused
+
     study_record = current_user.study_records.find_by(ended_at: nil)
     room_access = current_user.room_accesses.find_by(is_active: true)
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
     study_status = room_access.study_status
-
     #一時離席時の画面遷移時は処理をスキップ
     return if study_interval.nil? && study_status == "paused"
     Rails.logger.debug "auto_pausedがreturnされませんでした、処理を続けます"
@@ -88,9 +119,23 @@ class Public::StudyIntervalsController < ApplicationController
 
     room = room_access.room
     room_accesses = room.room_accesses.where(is_active: true)
+    public_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = render_to_string(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
 
-    #他ユーザへブロードキャスト
-    room.broadcast_active_users
+    ActionCable.server.broadcast "room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
 
     @active_room_access = room_access
     @study_record = study_record

@@ -1,5 +1,4 @@
 class Admin::StampsController < ApplicationController
-
   layout "admin"
 
   def create
@@ -40,9 +39,8 @@ class Admin::StampsController < ApplicationController
       redirect_to admin_stamps_path
   end
 
-  private
   def stamp_params
     params.require(:stamp).permit(:stamp_name, :stamp_image, :is_active)
   end
-  
+
 end

@@ -1,5 +1,4 @@
 class Admin::ChatLogsController < ApplicationController
-
   layout "admin"
 
   def destroy
@@ -13,5 +12,5 @@ class Admin::ChatLogsController < ApplicationController
     }
     head :no_content
   end
-  
+
 end

@@ -1,5 +1,4 @@
 class Admin::StudyRecordsController < ApplicationController
-
   layout "admin"
   
   def index
@@ -12,5 +11,4 @@ class Admin::StudyRecordsController < ApplicationController
     @study_record.destroy
     redirect_to admin_study_records_path
   end
-  
 end

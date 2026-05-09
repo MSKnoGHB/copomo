@@ -1,5 +1,4 @@
 class Admin::StudyCategoriesController < ApplicationController
-
   layout "admin"
 
   def create

@@ -1,7 +1,5 @@
 class Admin::CommentsController < ApplicationController
-
   layout "admin"
-  
   def index
     @comments = Comment.all
   end
@@ -11,5 +9,4 @@ class Admin::CommentsController < ApplicationController
     comment.destroy
     redirect_to admin_comments_path
   end
-  
 end

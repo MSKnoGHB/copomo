@@ -1,5 +1,4 @@
 class Admin::RoomsController < ApplicationController
-
   layout "admin"
   before_action :authenticate_admin!
 
@@ -20,5 +19,4 @@ class Admin::RoomsController < ApplicationController
     @chat_log = ChatLog.new
     @stamps = Stamp.all
   end
-  
 end
