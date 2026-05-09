@@ -1,7 +1,6 @@
 class Public::RoomAccessesController < ApplicationController
 
   def create
-    @room = Room.find(room_access_params[:room_id])
     #既存のstudy_themeを選択した際の処理
     room_access = current_user.room_accesses.create!(
       room_access_params.merge(
@@ -12,32 +11,15 @@ class Public::RoomAccessesController < ApplicationController
     )
     Rails.logger.info "作成されたデータ: #{room_access}"
 
-    room_accesses = @room.room_accesses.where(is_active: true)
-
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals: {room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals: {room_accesses: room_accesses, is_admin: true}
-    )
-
-    ActionCable.server.broadcast "room_channel_#{@room.id}", {
-      type: "active_users_list",
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{@room.id}", {
-      type: "active_users_list",
-      active_users_list_html: admin_html
-    }
+    #RoomModel内のメソッドでブロードキャスト
+    @room = Room.find(room_access_params[:room_id])
+    @room.broadcast_active_users
     
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end
 
   def status_change
-    
     room_access = current_user.room_accesses.find(params[:room_access_id])
     study_status = room_access.study_status
 
@@ -49,31 +31,15 @@ class Public::RoomAccessesController < ApplicationController
       Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     end
 
+    #RoomModel内のメソッドでブロードキャスト
     room = room_access.room
-    room_accesses = room.room_accesses.where(is_active: true)
-
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: true}
-    )
-
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: admin_html
-    }
+    room.broadcast_active_users
 
     @active_room_access = room_access
     @study_record = current_user.study_records.find(params[:study_record_id])
     @study_status = @active_room_access.study_status
     @timer = room.timer_status
+    
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end

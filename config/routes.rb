@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  devise_for :admins, controllers: {
-    sessions: "admin/devise/sessions",
-    registrations: "admin/devise/registrations"
-  }
+  devise_for :admins, controllers: {sessions: "admin/devise/sessions"}
 
   namespace :admin do
 
@@ -35,8 +32,6 @@ Rails.application.routes.draw do
       end
     end
 
-    
-    
   end
 
   namespace :public do
@@ -81,11 +76,13 @@ Rails.application.routes.draw do
     resources :study_themes, only: [:index,:create, :edit, :update, :destroy]
     resources :stamps, only: [:index]
     resources :follows, only: [:create, :destroy]
-    
+
     devise_scope :user do
-      post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+      post "guest_sign_in", to: "guest_logins#guest_sign_in"
     end
+
   end
+
 
   get '/search', to: 'searches#search'
 
