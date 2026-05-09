@@ -1,4 +1,5 @@
 class Admin::RoomAccessesController < ApplicationController
+
   def force_exit
     room_access = RoomAccess.find(params[:id])
     target_user = room_access.user
@@ -40,6 +41,6 @@ class Admin::RoomAccessesController < ApplicationController
     }
     # 管理者側の画面は、ボタンを押した後に何も返さない（またはJSで消す）
     head :no_content
-
   end
+  
 end

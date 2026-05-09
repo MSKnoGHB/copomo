@@ -19,29 +19,11 @@ class Public::StudyIntervalsController < ApplicationController
     room_access = current_user.room_accesses.find(params[:room_access_id])
     room_access.update!(study_status: "studying")
     Rails.logger.info "room_access changes: #{room_access.saved_changes}"
-    #roomにリダイレクト
-
     room_accesses = room.room_accesses.where(is_active: true)
 
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: true}
-    )
+    room = room_access.room
+    room.broadcast_active_users
 
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: admin_html
-    }
-    #head :ok 
-    #redirect_to public_room_path(study_record.room_id)
     @active_room_access = room_access
     @study_record = study_record
     @study_status = @active_room_access.study_status
@@ -68,25 +50,10 @@ class Public::StudyIntervalsController < ApplicationController
 
     room_accesses = room.room_accesses.where(is_active: true)
 
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: true}
-    )
-
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: admin_html
-    }
-    #head :ok 
-    #redirect_to public_room_path(study_record.room_id)
+    room = room_access.room
+    
+    room.broadcast_active_users
+ 
     @active_room_access = room_access
     @study_record = study_record
     @study_status = @active_room_access.study_status
@@ -119,23 +86,8 @@ class Public::StudyIntervalsController < ApplicationController
 
     room = room_access.room
     room_accesses = room.room_accesses.where(is_active: true)
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: true}
-    )
 
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: admin_html
-    }
+    room.broadcast_active_users
 
     @active_room_access = room_access
     @study_record = study_record

@@ -1,4 +1,5 @@
 class Public::LikesController < ApplicationController
+
   def create
     study_record = StudyRecord.find(params[:study_record_id])
     like = current_user.likes.new(study_record_id: study_record.id)
@@ -26,4 +27,5 @@ class Public::LikesController < ApplicationController
       redirect_to public_root_path
     end
   end
+
 end

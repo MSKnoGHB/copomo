@@ -23,23 +23,9 @@ class Public::StudyThemesController < ApplicationController
 
     room_accesses = room.room_accesses.where(is_active: true)
 
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals:{room_accesses: room_accesses, is_admin: true}
-    )
-
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list", 
-      active_users_list_html: admin_html
-    }
+    room = room_access.room
+    
+    room.broadcast_active_users
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
   end

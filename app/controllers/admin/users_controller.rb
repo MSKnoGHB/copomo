@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
+
   layout "admin"
+
   def index
     @users = User.all
   end
@@ -9,5 +11,5 @@ class Admin::UsersController < ApplicationController
     user.destroy
     redirect_to admin_users_path
   end
-
+  
 end

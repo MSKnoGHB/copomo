@@ -31,9 +31,11 @@ class Public::ChatLogsController < ApplicationController
     else
       head :unprocessable_entity
     end
+
   end
 
   def chat_log_params
     params.require(:chat_log).permit(:message, :room_id, :stamp_id)
   end
+  
 end

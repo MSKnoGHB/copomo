@@ -1,8 +1,10 @@
 class Public::CommentsController < ApplicationController
+
   def create
     @study_record = StudyRecord.find(params[:study_record_id])
     @comment = @study_record.comments.new(comment_params)
     @comment.user = current_user
+
     if @comment.save
       redirect_to public_study_record_path(@study_record), notice: "コメントを投稿しました"
     else
@@ -17,6 +19,7 @@ class Public::CommentsController < ApplicationController
       @comments = @study_record.comments.all
       render "public/study_records/show"
     end
+    
   end
 
   def destroy
@@ -34,4 +37,5 @@ class Public::CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:comment_body)
   end
+
 end
