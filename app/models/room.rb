@@ -18,5 +18,28 @@ class Room < ApplicationRecord
     { mode: mode, remaining: remaining.to_i }
   end
 
+  def broadcast_active_users
+    room_accesses = self.room_accesses.where(is_active: true)
+
+    renderer = ApplicationController.renderer
+
+    public_html = renderer.render(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: false}
+    )
+    admin_html = renderer.render(
+      partial: "shared/active_users_list",
+      locals:{room_accesses: room_accesses, is_admin: true}
+    )
+
+    ActionCable.server.broadcast "room_channel_#{self.id}", {
+      type: "active_users_list", 
+      active_users_list_html: public_html
+    }
+    ActionCable.server.broadcast "admin_room_channel_#{self.id}", {
+      type: "active_users_list", 
+      active_users_list_html: admin_html
+    }
+  end
 
 end

@@ -11,6 +11,7 @@ class Public::ChatLogsController < ApplicationController
     end
 
     if @chat_log.save
+      #他ユーザへブロードキャスト
       public_html = render_to_string(
       partial: 'shared/chat_log',
       locals: { chat_log: @chat_log, is_admin: false }
@@ -36,4 +37,5 @@ class Public::ChatLogsController < ApplicationController
   def chat_log_params
     params.require(:chat_log).permit(:message, :room_id, :stamp_id)
   end
+  
 end

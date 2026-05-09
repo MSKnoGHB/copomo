@@ -1,4 +1,5 @@
 class Admin::RoomAccessesController < ApplicationController
+
   def force_exit
     room_access = RoomAccess.find(params[:id])
     target_user = room_access.user
@@ -13,24 +14,9 @@ class Admin::RoomAccessesController < ApplicationController
       room_access.update!(is_active: false)
       redirect_url = public_rooms_path
     end
-
-    public_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals: {room_accesses: room_accesses, is_admin: false}
-    )
-    admin_html = render_to_string(
-      partial: "shared/active_users_list",
-      locals: {room_accesses: room_accesses, is_admin: true}
-    )
-
-    ActionCable.server.broadcast "room_channel_#{room.id}", {
-      type: "active_users_list",
-      active_users_list_html: public_html
-    }
-    ActionCable.server.broadcast "admin_room_channel_#{room.id}", {
-      type: "active_users_list",
-      active_users_list_html: admin_html
-    }
+    
+    #RoomModel内のメソッドでブロードキャスト
+    room.broadcast_active_users
  
     #対象ユーザーだけに「編集画面へ飛べ」という命令を送る
     ActionCable.server.broadcast "room_channel_#{room.id}", {
@@ -40,6 +26,6 @@ class Admin::RoomAccessesController < ApplicationController
     }
     # 管理者側の画面は、ボタンを押した後に何も返さない（またはJSで消す）
     head :no_content
-
   end
+  
 end
