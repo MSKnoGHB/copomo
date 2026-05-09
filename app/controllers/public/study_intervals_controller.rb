@@ -1,4 +1,5 @@
 class Public::StudyIntervalsController < ApplicationController
+
   skip_before_action :verify_authenticity_token, only: [:auto_paused]
 
   def index
@@ -21,6 +22,7 @@ class Public::StudyIntervalsController < ApplicationController
     Rails.logger.info "room_access changes: #{room_access.saved_changes}"
     room_accesses = room.room_accesses.where(is_active: true)
 
+    #RoomModel内のメソッドでブロードキャスト
     room = room_access.room
     room.broadcast_active_users
 
@@ -50,8 +52,8 @@ class Public::StudyIntervalsController < ApplicationController
 
     room_accesses = room.room_accesses.where(is_active: true)
 
+    #RoomModel内のメソッドでブロードキャスト
     room = room_access.room
-    
     room.broadcast_active_users
  
     @active_room_access = room_access
@@ -64,12 +66,12 @@ class Public::StudyIntervalsController < ApplicationController
     end
   end
 
-  def auto_paused
-
+  def auto_paused #学習中の画面遷移時の処理
     study_record = current_user.study_records.find_by(ended_at: nil)
     room_access = current_user.room_accesses.find_by(is_active: true)
     study_interval = study_record.study_intervals.find_by(ended_at: nil)
     study_status = room_access.study_status
+
     #一時離席時の画面遷移時は処理をスキップ
     return if study_interval.nil? && study_status == "paused"
     Rails.logger.debug "auto_pausedがreturnされませんでした、処理を続けます"
@@ -87,6 +89,7 @@ class Public::StudyIntervalsController < ApplicationController
     room = room_access.room
     room_accesses = room.room_accesses.where(is_active: true)
 
+    #他ユーザへブロードキャスト
     room.broadcast_active_users
 
     @active_room_access = room_access

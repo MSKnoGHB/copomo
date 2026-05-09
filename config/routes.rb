@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  devise_for :admins, controllers: {
-    sessions: "admin/devise/sessions",
-    registrations: "admin/devise/registrations"
-  }
+  devise_for :admins, controllers: {sessions: "admin/devise/sessions"}
 
   namespace :admin do
 
@@ -35,8 +32,6 @@ Rails.application.routes.draw do
       end
     end
 
-    
-    
   end
 
   namespace :public do

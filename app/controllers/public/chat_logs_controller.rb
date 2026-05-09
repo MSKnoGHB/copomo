@@ -11,6 +11,7 @@ class Public::ChatLogsController < ApplicationController
     end
 
     if @chat_log.save
+      #他ユーザへブロードキャスト
       public_html = render_to_string(
       partial: 'shared/chat_log',
       locals: { chat_log: @chat_log, is_admin: false }
@@ -31,7 +32,6 @@ class Public::ChatLogsController < ApplicationController
     else
       head :unprocessable_entity
     end
-
   end
 
   def chat_log_params

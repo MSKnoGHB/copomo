@@ -23,8 +23,7 @@ class Public::StudyThemesController < ApplicationController
 
     room_accesses = room.room_accesses.where(is_active: true)
 
-    room = room_access.room
-    
+    #他ユーザへブロードキャスト
     room.broadcast_active_users
     #roomにリダイレクト
     redirect_to public_room_path(room_access.room_id)
@@ -38,6 +37,7 @@ class Public::StudyThemesController < ApplicationController
 
   def update
     @study_theme = StudyTheme.find(params[:id])
+
     if @study_theme.update(study_theme_params)
       redirect_to public_user_study_themes_path(@study_theme.user), notice: "学習テーマを更新しました"
     else
@@ -54,7 +54,6 @@ class Public::StudyThemesController < ApplicationController
   end
 
   private
-
   def study_theme_params
     params.require(:study_theme).permit(:study_category_id, :theme_color, :theme_title, :theme_body)
   end

@@ -1,4 +1,5 @@
 class Public::StudyRecordsController < ApplicationController
+  
   before_action only: [:edit, :destroy] do
     authorize_owner(StudyRecord.find(params[:id]))
   end
@@ -57,8 +58,8 @@ class Public::StudyRecordsController < ApplicationController
     #Actioncableによるリアルタイム表示
     room_accesses = room.room_accesses.where(is_active: true)
 
+    #RoomModel内のメソッドでブロードキャスト
     room = room_access.room
-
     room.broadcast_active_users
 
     @active_room_access = room_access
@@ -66,6 +67,7 @@ class Public::StudyRecordsController < ApplicationController
     @study_status = @active_room_access.study_status
     @interval = study_interval
     @timer = room.timer_status
+    
     respond_to do |format|
       format.js { render 'shared/study_control' }
     end
@@ -82,8 +84,8 @@ class Public::StudyRecordsController < ApplicationController
       params[:room_access_id]
     )
 
+    #RoomModel内のメソッドでブロードキャスト
     room_accesses = room.room_accesses.where(is_active: true)
-    
     room.broadcast_active_users
 
     #画面遷移_学習記録投稿画面へ
