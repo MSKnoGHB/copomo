@@ -18,7 +18,7 @@
     </div>
     <div class="col-12 order-1 w-25 col-md-2 order-md-2 w-100 pt-5 d-flex flex-column justify-content-center align-items-center">
       <span id="mode" style="font-size: 50px;"><%=@timer[:mode]%></span>
-      <span id="timer" style="font-size: 50px;"><%=@timer[:remaining]%></span>
+      <span id="timer" data-room-id = "<%= @room.id %>" data-mode="<%=@timer[:mode]%>" style="font-size: 50px;"><%=@timer[:remaining]%></span>
       <div class = "d-flex flex-column justify-content-center w-100">
         <%= link_to "終了", admin_root_path, class: "btn btn-outline-danger w-100 mt-3 mb-3" %>
       </div>
