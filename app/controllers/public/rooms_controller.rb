@@ -1,4 +1,5 @@
 class Public::RoomsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:check_timer]
 
   def index
     #学習ルーム選択
