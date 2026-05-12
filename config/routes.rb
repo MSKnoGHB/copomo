@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: {sessions: "admin/devise/sessions"}
 
   namespace :admin do
-
     root to: "dashboards#index"
     resources :users, only: [:index, :destroy]
     resources :study_records, only: [:index, :destroy]
@@ -31,7 +30,6 @@ Rails.application.routes.draw do
         patch :activate
       end
     end
-
   end
 
   namespace :public do
@@ -83,8 +81,6 @@ Rails.application.routes.draw do
 
   end
 
-
   get '/search', to: 'searches#search'
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
